@@ -12,7 +12,7 @@ function App() {
     <>
           <ToastContainer />
      <Routes >
-     <Route path="/login" element={<AdminLoginPage />} />
+     {/* <Route path="/login" element={<AdminLoginPage />} /> */}
 
       <Route path="/" element={<AdminLayout />}  >
              
