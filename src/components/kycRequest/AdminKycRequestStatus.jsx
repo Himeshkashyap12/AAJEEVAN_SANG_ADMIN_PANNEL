@@ -16,7 +16,7 @@ const AdminKycRequestStatus=({id})=>{
     const kycRequesthandler=async()=>{
           try {
             
-            const data={type:status=="approve" ? "verify":"unverify",document:"all"}
+            const data={type:status=="approve" ? "verify":"rejected",document:"all"}
             const res= await dispatch(updateKycRequestAsync({token,data,id})).unwrap();
             if(res.code==200 && res.status){
                 toast.success(res.message)
