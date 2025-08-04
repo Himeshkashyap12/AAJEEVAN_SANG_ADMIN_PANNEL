@@ -7,7 +7,7 @@ const CustomInput = ({ onchange, placeholder, type,label,size,inputValue ,name,c
     <>
       <div class="relative">
         <div className="pb-1">
-        <CustomText  className={"font-semibold !text-[14px]"} value={label}/>
+        <CustomText  className={"font-[400]  text-[#181819E5] !text-[14px]"} value={label}/>
         </div>
         <Input
         name={name}

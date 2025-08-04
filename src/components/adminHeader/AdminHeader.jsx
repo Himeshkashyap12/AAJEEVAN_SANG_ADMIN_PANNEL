@@ -2,7 +2,13 @@ import { Avatar, Button, Popover } from "antd";
 import { MenuFoldOutlined, MenuUnfoldOutlined } from "@ant-design/icons";
 import CustomText from "../common/CustomText";
 import profile from "../../assets/logo/profile.png"
+import { useDispatch } from "react-redux";
+import { logout } from "../../feature/auth/authSlice";
 const AdminHeader = ({ setCollapsed, collapsed }) => {
+        const dispatch=useDispatch();
+  const logoutHandler=()=>{
+         dispatch(logout())
+  }
   return (
     <div className={`flex justify-between bg-[#fff]   `}>
       <div className="flex gap-5 ">
@@ -42,7 +48,7 @@ const AdminHeader = ({ setCollapsed, collapsed }) => {
               <div>Admin</div>  
               </div>
             </div>
-            <div className="bg-[#F2F2F2] p-2 cursor-pointer mt-5">
+            <div onClick={()=>{logoutHandler()}} className="bg-[#F2F2F2] p-2 cursor-pointer mt-5">
             <CustomText value={"Logout"} />
             </div>
           </div>}
