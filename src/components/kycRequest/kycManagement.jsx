@@ -5,7 +5,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { getAllUserAsync } from "../../feature/userManagement/userManagementSlice";
 import AdminKycRequest from "./AdminKycRequest";
 import { getAllKycRequestAsync } from "../../feature/kycRequest/KycRequestSlice";
-import Loader from "../loader/Loader";
+import CustomTabs from "../common/CustomTabs"
+
 const KycManagement=()=>{
    const [key,setKey]=useState(1);    
     const token=Cookies.get("token")
