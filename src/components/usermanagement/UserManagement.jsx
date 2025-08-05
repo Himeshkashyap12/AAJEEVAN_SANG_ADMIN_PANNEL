@@ -5,13 +5,13 @@ import { useDispatch, useSelector } from "react-redux";
 import { getAllUserAsync } from "../../feature/userManagement/userManagementSlice";
 import AdminAllUsers from "./AdminAllUsers";
 import AdminBlockUsers from "./AdminBlockUsers";
+import CustomTabs from "../common/CustomTabs.jsx"
 const UserManagement=()=>{
    const [key,setKey]=useState(1);    
     const token=Cookies.get("token")
     const dispatch=useDispatch();
     const {users}=useSelector(state=>state.users);
 
-    console.log(users);
     
     const setTabKeyHandler=(key)=>{
     setKey(key)
