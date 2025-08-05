@@ -1,6 +1,5 @@
 import Cookies from "js-cookie";
 import CustomText from "../common/CustomText";
-import CustomTabs from "../../../../AAPKA_APNA_GAME-main/src/components/common/CustomTabs";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getAllUserAsync } from "../../feature/userManagement/userManagementSlice";
