@@ -10,7 +10,7 @@ import SocialInformation from "./SocialInformation";
 import HabitualInformation from "./HabitualInformation";
 import Cookies from "js-cookie";
 import Loader from "../../loader/Loader";
-import Documents from "./documents";
+import Documents from "./Documents";
 import BasicInformation from "./AdminBasicInformation";
 const AdminUserDetails=({id})=>{
   console.log(id);
