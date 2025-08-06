@@ -1,7 +1,8 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import api from "../../axios/axios";
 const initialState = {
-  users:[],  
+  users:[],
+  userDetails:[],  
   isLoading: false,
   error: null,
 };
@@ -17,7 +18,24 @@ export const getAllUserAsync = createAsyncThunk(
         }
       });
       
-      return res.data; // No need for `await res.data`
+      return res.data; 
+    } catch (error) {
+      throw error;
+    }
+  }
+);
+export const getAllUserDetailsAsync = createAsyncThunk(
+  "users/allusersDetails",
+ async ({token,id}) => {
+        try {
+      const res = await api.get(`/admin/user/${id}`,{
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${token}`,
+        }
+      });
+      
+      return res.data; 
     } catch (error) {
       throw error;
     }
@@ -34,7 +52,7 @@ export const blockUserAsync = createAsyncThunk(
         }
       });
       
-      return res.data; // No need for `await res.data`
+      return res.data; 
     } catch (error) {
       throw error;
     }
@@ -66,6 +84,17 @@ export const userSlice = createSlice({
       state.isLoading = false;
     });
     builder.addCase(blockUserAsync.rejected, (state, action) => {
+      state.isLoading = false;
+      state.error = action;
+    });
+     builder.addCase(getAllUserDetailsAsync.pending, (state) => {
+      state.isLoading = true;
+    });
+    builder.addCase(getAllUserDetailsAsync.fulfilled, (state, action) => {                
+      state.isLoading = false;
+      state.userDetails=action.payload;
+    });
+    builder.addCase(getAllUserDetailsAsync.rejected, (state, action) => {
       state.isLoading = false;
       state.error = action;
     });

@@ -11,8 +11,11 @@ import CustomPagination from "../common/CustomPagination";
 import {EllipsisOutlined} from '@ant-design/icons';
 import Loader from "../loader/Loader";
 import { toast } from "react-toastify";
-const AdminBlockUsers=()=>{
-     const [pageNumber,setPageNumber]=useState(1)
+const AdminBlockUsers=({activeTab})=>{
+  console.log("blocked user");
+  
+     const [pageNumber,setPageNumber]=useState(1);
+    const [serachInput,setSearchInput]=useState("");
     const {users,isLoading}=useSelector(state=>state.users);
     const token=Cookies.get("token");
     const dispatch=useDispatch();
@@ -109,7 +112,7 @@ const AdminBlockUsers=()=>{
   ];
    const getAllUsers=async()=>{
         try{
-            const data={page:pageNumber}
+            const data={page:pageNumber,filter:serachInput!="" && {name: serachInput}}
             const res=await dispatch(getAllUserAsync({token,data,status:"block"})).unwrap();
             console.log(res)
             
@@ -120,13 +123,19 @@ const AdminBlockUsers=()=>{
     }
     
     useEffect(()=>{
+      if(activeTab){
                 getAllUsers();
-    },[dispatch,pageNumber]);
-    if(isLoading) return <Loader/>
+
+      }
+
+    },[dispatch,pageNumber,activeTab,serachInput]);
+        if(isLoading  && serachInput=="") return <Loader/>;
+
     return(
         <div className="">
             <div className="flex flex-wrap gap-2 justify-between py-2">
-            <CustomSearch />
+            <CustomSearch  value={serachInput} onchange={(e)=>{setSearchInput(e.target.value)}}/>  
+
             
         </div>
         <CustomTable

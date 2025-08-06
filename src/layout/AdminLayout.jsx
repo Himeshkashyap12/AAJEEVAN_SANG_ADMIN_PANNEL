@@ -3,6 +3,7 @@ import { Layout } from "antd";
 import { Outlet } from "react-router-dom";
 import AdminSidebar from "../components/adminsidebar/AdminSidebar";
 import AdminHeader from "../components/adminHeader/AdminHeader";
+import CustomText from "../components/common/CustomText";
 
 const { Header, Sider, Content } = Layout;
 
@@ -38,7 +39,10 @@ const AdminLayout = () => {
           >
             <Outlet />
           </div>
+      <div className="flex justify-end pb-5 pe-5"><CustomText className={"text-[16px] font-[400] "} value={"Developed and managed by Celestialit verse pvt. ltd."}/></div>
+
         </Content>
+
       </Layout>
     </Layout>
   );

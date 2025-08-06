@@ -11,10 +11,13 @@ import CustomPagination from "../common/CustomPagination";
 import {EllipsisOutlined} from '@ant-design/icons';
 import Loader from "../loader/Loader";
 import { toast } from "react-toastify";
-const AdminAllUsers=()=>{
-    const [pageNumber,setPageNumber]=useState(1)
+import { useNavigate } from "react-router-dom";
+const AdminAllUsers=({activeTab})=>{
+    const [pageNumber,setPageNumber]=useState(1);
+    const [serachInput,setSearchInput]=useState("");
     const {users,isLoading}=useSelector(state=>state.users);
     const token=Cookies.get("token");
+    const navigate=useNavigate();
     const dispatch=useDispatch();
    const blockUserHandler=async(id)=>{
     try {
@@ -47,7 +50,7 @@ const AdminAllUsers=()=>{
       key: "profilePic",
       width:200,
       align:"center",
-      render: (_,record) => <div className="flex gap-2 items-center cursor-pointer" ><Avatar  size={30} src={record?.image}/><CustomText  value={record?.name} /></div>,
+      render: (_,record) => <div onClick={()=>{navigate(`/admin/user-details/${record?.id}`)}} className="flex gap-2 items-center cursor-pointer" ><Avatar  size={30} src={record?.image}/><CustomText  value={record?.name} /></div>,
 
     },
     {
@@ -103,7 +106,6 @@ const AdminAllUsers=()=>{
           <Popover content={<div className="flex flex-col gap-2 w-[100px]">
            <div className="cursor-pointer" > <CustomText value={"View"}/></div>
             <div className="cursor-pointer" onClick={()=>{blockUserHandler(record?.id)}} ><CustomText value={"Block"}/></div>
-            <div className="cursor-pointer" ><CustomText value={`${record?.status==="SUSPENDED" ? "UnSuspend":"Suspend"}`}/></div>
           </div>}  trigger="click" placement="bottomLeft" >
                 <EllipsisOutlined />
          </Popover>
@@ -114,8 +116,10 @@ const AdminAllUsers=()=>{
   ];
 
   const getAllUsers=async()=>{
+    console.log("getal");
+    
       try{
-          const data={page:pageNumber}
+          const data={page:pageNumber,filter:{name:serachInput}}
           const res=await dispatch(getAllUserAsync({token,data,status:"all"})).unwrap();
           console.log(res)
           
@@ -126,14 +130,19 @@ const AdminAllUsers=()=>{
   }
   
   useEffect(()=>{
-              getAllUsers();
-  },[dispatch,pageNumber])
-    if(isLoading) return <Loader/>
+    if(activeTab){
+        getAllUsers();
+
+    }
+      
+  },[activeTab,pageNumber,dispatch,serachInput])
+    if(isLoading  && serachInput=="") return <Loader/>;
+
  
     return(
          <div className="">
             <div className="flex flex-wrap gap-2 justify-between py-2">
-            <CustomSearch />  
+            <CustomSearch  value={serachInput} onchange={(e)=>{setSearchInput(e.target.value)}}/>  
         </div>
         <CustomTable
         scroll={{x:1500}}

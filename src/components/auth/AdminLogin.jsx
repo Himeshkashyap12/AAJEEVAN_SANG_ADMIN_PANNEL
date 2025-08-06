@@ -6,13 +6,15 @@ import CustomInput from "../common/CustomInput";
 import CustomButton from "../common/CustomButton";
 import { useState } from "react";
 import Password from "antd/es/input/Password";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { logInAsyncHandler } from "../../feature/auth/authSlice";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
+import Loader from "../loader/Loader";
 const AdminLogin = () => {
     const dispatch=useDispatch();
     const navigate=useNavigate();
+    const {isLoading}=useSelector(state=>state.auth)
     const [loginInput,setLoginInput]=useState({
         email:"",
         password:""
@@ -39,10 +41,12 @@ const AdminLogin = () => {
     console.log(loginInput,"login");
     
     }
+
+    if(isLoading) return <Loader/>
   return (
     <div className="login">
       <Row>
-        <Col span={8}>
+        <Col xxl={8} xl={8} lg={8} md={12} sm={24} xs={24}>
           <div className="pt-[50px] px-[50px] relative h-[100vh]">
             <div className="flex flex-col gap-10 ">
               <Image className="!w-[300px]" src={logo} preview={false} />
@@ -73,7 +77,7 @@ const AdminLogin = () => {
             </div>
           </div>
         </Col>
-        <Col span={16}>
+        <Col xxl={16} xl={16} lg={16} md={12} sm={24} xs={24}>
           <div className="bg-[#F81B3E] h-[100vh] relative">
             <div className="absolute bottom-0">
               <div className="flex flex-col gap-[50px]">

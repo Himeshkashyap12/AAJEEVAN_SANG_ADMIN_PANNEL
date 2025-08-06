@@ -11,9 +11,10 @@ import CustomPagination from "../common/CustomPagination";
 import AdminKycRequestStatus from "./AdminKycRequestStatus";
 import Loader from "../loader/Loader";
 
-const AdminKycRequest=()=>{
+const AdminKycRequest=({activeTab})=>{
     const token=Cookies.get("token");
-    const [pageNumber,setPageNumber]=useState(1)
+    const [pageNumber,setPageNumber]=useState(1);
+    const [serachInput,setSearchInput]=useState("")
     const {kycRequest,isLoading}=useSelector(state=>state.kyc);
     console.log(kycRequest,"kyc");
     
@@ -66,32 +67,36 @@ const AdminKycRequest=()=>{
       render: (_,record) => <CustomText  value={record?.kycststus=="pending" && <AdminKycRequestStatus id={record?.id}/>} />,
 
     },
-   
-    
-   
- 
   ];
-
+ const getAllKycRequest=async()=>{
+        try{
+            const data={page:pageNumber,filter:{name:serachInput}}
+            const res=await dispatch(getAllKycRequestAsync({token,data})).unwrap();
+        }catch(error){
+    console.log(error);
+        }
+    }
     useEffect(()=>{
-       dispatch(getAllKycRequestAsync({token,page:1}));
-    },[dispatch,])
-if(isLoading) return <Loader/>
-
+      if(activeTab){
+          getAllKycRequest();
+      }
+    },[dispatch,pageNumber,activeTab,serachInput])
+if(isLoading  && serachInput=="") return <Loader/>;
     return(
           <div className="">
             <div className="flex flex-wrap gap-2 justify-between py-2">
-            <CustomSearch />  
-        </div>
-        <CustomTable
-        scroll={{x:600}}
-        columns={columns}
-        dataSource={kycRequest?.data}
-      />
-      <CustomPagination
-        total={kycRequest?.totalpage}
-        onchange={(e)=>setPageNumber(e)}
-        pageNumber={pageNumber}
-       />
+            <CustomSearch  value={serachInput} onchange={(e)=>{setSearchInput(e.target.value)}} />  
+          </div>
+            <CustomTable
+            scroll={{x:600}}
+            columns={columns}
+            dataSource={kycRequest?.data}
+            />
+        <CustomPagination
+          total={kycRequest?.totalpage}
+          onchange={(e)=>setPageNumber(e)}
+          pageNumber={pageNumber}
+        />
        {/* <Custom */}
       </div>
     )
