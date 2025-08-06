@@ -104,7 +104,7 @@ const AdminAllUsers=({activeTab})=>{
       render: (_,record) => {
         return(
           <Popover content={<div className="flex flex-col gap-2 w-[100px]">
-           <div className="cursor-pointer" > <CustomText value={"View"}/></div>
+           <div onClick={()=>{navigate(`/admin/user-details/${record?.id}`)}} className="cursor-pointer" > <CustomText value={"View"}/></div>
             <div className="cursor-pointer" onClick={()=>{blockUserHandler(record?.id)}} ><CustomText value={"Block"}/></div>
           </div>}  trigger="click" placement="bottomLeft" >
                 <EllipsisOutlined />
