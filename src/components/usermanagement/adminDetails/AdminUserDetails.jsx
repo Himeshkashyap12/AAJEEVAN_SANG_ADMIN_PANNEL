@@ -5,13 +5,13 @@ import CustomTabs from "../../common/CustomTabs";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getAllUserDetailsAsync } from "../../../feature/userManagement/userManagementSlice";
-import BasicInformation from "./basicInformation";
 import FamilyInformation from "./FamilyInformation";
 import SocialInformation from "./SocialInformation";
 import HabitualInformation from "./HabitualInformation";
 import Cookies from "js-cookie";
 import Loader from "../../loader/Loader";
 import Documents from "./documents";
+import BasicInformation from "./AdminBasicInformation";
 const AdminUserDetails=({id})=>{
   console.log(id);
   
