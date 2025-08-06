@@ -10,6 +10,7 @@ import CustomText from "../common/CustomText";
 import CustomPagination from "../common/CustomPagination";
 import AdminKycRequestStatus from "./AdminKycRequestStatus";
 import Loader from "../loader/Loader";
+import CustomCard from "../common/CustomCard";
 
 const AdminKycRequest=({activeTab})=>{
     const token=Cookies.get("token");
@@ -84,6 +85,11 @@ const AdminKycRequest=({activeTab})=>{
 if(isLoading  && serachInput=="") return <Loader/>;
     return(
           <div className="">
+             <div className="flex gap-2">
+            <CustomCard data={kycRequest?.totalpage} value={"Total Request"} />
+            <CustomCard  value={"Approved Request"} />
+            <CustomCard  value={"Penading Request"} />
+            </div>
             <div className="flex flex-wrap gap-2 justify-between py-2">
             <CustomSearch  value={serachInput} onchange={(e)=>{setSearchInput(e.target.value)}} />  
           </div>

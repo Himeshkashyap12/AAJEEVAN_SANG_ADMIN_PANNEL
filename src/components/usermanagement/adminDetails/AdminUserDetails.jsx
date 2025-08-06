@@ -12,6 +12,7 @@ import Cookies from "js-cookie";
 import Loader from "../../loader/Loader";
 import Documents from "./Documents";
 import BasicInformation from "./AdminBasicInformation";
+import AdminImages from "./AdminImages";
 const AdminUserDetails=({id})=>{
   console.log(id);
   
@@ -42,9 +43,15 @@ const AdminUserDetails=({id})=>{
   },
    {
     key: 5,
-    label: <CustomText className={`${key=="5" ?"!text-[#F81B3E]":"text-[#000]"}`} value={"Documents"}/>,
+    label: <CustomText className={`${key=="5" ?"!text-[#F81B3E]":"text-[#000]"}`} value={"KYC Veification"}/>,
     children:<Documents/>,
   },
+    {
+    key: 6,
+    label: <CustomText className={`${key=="6" ?"!text-[#F81B3E]":"text-[#000]"}`} value={"Images"}/>,
+    children:<AdminImages/>,
+  }
+   
   
 ];
 

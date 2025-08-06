@@ -12,6 +12,7 @@ import {EllipsisOutlined} from '@ant-design/icons';
 import Loader from "../loader/Loader";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
+import CustomCard from "../common/CustomCard";
 const AdminBlockUsers=({activeTab})=>{
   
      const [pageNumber,setPageNumber]=useState(1);
@@ -134,6 +135,10 @@ const AdminBlockUsers=({activeTab})=>{
 
     return(
         <div className="">
+            <div className="flex gap-2">
+            <CustomCard data={users?.totalpage} value={"Total Users"} />
+            <CustomCard  value={"Active Users"} />
+            </div>
             <div className="flex flex-wrap gap-2 justify-between py-2">
             <CustomSearch  value={serachInput} onchange={(e)=>{setSearchInput(e.target.value)}}/>  
 

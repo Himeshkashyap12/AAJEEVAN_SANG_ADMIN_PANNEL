@@ -5,9 +5,7 @@ import CustomUserData from "../../common/CustomUserData";
 
 const BasicInformation = () => {
   const { userDetails } = useSelector((state) => state?.users);
-
   const basicInformation = userDetails?.data;
-
   return (
     <div className="border-[1px] border-[#A2A1A833] rounded-md  p-2">
       <div className="flex gap-3 border-b-1 border-[#A2A1A833] pb-5">
