@@ -11,33 +11,25 @@ import CustomPagination from "../common/CustomPagination";
 import AdminKycRequestStatus from "./AdminKycRequestStatus";
 import Loader from "../loader/Loader";
 import CustomCard from "../common/CustomCard";
+import { useNavigate } from "react-router-dom";
 
 const AdminKycRequest=({activeTab})=>{
     const token=Cookies.get("token");
     const [pageNumber,setPageNumber]=useState(1);
-    const [serachInput,setSearchInput]=useState("")
+    const [serachInput,setSearchInput]=useState("");
+    const navigate=useNavigate();
     const {kycRequest,isLoading}=useSelector(state=>state.kyc);
     console.log(kycRequest,"kyc");
     
     const dispatch=useDispatch();
         const columns = [
-    {
-      title: <TableHeaderText className={"font-semibold "} value={"Id"} />,
-      dataIndex: "id",
-      key: "id",
-      width:100,
-      align:"center",
-      sorter: (a, b) => a?.id - b?.id,
-      render: (_,record) => <div className="cursor-pointer"  > <CustomText   value={record?.id.slice(0,10)} /></div>,
-    },
      {
       title: <TableHeaderText className={"font-semibold "} value={"UID"} />,
       dataIndex: "uid",
       key: "uid",
       width:100,
       align:"center",
-      sorter: (a, b) => a?.id - b?.id,
-      render: (_,record) => <div className="cursor-pointer"  > <CustomText   value={record?.uid} /></div>,
+      render: (_,record) => <div onClick={()=>{navigate(`/admin/kyc-request-details/${record?.id}`)}} className="cursor-pointer"  > <CustomText   value={record?.uid} /></div>,
     },
     {
       title: <TableHeaderText className={"font-semibold"} value={"Profile Pic"} />,
@@ -45,7 +37,7 @@ const AdminKycRequest=({activeTab})=>{
       key: "profilePic",
       width:200,
       align:"center",
-      render: (_,record) => <div className="flex gap-2 items-center " ><Avatar  size={30} src={record?.image}/><CustomText  value={record?.name} /></div>,
+      render: (_,record) => <div onClick={()=>{navigate(`/admin/kyc-request-details/${record?.id}`)}} className="flex gap-2 items-center cursor-pointer" ><Avatar  size={30} src={record?.image}/><CustomText  value={record?.name} /></div>,
 
     },
     {
@@ -55,7 +47,7 @@ const AdminKycRequest=({activeTab})=>{
       width:150,
       align:"center",
 
-      render: (_,record) =><div className="cursor-pointer"  > <CustomText  value={record?.phone} /></div>,
+      render: (_,record) =><div onClick={()=>{navigate(`/admin/kyc-request-details/${record?.id}`)}} className="cursor-pointer"  > <CustomText  value={record?.phone} /></div>,
 
     },
       {
@@ -65,7 +57,7 @@ const AdminKycRequest=({activeTab})=>{
       width:100,
       align:"center",
 
-      render: (_,record) => <CustomText  value={record?.kycststus=="pending" && <AdminKycRequestStatus id={record?.id}/>} />,
+      render: (_,record) => <CustomText  value={record?.kycststus=="pending" && <AdminKycRequestStatus type={"all"} id={record?.id}/>} />,
 
     },
   ];

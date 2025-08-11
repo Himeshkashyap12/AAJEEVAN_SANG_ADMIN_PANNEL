@@ -6,7 +6,7 @@ import { getAllKycRequestAsync, updateKycRequestAsync } from "../../feature/kycR
 import Cookies from "js-cookie";
 import { toast } from "react-toastify";
 import Loader from "../loader/Loader";
-const AdminKycRequestStatus=({id})=>{
+const AdminKycRequestStatus=({id,type})=>{
     const [kycRequestModel,setKycRequestModel]=useState(false);
     const [status,setStatus]=useState("");
     const dispatch=useDispatch();
@@ -16,7 +16,7 @@ const AdminKycRequestStatus=({id})=>{
     const kycRequesthandler=async()=>{
           try {
             
-            const data={type:status=="approve" ? "verify":"rejected",document:"all"}
+            const data={type:status=="approve" ? "verify":"rejected",document:type}
             const res= await dispatch(updateKycRequestAsync({token,data,id})).unwrap();
             if(res.code==200 && res.status){
                 toast.success(res.message)
