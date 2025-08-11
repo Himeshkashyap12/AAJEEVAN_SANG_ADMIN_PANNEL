@@ -32,12 +32,12 @@ const AdminKycRequest=({activeTab})=>{
       render: (_,record) => <div onClick={()=>{navigate(`/admin/kyc-request-details/${record?.id}`)}} className="cursor-pointer"  > <CustomText   value={record?.uid} /></div>,
     },
     {
-      title: <TableHeaderText className={"font-semibold"} value={"Profile Pic"} />,
+      title: <TableHeaderText className={"font-semibold"} value={"Name"} />,
       dataIndex: "profilePic",
       key: "profilePic",
       width:200,
-      align:"center",
-      render: (_,record) => <div onClick={()=>{navigate(`/admin/kyc-request-details/${record?.id}`)}} className="flex gap-2 items-center cursor-pointer" ><Avatar  size={30} src={record?.image}/><CustomText  value={record?.name} /></div>,
+      align:"start",
+      render: (_,record) => <div onClick={()=>{navigate(`/admin/kyc-request-details/${record?.id}`)}} className="flex gap-2 items-center cursor-pointer" ><CustomText  value={record?.name} /></div>,
 
     },
     {
