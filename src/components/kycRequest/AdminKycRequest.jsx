@@ -95,7 +95,6 @@ if(isLoading  && serachInput=="") return <Loader/>;
           onchange={(e)=>setPageNumber(e)}
           pageNumber={pageNumber}
         />
-       {/* <Custom */}
       </div>
     )
 }

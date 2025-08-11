@@ -32,7 +32,7 @@ const AdminImages=()=>{
         {userDetails?.data?.multiimage.map((item)=>{
             return(
                <div >
-               <Image src={item} className="rounded-md"/>
+               <Image  src={item} className="rounded-md !h-[200px] w-full object-cover"/>
                </div> 
             )
         })}
