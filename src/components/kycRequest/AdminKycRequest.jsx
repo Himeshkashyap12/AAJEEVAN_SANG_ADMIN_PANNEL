@@ -12,6 +12,9 @@ import AdminKycRequestStatus from "./AdminKycRequestStatus";
 import Loader from "../loader/Loader";
 import CustomCard from "../common/CustomCard";
 import { useNavigate } from "react-router-dom";
+import {
+EyeOutlined
+} from '@ant-design/icons';
 
 const AdminKycRequest=({activeTab})=>{
     const token=Cookies.get("token");
@@ -19,7 +22,6 @@ const AdminKycRequest=({activeTab})=>{
     const [serachInput,setSearchInput]=useState("");
     const navigate=useNavigate();
     const {kycRequest,isLoading}=useSelector(state=>state.kyc);
-    console.log(kycRequest,"kyc");
     
     const dispatch=useDispatch();
         const columns = [
@@ -40,6 +42,7 @@ const AdminKycRequest=({activeTab})=>{
       render: (_,record) => <div onClick={()=>{navigate(`/admin/kyc-request-details/${record?.id}`)}} className="flex gap-2 items-center cursor-pointer" ><CustomText  value={record?.name} /></div>,
 
     },
+    
     {
       title: <TableHeaderText className={"font-semibold"} value={"Mobile Number"} />,
       dataIndex: "phone",
@@ -50,8 +53,17 @@ const AdminKycRequest=({activeTab})=>{
       render: (_,record) =><div onClick={()=>{navigate(`/admin/kyc-request-details/${record?.id}`)}} className="cursor-pointer"  > <CustomText  value={record?.phone} /></div>,
 
     },
+     {
+      title: <TableHeaderText className={"font-semibold"} value={"Document"} />,
+      dataIndex: "profilePic",
+      key: "profilePic",
+      width:200,
+      align:"center ",
+      render: (_,record) => <div onClick={()=>{navigate(`/admin/kyc-request-details/${record?.id}`)}} className="flex gap-2 items-center justify-center cursor-pointer" ><EyeOutlined style={{fontSize:"20px"}} /></div>,
+
+    },
       {
-      title: <TableHeaderText className={"font-semibold"} value={"KYC status"} />,
+      title: <TableHeaderText className={"font-semibold"} value={"KYC Request"} />,
       dataIndex: "kycststus",
       key: "kycststus",
       width:100,
@@ -72,7 +84,7 @@ const AdminKycRequest=({activeTab})=>{
     useEffect(()=>{
       if(activeTab){
           getAllKycRequest();
-      }
+      } 
     },[dispatch,pageNumber,activeTab,serachInput])
 if(isLoading  && serachInput=="") return <Loader/>;
     return(

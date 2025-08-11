@@ -10,6 +10,21 @@ const AdminSidebar = ({ collapsed }) => {
   const [selectKey, setSelectKey] = useState(0);
   const navigate = useNavigate();
   const sidebarItems = [
+    // {
+    //       key: 2,
+    //       path: "admin/home",
+    //       icon: (
+    //         <div className={`border rounded-md p-1 ${collapsed && "border-none"} ${selectKey==1?"border-[#F81B3E]":"border-[#000]"} border-2px `}> <FileFilled style={{color:selectKey==1?"#F81B3E":"#000",fontSize:"12px"}} /></div>
+    //       ),
+    //       label: (!collapsed &&
+    //         <Link to={"/admin/home"}>
+    //         <CustomText
+    //           className={`${selectKey == 2 ? "!text-[#000]" : "!text-[#7b8190]"}`}
+    //           value={"Overview"}
+    //         />
+    //         </Link>
+    //       ),
+    //     },
           {
           key: 0,
           path: "admin/user",
@@ -41,6 +56,7 @@ const AdminSidebar = ({ collapsed }) => {
             </Link>
           ),
         },
+         
    
   ];
   const handleSidebar = (e) => {

@@ -10,6 +10,7 @@ import AdminProtected from './protected/AdminProtected'
 import AdmiKycRequestPage from './pages/AdminKycRequestPage'
 import AdminUserDetailsPage from './pages/AdminUserDetailsPage'
 import AdminKycRequestDetails from './components/kycRequest/AdminKycRequestDetails'
+import AdminOverViewPage from './pages/AdminOverviewPage'
 
 
 function App() {
@@ -20,6 +21,7 @@ function App() {
      <Route path="/login" element={<AdminLoginPage />} />
 
       <Route path="/" element={<AdminProtected><AdminLayout /></AdminProtected>}  >
+     <Route path="/admin/home" element={<AdminOverViewPage />} />
      <Route path="/admin/user" element={<UserManagement />} />
      <Route path='/admin/user-details/:id' element={<     AdminUserDetailsPage/>}/>
      <Route path='/admin/kyc-request' element={<AdmiKycRequestPage/>}/>
