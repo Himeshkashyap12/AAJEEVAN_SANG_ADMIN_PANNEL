@@ -21,12 +21,12 @@ function App() {
      <Route path="/login" element={<AdminLoginPage />} />
 
       <Route path="/" element={<AdminProtected><AdminLayout /></AdminProtected>}  >
-     <Route path="/admin/home" element={<AdminOverViewPage />} />
-     <Route path="/admin/user" element={<UserManagement />} />
-     <Route path='/admin/user-details/:id' element={<     AdminUserDetailsPage/>}/>
-     <Route path='/admin/kyc-request' element={<AdmiKycRequestPage/>}/>
-     <Route path='/admin/kyc-request-details/:id' element={<AdminKycRequestDetails/>}/>
-       </Route>
+        <Route path="/admin/home" element={<AdminOverViewPage />} />
+        <Route path="/admin/user" element={<UserManagement />} />
+        <Route path='/admin/user-details/:id' element={<     AdminUserDetailsPage/>}/>
+        <Route path='/admin/kyc-request' element={<AdmiKycRequestPage/>}/>
+        <Route path='/admin/kyc-request-details/:id' element={<AdminKycRequestDetails/>}/>
+      </Route>
     </Routes>
     </>
   )
