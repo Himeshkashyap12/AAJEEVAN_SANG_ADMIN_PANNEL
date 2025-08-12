@@ -38,25 +38,25 @@ const AdminOverview=()=>{
     return(
         <div className="flex flex-col gap-5">
         <Row gutter={[20,20]} >
-          <Col span={6}>
+          <Col xxl={6} xl={8} lg={12} md={12} sm={12} xs={24}>
           <HomeCard heading={"Active Users"} background={"#E8F5E9"} data={dashboard?.data?.activeUser} value={<div><PlusSquareFilled  style={{color:'#29CC6A',fontSize:"24px"}}/></div>}/>
           </Col>
-             <Col span={6}>
+             <Col xxl={6} xl={8} lg={12} md={12} sm={12} xs={24}>
           <HomeCard heading={"Verified Profiles"} background={"#E1F5FD"} data={dashboard?.data?.verifiedUser} value={<div><Image preview={false} width={20} height={20} src={verify}/></div>}/>
           </Col>
-          <Col span={6}>
+          <Col xxl={6} xl={8} lg={12} md={12} sm={12} xs={24}>
           <HomeCard heading={"Active Subscriptions"} background={"#E8F5E9"} data={dashboard?.data?.activeSubscription} value={<div><Image preview={false} width={20} height={20} src={activeSubscription}/></div>}/>
           </Col>
-         <Col span={6}>
+         <Col xxl={6} xl={8} lg={12} md={12} sm={12} xs={24}>
           <HomeCard heading={"Revenue this Month"} background={"#FFFEC6"} data={dashboard?.data?.monthRevenu} value={<div><Image preview={false} width={20} height={20} src={revenue}/></div>}/>
           </Col>
            
         </Row>
         <Row gutter={[20,20]} >
-           <Col span={6}>
+           <Col xxl={6} xl={8} lg={12} md={12} sm={12} xs={24}>
           <HomeCard heading={"Verification Request"} background={"#E1F5FD"} data={dashboard?.data?.pendingRequest} value={<div><Image preview={false} width={20} height={20} src={verificationRequest}/></div>}/>
           </Col>
-        <Col span={6}>
+        <Col xxl={6} xl={8} lg={12} md={12} sm={12} xs={24}>
           <HomeCard heading={"Total Admin"} background={"#F5E8F3"} data={dashboard?.data?.totalAdmin} value={<div><Image preview={false} width={20} height={20} src={totalAdmin}/></div>}/>
           </Col>
          

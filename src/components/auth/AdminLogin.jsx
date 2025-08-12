@@ -1,4 +1,4 @@
-import { Col, Image, Row } from "antd";
+import { Col, Form, Image, Row } from "antd";
 import Couple from "../../assets/auth/couple.png";
 import CustomText from "../common/CustomText";
 import logo from "../../assets/logo/logo.png";
@@ -32,7 +32,7 @@ const AdminLogin = () => {
             const res=await dispatch(logInAsyncHandler({data})).unwrap();
             if(res.status && res.code==200){
                 toast.success(res.message);
-                navigate("/admin/user")
+                navigate("/admin/home")
             }
             
         } catch (error) {
@@ -46,7 +46,7 @@ const AdminLogin = () => {
   return (
     <div className="login">
       <Row>
-        <Col xxl={8} xl={8} lg={8} md={12} sm={24} xs={24}>
+        <Col xxl={8} xl={12} lg={12} md={12} sm={24} xs={24}>
           <div className="pt-[50px] px-[50px] relative h-[100vh]">
             <div className="flex flex-col gap-10 ">
               <Image className="!w-[300px]" src={logo} preview={false} />
@@ -67,23 +67,22 @@ const AdminLogin = () => {
                   className={"!bg-[#F81B3E] !py-[28px] !w-full !text-[#fff]"}
                   value={"Login"}
                   onclick={()=>{loginHandler()}}
-
                 />
               </div>
             </div>
-            <div className="absolute bottom-3  text-center ">
+            <div className="absolute bottom-3  text-center hidden md:block ">
                 <CustomText className={""} value={"©2025–2026 All Rights Reserved. Aajeevansang® is a registered trademark."}/>
                 <CustomText className={"!text-[#3855B3]"} value={"Cookie Preferences, Privacy, and Terms"}/>
             </div>
           </div>
         </Col>
-        <Col xxl={16} xl={16} lg={16} md={12} sm={24} xs={24}>
-          <div className="bg-[#F81B3E] h-[100vh] relative">
+        <Col xxl={16} xl={12} lg={12} md={12} sm={24} xs={24}>
+          <div className="bg-[#F81B3E] h-[100vh] relative hidden md:block">
             <div className="absolute bottom-0">
               <div className="flex flex-col gap-[50px]">
                 <div className="flex flex-col items-center">
                   <CustomText
-                    className={"!text-[40px] font-[700] !text-[#fff]"}
+                    className={"md:!text-[40px] !text-[30px] font-[700] !text-[#fff]"}
                     value={"Welcome to Aajeevansang"}
                   />
                   <CustomText

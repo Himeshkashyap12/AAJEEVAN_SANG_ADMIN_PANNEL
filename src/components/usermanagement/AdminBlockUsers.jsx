@@ -137,7 +137,6 @@ const AdminBlockUsers=({activeTab})=>{
         <div className="">
             <div className="flex gap-2">
             <CustomCard data={users?.totalpage} value={"Total Users"} />
-            <CustomCard  value={"Active Users"} />
             </div>
             <div className="flex flex-wrap gap-2 justify-between py-2">
             <CustomSearch  value={serachInput} onchange={(e)=>{setSearchInput(e.target.value)}}/>  
