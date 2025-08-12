@@ -1,30 +1,67 @@
-import { Col, Row } from "antd";
+import { Col, Image, Row } from "antd";
 import HomeCard from "../common/HomeCard";
-// import {PlusSquareOutlined} from ""
+import {
+  PlusSquareFilled
+} from '@ant-design/icons';
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { getHomeDataAsync } from "../../feature/home/homeSlice";
+import Cookies from "js-cookie";
+import activeSubscription from "../../assets/home/activeSubscription.png";
+import revenue from "../../assets/home/revenue.png";
+import totalAdmin from "../../assets/home/totalAdmin.png";
+import verificationRequest from "../../assets/home/verificationRequest.png";
+import verify from "../../assets/home/verify.png";
+import Loader from "../loader/Loader";
 const AdminOverview=()=>{
+  const dispatch=useDispatch();
+  const token=Cookies.get("token");
+  const {dashboard,isLoading}=useSelector(state=>state?.home);
+  
+  
+  const getHomeData=async()=>{
+    try {
+      const res=await dispatch(getHomeDataAsync({token})).unwrap();
+      console.log(res);
+      
+      
+    } catch (error) {
+      console.log(error);
+      
+      
+    }
+  }
+  useEffect(()=>{
+    getHomeData()
+  },[dispatch])
+  if(isLoading) return <Loader/>
     return(
-        <>
+        <div className="flex flex-col gap-5">
         <Row gutter={[20,20]} >
           <Col span={6}>
-          <HomeCard heading={"Total Users"} background={"#E8F5E9"} data={"123"} value={<div><PlusSquareOutlined /></div>}/>
+          <HomeCard heading={"Active Users"} background={"#E8F5E9"} data={dashboard?.data?.activeUser} value={<div><PlusSquareFilled  style={{color:'#29CC6A',fontSize:"24px"}}/></div>}/>
+          </Col>
+             <Col span={6}>
+          <HomeCard heading={"Verified Profiles"} background={"#E1F5FD"} data={dashboard?.data?.verifiedUser} value={<div><Image preview={false} width={20} height={20} src={verify}/></div>}/>
           </Col>
           <Col span={6}>
-          <HomeCard background={"#E1F5FD"} data={"bh"} value={"hug"}/>
+          <HomeCard heading={"Active Subscriptions"} background={"#E8F5E9"} data={dashboard?.data?.activeSubscription} value={<div><Image preview={false} width={20} height={20} src={activeSubscription}/></div>}/>
           </Col>
          <Col span={6}>
-          <HomeCard background={"#E8F5E9"} data={"bh"} value={"hug"}/>
+          <HomeCard heading={"Revenue this Month"} background={"#FFFEC6"} data={dashboard?.data?.monthRevenu} value={<div><Image preview={false} width={20} height={20} src={revenue}/></div>}/>
           </Col>
-          <Col span={6}>
-          <HomeCard background={"#FFFEC6"} data={"bh"} value={"hug"}/>
+           
+        </Row>
+        <Row gutter={[20,20]} >
+           <Col span={6}>
+          <HomeCard heading={"Verification Request"} background={"#E1F5FD"} data={dashboard?.data?.pendingRequest} value={<div><Image preview={false} width={20} height={20} src={verificationRequest}/></div>}/>
           </Col>
+        <Col span={6}>
+          <HomeCard heading={"Total Admin"} background={"#F5E8F3"} data={dashboard?.data?.totalAdmin} value={<div><Image preview={false} width={20} height={20} src={totalAdmin}/></div>}/>
+          </Col>
+         
         </Row>
-        <Row>
-          <Col></Col>
-          <Col></Col>
-          <Col></Col>
-          <Col></Col>
-        </Row>
-        </>
+        </div>
     )
 }
 

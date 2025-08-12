@@ -10,8 +10,7 @@ const HomeCard=({data,value,heading,background})=>{
         <CustomText value={<CustomText className={"!text-[18px] font-[400]"} value={data} />} />
       </div>
       <div className="flex justify-start">
-        <CustomText value={<CustomText className={"!text-[16px] font-[400]"} value={heading} />} />
-
+        <CustomText value={<CustomText className={"!text-[16px] font-[500]"} value={heading} />} />
       </div>
       </div>
   </Card>
