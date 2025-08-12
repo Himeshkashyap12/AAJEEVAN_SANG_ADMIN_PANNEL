@@ -34,8 +34,8 @@ const AdminLogin = () => {
                 toast.success(res.message);
                 navigate("/admin/home")
             }
-            
         } catch (error) {
+          console.log(error);
             
         }
     console.log(loginInput,"login");
