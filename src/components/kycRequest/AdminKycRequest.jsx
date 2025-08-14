@@ -2,7 +2,7 @@ import Cookies from "js-cookie";
 import { getAllKycRequestAsync } from "../../feature/kycRequest/KycRequestSlice";
 import { useDispatch, useSelector } from "react-redux";
 import TableHeaderText from "../common/TableHeaderText";
-import { Avatar } from "antd";
+import { Avatar, Image } from "antd";
 import CustomTable from "../common/CustomTable";
 import CustomSearch from "../common/CustomSearch";
 import { useEffect, useState } from "react";
@@ -51,6 +51,21 @@ const AdminKycRequest=({activeTab})=>{
       align:"center",
 
       render: (_,record) =><div onClick={()=>{navigate(`/admin/kyc-request-details/${record?.id}`)}} className="cursor-pointer"  > <CustomText  value={record?.phone} /></div>,
+
+    },
+     {
+      title: <TableHeaderText className={"font-semibold"} value={"Document"} />,
+      dataIndex: "profilePic",
+      key: "profilePic",
+      width:200,
+      align:"center ",
+      render: (_,record) => {return (<div className="flex gap-2 justify-center"> {record?.document?.map((item)=>{
+         return(
+            item?.url?.map((items)=>{
+              return <Image className="!h-[70px] !w-[100px] rounded-xl" src={items}/>
+           })
+         )
+      })} </div>)},
 
     },
      {

@@ -19,7 +19,6 @@ function App() {
           <ToastContainer />
      <Routes >
      <Route path="/login" element={<AdminLoginPage />} />
-
       <Route path="/" element={<AdminProtected><AdminLayout /></AdminProtected>}  >
         <Route path="/admin/home" element={<AdminOverViewPage />} />
         <Route path="/admin/user" element={<UserManagement />} />

@@ -42,8 +42,8 @@ const AdminBlockUsers=({activeTab})=>{
      const columns = [
     {
       title: <TableHeaderText className={"font-semibold "} value={"Id"} />,
-      dataIndex: "id",
-      key: "id",
+      dataIndex: "uid",
+      key: "uid",
       width:100,
       align:"center",
       sorter: (a, b) => a?.id - b?.id,
