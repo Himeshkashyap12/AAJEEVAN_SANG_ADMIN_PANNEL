@@ -69,7 +69,7 @@ const AdminKycRequest=({activeTab})=>{
 
     },
      {
-      title: <TableHeaderText className={"font-semibold"} value={"Document"} />,
+      title: <TableHeaderText className={"font-semibold"} value={"Document view"} />,
       dataIndex: "profilePic",
       key: "profilePic",
       width:200,
