@@ -31,7 +31,7 @@ const AdminKycRequest=({activeTab})=>{
       key: "uid",
       width:100,
       align:"center",
-      render: (_,record) => <div onClick={()=>{navigate(`/admin/kyc-request-details/${record?.id}`)}} className="cursor-pointer"  > <CustomText   value={record?.uid} /></div>,
+      render: (_,record) => <div onClick={()=>{navigate(`/admin/user-details/${record?.id}`)}} className="cursor-pointer"  > <CustomText   value={record?.uid} /></div>,
     },
     {
       title: <TableHeaderText className={"font-semibold"} value={"Name"} />,
@@ -39,7 +39,7 @@ const AdminKycRequest=({activeTab})=>{
       key: "profilePic",
       width:200,
       align:"start",
-      render: (_,record) => <div onClick={()=>{navigate(`/admin/kyc-request-details/${record?.id}`)}} className="flex gap-2 items-center cursor-pointer" ><CustomText  value={record?.name} /></div>,
+      render: (_,record) => <div onClick={()=>{navigate(`/admin/user-details/${record?.id}`)}} className="flex gap-2 items-center cursor-pointer" ><CustomText  value={record?.name} /></div>,
 
     },
     
@@ -50,7 +50,7 @@ const AdminKycRequest=({activeTab})=>{
       width:150,
       align:"center",
 
-      render: (_,record) =><div onClick={()=>{navigate(`/admin/kyc-request-details/${record?.id}`)}} className="cursor-pointer"  > <CustomText  value={record?.phone} /></div>,
+      render: (_,record) =><div onClick={()=>{navigate(`/admin/user-details/${record?.id}`)}} className="cursor-pointer"  > <CustomText  value={record?.phone} /></div>,
 
     },
      {
@@ -74,7 +74,7 @@ const AdminKycRequest=({activeTab})=>{
       key: "profilePic",
       width:200,
       align:"center ",
-      render: (_,record) => <div onClick={()=>{navigate(`/admin/kyc-request-details/${record?.id}`)}} className="flex gap-2 items-center justify-center cursor-pointer" ><EyeOutlined style={{fontSize:"20px"}} /></div>,
+      render: (_,record) => <div onClick={()=>{navigate(`/admin/user-details/${record?.id}`)}} className="flex gap-2 items-center justify-center cursor-pointer" ><EyeOutlined style={{fontSize:"20px"}} /></div>,
 
     },
       {

@@ -41,13 +41,12 @@ const AdminBlockUsers=({activeTab})=>{
 
      const columns = [
     {
-      title: <TableHeaderText className={"font-semibold "} value={"Id"} />,
+      title: <TableHeaderText className={"font-semibold "} value={"UID"} />,
       dataIndex: "uid",
       key: "uid",
       width:100,
       align:"center",
-      sorter: (a, b) => a?.id - b?.id,
-      render: (_,record) => <div className="cursor-pointer"  > <CustomText   value={record?.id.slice(0,10)} /></div>,
+      render: (_,record) => <div className="cursor-pointer"  > <CustomText   value={record?.uid} /></div>,
     },
     {
       title: <TableHeaderText className={"font-semibold"} value={"Profile Pic"} />,

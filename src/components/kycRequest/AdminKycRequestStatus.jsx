@@ -14,6 +14,9 @@ const AdminKycRequestStatus=({id,type})=>{
     const {isLoading}=useSelector(state=>state.kyc);
 
     const kycRequesthandler=async()=>{
+     
+        
+        
           try {
             
             const data={type:status=="approve" ? "verify":"rejected",document:type}
@@ -25,8 +28,6 @@ const AdminKycRequestStatus=({id,type})=>{
                 
             }
             console.log(res);
-            
-            
           } catch (error) {
             console.log(error);
 

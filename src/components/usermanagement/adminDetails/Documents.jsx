@@ -2,6 +2,7 @@ import { Col, Image, Row } from "antd";
 import { useSelector } from "react-redux";
 import CustomText from "../../common/CustomText";
 import CustomUserData from "../../common/CustomUserData";
+import AdminKycRequestStatus from "../../kycRequest/AdminKycRequestStatus";
 const Documents = () => {
   const { userDetails, isLoading } = useSelector((state) => state?.users);
   const document = userDetails?.data;
@@ -33,6 +34,9 @@ const Documents = () => {
           <Col xxl={12} xl={12} md={12} sm={24} xs={24}>
             <div className="flex flex-col gap-10 justify-start">
               {document?.documentverify?.map((item) => {
+                console.log(item,"kyc");
+                console.log(document,"document");
+                
                 return (
                   <>
                     <div className="flex justify-between items-center">
@@ -57,7 +61,7 @@ const Documents = () => {
                           {item?.url.map((items) => {
                             return (
                               <>
-                                <div className="w-[200px] h-[200px]  rounded-2xl overflow-hidden">
+                                <div className="w-[200px] h-[100px]  rounded-2xl overflow-hidden">
                                   <Image
                                     src={items}
                                     className="w-full h-full object-cover rounded-md"
@@ -68,7 +72,12 @@ const Documents = () => {
                           })}
                         </div>
                       </Col>
+                      
                     </Row>
+                     <div  className="flex justify-start">
+                    <AdminKycRequestStatus type={item?.name} id={document?.id}/>
+                    </div>
+                   
                   </>
                 );
               })}
