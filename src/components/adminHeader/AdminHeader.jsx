@@ -1,7 +1,7 @@
 import { Avatar, Button, Popover } from "antd";
 import { MenuFoldOutlined, MenuUnfoldOutlined } from "@ant-design/icons";
 import CustomText from "../common/CustomText";
-import profile from "../../assets/logo/profile.png"
+import profile from "../../assets/logo/logoAdmin.png"
 import { useDispatch } from "react-redux";
 import { logout } from "../../feature/auth/authSlice";
 const AdminHeader = ({ setCollapsed, collapsed }) => {
