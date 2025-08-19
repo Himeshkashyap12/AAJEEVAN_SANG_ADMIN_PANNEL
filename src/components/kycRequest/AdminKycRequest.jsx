@@ -111,7 +111,7 @@ if(isLoading  && serachInput=="") return <Loader/>;
             <CustomSearch  value={serachInput} onchange={(e)=>{setSearchInput(e.target.value)}} />  
           </div>
             <CustomTable
-            scroll={{x:600}}
+            scroll={{x:1200}}
             columns={columns}
             dataSource={kycRequest?.data}
             />

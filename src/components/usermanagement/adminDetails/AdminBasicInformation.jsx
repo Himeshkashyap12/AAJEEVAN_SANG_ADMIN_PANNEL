@@ -30,7 +30,7 @@ const BasicInformation = () => {
         </div>
       </div>
       <Row>
-        <Col xxl={12} xl={12} md={12} sm={24} xs={24}>
+        <Col xxl={12} xl={12} md={24} sm={24} xs={24}>
           <div className="flex flex-col gap-10 justify-start">
             <div className="flex justify-between items-center">
               <CustomUserData
@@ -42,7 +42,7 @@ const BasicInformation = () => {
                 value={basicInformation?.bdetail?.age}
               />
             </div>
-            <div className="flex justify-between items-center">
+            <div className="flex justify-between flex-wrap gap-10 items-center">
               <CustomUserData
                 label={"Mobile Number"}
                 value={basicInformation?.bdetail?.phone}
