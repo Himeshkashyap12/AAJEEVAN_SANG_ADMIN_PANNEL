@@ -48,7 +48,7 @@ const AdminKycRequestStatus=({id,type})=>{
         </div>
         <CustomModal value={`Are you sure you want to ${status} this request ?`} open={kycRequestModel} setOpen={setKycRequestModel} modalBody={<div className="'flex flex-col gap-5">
            {status=="reject" && <div>
-                <TextArea onChange={(e)=>{setRemark(e.target.value)}}/>
+                <TextArea value={remark} placeholder="Please enter remark" onChange={(e)=>{setRemark(e.target.value)}}/>
             </div>}
             <div className="flex justify-end gap-3 pt-2">
             <CustomButton onclick={()=>{setKycRequestModel(false)}} value={"No"} className={"!bg-[#F81B3E] !text-[#fff]"}/>
