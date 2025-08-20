@@ -113,7 +113,7 @@ const AdminBlockUsers=({activeTab})=>{
   ];
    const getAllUsers=async()=>{
         try{
-            const data={page:pageNumber,filter:serachInput!="" && {name: serachInput}}
+            const data={page:pageNumber,filter:serachInput!="" && {search: serachInput}}
             const res=await dispatch(getAllUserAsync({token,data,status:"block"})).unwrap();
             console.log(res)
             

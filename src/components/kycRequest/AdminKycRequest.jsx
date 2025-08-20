@@ -90,7 +90,7 @@ const AdminKycRequest=({activeTab})=>{
   ];
  const getAllKycRequest=async()=>{
         try{
-            const data={page:pageNumber,filter:{name:serachInput}}
+            const data={page:pageNumber,filter:{search:serachInput}}
             const res=await dispatch(getAllKycRequestAsync({token,data})).unwrap();
         }catch(error){
     console.log(error);

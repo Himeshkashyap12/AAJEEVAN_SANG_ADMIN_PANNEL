@@ -21,8 +21,7 @@ const AdminKycRequestStatus=({id,type})=>{
         
         
           try {
-            console.log(remark);
-            
+               if(status=="reject" && !remark)   return;          
             
             const data={type:status=="approve" ? "verify":"rejected",document:type,remark:remark}
             const res= await dispatch(updateKycRequestAsync({token,data,id})).unwrap();
@@ -48,9 +47,9 @@ const AdminKycRequestStatus=({id,type})=>{
             <CustomButton onclick={()=>{setKycRequestModel(true),setStatus("reject")}} className={"!bg-[#F81B3E] !text-[#fff]"} value={"Reject"}/>
         </div>
         <CustomModal value={`Are you sure you want to ${status} this request ?`} open={kycRequestModel} setOpen={setKycRequestModel} modalBody={<div className="'flex flex-col gap-5">
-            <div>
+           {status=="reject" && <div>
                 <TextArea onChange={(e)=>{setRemark(e.target.value)}}/>
-            </div>
+            </div>}
             <div className="flex justify-end gap-3 pt-2">
             <CustomButton onclick={()=>{setKycRequestModel(false)}} value={"No"} className={"!bg-[#F81B3E] !text-[#fff]"}/>
             <CustomButton onclick={()=>{kycRequesthandler()}} value={"Yes"} className={"!bg-[#F81B3E] !text-[#fff]"}/>

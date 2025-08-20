@@ -115,11 +115,9 @@ const AdminAllUsers=({activeTab})=>{
     },
   ];
 
-  const getAllUsers=async()=>{
-    console.log("getal");
-    
+  const getAllUsers=async()=>{    
       try{
-          const data={page:pageNumber,filter:{name:serachInput}}
+          const data={page:pageNumber,filter:{search:serachInput}}
           const res=await dispatch(getAllUserAsync({token,data,status:"all"})).unwrap();
           console.log(res)
           
