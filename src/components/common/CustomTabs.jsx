@@ -1,10 +1,10 @@
 
 import React from 'react';
 import { Tabs } from 'antd';
-const CustomTabs=({item,onchange})=>{
+const CustomTabs=({item,onchange,defaultActiveKey})=>{
     return(
         <>
-        <Tabs defaultActiveKey="0" items={item} onChange={onchange} />
+        <Tabs defaultActiveKey={defaultActiveKey} items={item} onChange={onchange} />
         </>
     )
 }

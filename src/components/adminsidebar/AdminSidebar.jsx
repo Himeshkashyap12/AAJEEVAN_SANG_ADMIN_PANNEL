@@ -1,76 +1,277 @@
-import {  Image, Menu,  } from "antd";
+import { Image, Menu } from "antd";
 import CustomText from "../common/CustomText";
 import "./adminSidebar.css";
-import {  FileFilled, HomeOutlined, UserOutlined,} from "@ant-design/icons";
-import {  Link, useNavigate } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { FileFilled, HomeOutlined, UserOutlined } from "@ant-design/icons";
+import { Link, useNavigate } from "react-router-dom";
+import { Children, useEffect, useState } from "react";
 import Cookies from "js-cookie";
-import logo from "../../assets/logo/logo.png"
-import home from "../../assets/adminSidebar/home.png"
+import logo from "../../assets/logo/logo.png";
+import home from "../../assets/adminSidebar/home.png";
+import { useSelector } from "react-redux";
 const AdminSidebar = ({ collapsed }) => {
   const [selectKey, setSelectKey] = useState(0);
+  const {profile}=useSelector(state=>state?.profile);
+  const sidebar=profile?.data?.permission;  
   const navigate = useNavigate();
   const sidebarItems = [
     {
+      type: "group",
+      label: "General",
+      children: [
+       sidebar?.overview?.view && 
+          {
           key: 0,
           path: "admin/home",
           icon: (
-            <div className={`border rounded-md p-1 ${collapsed && "border-none"} ${selectKey==0?"border-[#F81B3E]":"border-[#000]"} border-2px `}><Image preview={false} className={selectKey!=0 && "grayscale" } height={"16px"} width={"16px"} src={home}/></div>
+            <div
+              className={`border rounded-md p-1 ${collapsed && "border-none"} ${
+                selectKey == 0 ? "border-[#F81B3E]" : "border-[#000]"
+              } border-2px `}
+            >
+              <Image
+                preview={false}
+                className={selectKey != 0 && "grayscale"}
+                height={"16px"}
+                width={"16px"}
+                src={home}
+              />
+            </div>
           ),
-          label: (!collapsed &&
+          label: !collapsed && (
             <Link to={"/admin/home"}>
-            <CustomText
-              className={`${selectKey == 0 ? "!text-[#000]" : "!text-[#7b8190]"}`}
-              value={"Overview"}
-            />
+              <CustomText
+                className={`${
+                  selectKey == 0 ? "!text-[#000]" : "!text-[#7b8190]"
+                }`}
+                value={"Overview"}
+              />
             </Link>
           ),
-        },
-          {
+      },
+        sidebar?.pricingplan?.view && {
           key: 1,
-          path: "admin/user",
-          icon: (
-            <div className={`border rounded-md p-1   ${collapsed && "border-none"} ${selectKey==1?"border-[#F81B3E]":"border-[#000]"} border-2px `}> <UserOutlined style={{color:selectKey==1?"#F81B3E":"#000",fontSize:"14px"}} /></div>
-          ),
-          label: (!collapsed &&
-            <Link to={"/admin/user"}>
-
-            <CustomText
-              className={`${selectKey == 1 ? "!text-[#000]" : "!text-[#7b8190]"}`}
-              value={"User Management"}
-            />
-            </Link>
+          path: "admin/plan",
+              icon: (
+                <div
+                  className={`border rounded-md p-1 ${collapsed && "border-none"} ${
+                    selectKey == 1 ? "border-[#F81B3E]" : "border-[#000]"
+                  } border-2px `}
+                >
+                  <Image
+                    preview={false}
+                    className={selectKey != 1 && "grayscale"}
+                    height={"16px"}
+                    width={"16px"}
+                    src={home}
+                  />
+                </div>
+              ),
+                label: !collapsed && (
+                  <Link to={"/admin/plan"}>
+                    <CustomText
+                      className={`${
+                        selectKey == 1 ? "!text-[#000]" : "!text-[#7b8190]"
+                      }`}
+                      value={"Pricing Plans"}
+                    />
+                  </Link>
           ),
         },
-         {
+      ],
+    },
+    {
+      type: "group",
+      label: "MAIN MENU",
+      children: [
+        sidebar?.usermanagement?.view && {
           key: 2,
           path: "admin/user",
           icon: (
-            <div className={`border rounded-md p-1 ${collapsed && "border-none"} ${selectKey==2?"border-[#F81B3E]":"border-[#000]"} border-2px `}> <FileFilled style={{color:selectKey==2?"#F81B3E":"#000",fontSize:"12px"}} /></div>
+            <div
+              className={`border rounded-md p-1   ${
+                collapsed && "border-none"
+              } ${
+                selectKey == 2 ? "border-[#F81B3E]" : "border-[#000]"
+              } border-2px `}
+            >
+              <UserOutlined
+                style={{
+                  color: selectKey == 2 ? "#F81B3E" : "#000",
+                  fontSize: "14px",
+                }}
+              />
+            </div>
           ),
-          label: (!collapsed &&
-            <Link to={"/admin/kyc-request"}>
-            <CustomText
-              className={`${selectKey == 2 ? "!text-[#000]" : "!text-[#7b8190]"}`}
-              value={"Kyc Request"}
-            />
+          label: !collapsed && (
+            <Link to={"/admin/user"}>
+              <CustomText
+                className={`${
+                  selectKey == 2 ? "!text-[#000]" : "!text-[#7b8190]"
+                }`}
+                value={"User Management"}
+              />
             </Link>
           ),
         },
-         
-   
+        sidebar?.kycrequest?.view && 
+          {
+          key: 3,
+          path: "admin/kyc",
+          icon: (
+            <div
+              className={`border rounded-md p-1 ${collapsed && "border-none"} ${
+                selectKey == 3 ? "border-[#F81B3E]" : "border-[#000]"
+              } border-2px `}
+            >
+              <FileFilled
+                style={{
+                  color: selectKey == 3 ? "#F81B3E" : "#000",
+                  fontSize: "12px",
+                }}
+              />
+            </div>
+          ),
+          label: !collapsed && (
+            <Link to={"/admin/kyc-request"}>
+              <CustomText
+                className={`${
+                  selectKey == 3 ? "!text-[#000]" : "!text-[#7b8190]"
+                }`}
+                value={"Kyc Request"}
+              />
+            </Link>
+          ),
+        },
+        sidebar?.rolemanagement?.view && {
+          key: 4,
+          path: "admin/role",
+          icon: (
+            <div
+              className={`border rounded-md p-1 ${collapsed && "border-none"} ${
+                selectKey == 4 ? "border-[#F81B3E]" : "border-[#000]"
+              } border-2px `}
+            >
+              <FileFilled
+                style={{
+                  color: selectKey == 4 ? "#F81B3E" : "#000",
+                  fontSize: "12px",
+                }}
+              />
+            </div>
+          ),
+          label: !collapsed && (
+            <Link to={"/admin/role"}>
+              <CustomText
+                className={`${
+                  selectKey == 4 ? "!text-[#000]" : "!text-[#7b8190]"
+                }`}
+                value={"Role Management"}
+              />
+            </Link>
+          ),
+        },
+        sidebar?.financialoversight?.view && {
+          key: 5,
+          path: "admin/financial",
+          icon: (
+            <div
+              className={`border rounded-md p-1 ${collapsed && "border-none"} ${
+                selectKey == 5 ? "border-[#F81B3E]" : "border-[#000]"
+              } border-2px `}
+            >
+              <FileFilled
+                style={{
+                  color: selectKey == 5 ? "#F81B3E" : "#000",
+                  fontSize: "12px",
+                }}
+              />
+            </div>
+          ),
+          label: !collapsed && (
+            <Link to={"/admin/financial"}>
+              <CustomText
+                className={`${
+                  selectKey == 5 ? "!text-[#000]" : "!text-[#7b8190]"
+                }`}
+                value={"Financial Oversight"}
+              />
+            </Link>
+          ),
+        },
+        sidebar?.analytics?.view && {
+          key: 6,
+          path: "admin/analytics",
+          icon: (
+            <div
+              className={`border rounded-md p-1 ${collapsed && "border-none"} ${
+                selectKey == 6 ? "border-[#F81B3E]" : "border-[#000]"
+              } border-2px `}
+            >
+              <FileFilled
+                style={{
+                  color: selectKey == 6 ? "#F81B3E" : "#000",
+                  fontSize: "12px",
+                }}
+              />
+            </div>
+          ),
+          label: !collapsed && (
+            <Link to={"/admin/analytics"}>
+              <CustomText
+                className={`${
+                  selectKey == 6 ? "!text-[#000]" : "!text-[#7b8190]"
+                }`}
+                value={"Analytics"}
+              />
+            </Link>
+          ),
+        
+        },
+         sidebar?.analytics?.view && {
+          key: 7,
+          path: "admin/logs",
+          icon: (
+            <div
+              className={`border rounded-md p-1 ${collapsed && "border-none"} ${
+                selectKey == 7 ? "border-[#F81B3E]" : "border-[#000]"
+              } border-2px `}
+            >
+              <FileFilled
+                style={{
+                  color: selectKey == 7 ? "#F81B3E" : "#000",
+                  fontSize: "12px",
+                }}
+              />
+            </div>
+          ),
+          label: !collapsed && (
+            <Link to={"/admin/logs"}>
+              <CustomText
+                className={`${
+                  selectKey == 7 ? "!text-[#000]" : "!text-[#7b8190]"
+                }`}
+                value={"Admin Logs"}
+              />
+            </Link>
+          ),
+        
+        },
+     
+      ],
+    },
+    
   ];
   const handleSidebar = (e) => {
     setSelectKey(e.key);
-    Cookies.set("key",e.key)
+    Cookies.set("key", e.key);
     const selectedItem = sidebarItems.find((item) => item.key === e.key);
     if (selectedItem?.path) {
       navigate(selectedItem.path);
     }
   };
-  useEffect(()=>{
-    navigate("/admin/home")
-  },[])
+  useEffect(() => {
+    navigate("/admin/home");
+  }, []);
 
   return (
     <div className="admin-sidebar ">

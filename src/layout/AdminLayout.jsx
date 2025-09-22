@@ -1,14 +1,21 @@
-import  {  useState } from "react";
+import  {  useEffect, useState } from "react";
 import { Layout } from "antd";
 import { Outlet } from "react-router-dom";
 import AdminSidebar from "../components/adminsidebar/AdminSidebar";
 import AdminHeader from "../components/adminHeader/AdminHeader";
 import CustomText from "../components/common/CustomText";
-
+import { useDispatch, useSelector } from "react-redux";
+import Cookies from "js-cookie"
+import { getAllNotificationAsync } from "../feature/notification/Notification";
+import { getProfileAsync } from "../feature/profile/profileSlice";
+import Loader from "../components/loader/Loader";
 const { Header, Sider, Content } = Layout;
 
 const AdminLayout = () => {
   const [collapsed, setCollapsed] = useState(false);
+  const dispatch=useDispatch();
+  const {isLoading}=useSelector(state=>state.profile)
+  const token=Cookies.get("token")
   const headerStyle = {
     backgroundColor: "#fff",
     border: "1px solid rgba(5,5,5,0.06)",
@@ -21,6 +28,31 @@ const AdminLayout = () => {
     width: "100%",
     flex: 1,
   };
+
+
+  const getAllNotification=async()=>{    
+            try{
+                const res=await dispatch(getAllNotificationAsync({token})).unwrap(); 
+            }catch(error){
+           console.log(error);
+           
+            }
+        
+        }
+  const getAllProfile=async()=>{    
+            try{
+                const res=await dispatch(getProfileAsync({token})).unwrap();  
+            }catch(error){
+        console.log(error);
+            }
+        }
+        
+        
+        useEffect(()=>{
+              getAllNotification();
+              getAllProfile()
+          },[])
+          if(isLoading) return <Loader/>
   return (
     <Layout>
       <div className="h-[100vh]">

@@ -13,22 +13,16 @@ import totalAdmin from "../../assets/home/totalAdmin.png";
 import verificationRequest from "../../assets/home/verificationRequest.png";
 import verify from "../../assets/home/verify.png";
 import Loader from "../loader/Loader";
+import AdminHistory from "./AdminHistory";
 const AdminOverview=()=>{
   const dispatch=useDispatch();
   const token=Cookies.get("token");
-  const {dashboard,isLoading}=useSelector(state=>state?.home);
-  
-  
+  const {dashboard,isLoading}=useSelector(state=>state?.home);  
   const getHomeData=async()=>{
     try {
-      const res=await dispatch(getHomeDataAsync({token})).unwrap();
-      console.log(res);
-      
-      
+      const res=await dispatch(getHomeDataAsync({token})).unwrap();      
     } catch (error) {
-      console.log(error);
-      
-      
+      console.log(error); 
     }
   }
   useEffect(()=>{
@@ -50,7 +44,6 @@ const AdminOverview=()=>{
          <Col xxl={6} xl={8} lg={12} md={12} sm={12} xs={24}>
           <HomeCard heading={"Revenue this Month"} background={"#FFFEC6"} data={dashboard?.data?.monthRevenu} value={<div><Image preview={false} width={20} height={20} src={revenue}/></div>}/>
           </Col>
-           
         </Row>
         <Row gutter={[20,20]} >
            <Col xxl={6} xl={8} lg={12} md={12} sm={12} xs={24}>
@@ -59,8 +52,8 @@ const AdminOverview=()=>{
         <Col xxl={6} xl={8} lg={12} md={12} sm={12} xs={24}>
           <HomeCard heading={"Total Admin"} background={"#F5E8F3"} data={dashboard?.data?.totalAdmin} value={<div><Image preview={false} width={20} height={20} src={totalAdmin}/></div>}/>
           </Col>
-         
         </Row>
+          <AdminHistory/>
         </div>
     )
 }
