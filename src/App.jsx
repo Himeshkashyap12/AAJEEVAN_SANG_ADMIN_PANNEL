@@ -19,6 +19,7 @@ import AdminLogPage from './pages/AdminLogPage'
 import CreateRolePage from './pages/CreateRolePage'
 import AnalyticsActivityPage from './pages/AnalyticsActivityPage'
 import TireWiseSubscriptionPage from './pages/TireWiseSubscriptionPage'
+import CreatePlanPage from './pages/CreatePlanPage'
 
 
 function App() {
@@ -34,6 +35,7 @@ function App() {
         <Route path='/admin/kyc-request' element={<AdmiKycRequestPage/>}/>
         <Route path='/admin/kyc-request-details/:id' element={<AdminKycRequestDetails/>}/>
         <Route path='/admin/plan' element={<AdminPlanPage/>}/>
+        <Route path='/admin/create-plan' element={<CreatePlanPage/>}/>
         <Route path='/admin/role' element={<AdminRolePage/>}/>
         <Route path='/admin/create-role' element={<CreateRolePage/>}/>
         <Route path='/admin/financial' element={<AdminFinancialOversightPage/>}/>

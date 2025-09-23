@@ -7,17 +7,16 @@ import { Avatar, Col, Row } from "antd";
 import admiPlanEditImage from "../../assets/plan/planEdit.png"
 import {
   CheckCircleOutlined,
-  CloseCircleOutlined
+  CloseCircleOutlined,
+  PlusOutlined
 } from '@ant-design/icons';
 import Loader from "../loader/Loader"
-import EditPlan from "./EditPlan";
+import { useNavigate } from "react-router-dom";
 const AdminPlan=()=>{
     const dispatch=useDispatch();
     const token=Cookies.get("token")
     const {plan,isLoading}=useSelector(state=>state?.plan);
-    const [editPlanStatus,setEditPlanStatus]=useState(false)
-    console.log(plan);
-    
+  const navigate=useNavigate();    
     const getPlanData=async()=>{
         try {
             const res=await dispatch(getAllPlanAsync({token})).unwrap();
@@ -30,7 +29,7 @@ const AdminPlan=()=>{
     },[])
      if(isLoading) return <Loader/>
     return(<>
-       {editPlanStatus?<div className="flex justify-start"><EditPlan setEditPlanStatus={setEditPlanStatus} /> </div>: <div className="flex flex-col gap-[20px]">
+        <div className="flex flex-col gap-[20px]">
         <div className="flex justify-items-start ">
             <CustomText className={"!text-[20px] font-[500]"}  value={"Pricing Plans"}/>
 
@@ -38,32 +37,32 @@ const AdminPlan=()=>{
         <div>
         <Row gutter={[20,20]}>
         <Col span={4}>
-            <div onClick={()=>{setEditPlanStatus(true)}} className="flex items-center justify-between  bg-[#DBEADC] px-5 py-5 rounded-xl ">
+            <div onClick={()=>{navigate("/admin/create-plan")}} className="flex items-center justify-between  bg-[#DBEADC] px-5 py-5 rounded-xl ">
              <CustomText value={"Edit Basic plan"}/>
              <Avatar  src={admiPlanEditImage}/>
             </div>
         </Col>
          <Col span={4}>
-            <div onClick={()=>{setEditPlanStatus(true)}} className="flex items-center justify-between bg-[#DDDDDD] px-5 py-5 rounded-xl ">
+            <div onClick={()=>{navigate("/admin/create-plan")}} className="flex items-center justify-between bg-[#DDDDDD] px-5 py-5 rounded-xl ">
              <CustomText value={"Edit Silver plan"}/>
              <Avatar  src={admiPlanEditImage}/>
 
             </div>
         </Col>
         <Col span={4}>
-            <div  onClick={()=>{setEditPlanStatus(true)}} className="flex items-center justify-between   bg-[#FFF5D0] px-5 py-5 rounded-xl">
+            <div   onClick={()=>{navigate("/admin/create-plan")}} className="flex items-center justify-between   bg-[#FFF5D0] px-5 py-5 rounded-xl">
              <CustomText value={"Edit Gold plan"}/>
              <Avatar  src={admiPlanEditImage}/>
             </div>
         </Col>
         <Col span={4}>
-            <div  onClick={()=>{setEditPlanStatus(true)}} className="flex items-center justify-between  bg-[#F2E7FC] px-5 py-5 rounded-xl">
+            <div   onClick={()=>{navigate("/admin/create-plan")}} className="flex items-center justify-between  bg-[#F2E7FC] px-5 py-5 rounded-xl">
              <CustomText value={"Edit Platinum plan"}/>
              <Avatar  src={admiPlanEditImage}/>
             </div>
         </Col>
          <Col span={4}>
-            <div  onClick={()=>{setEditPlanStatus(true)}} className="flex items-center justify-between  bg-[#E1F5FD] px-5 py-5 rounded-xl">
+            <div  onClick={()=>{navigate("/admin/create-plan")}} className="flex items-center justify-between  bg-[#E1F5FD] px-5 py-5 rounded-xl">
              <CustomText value={"Edit Diamond VIP plan"}/>
              <Avatar  src={admiPlanEditImage}/>
             </div>
@@ -103,9 +102,14 @@ const AdminPlan=()=>{
                 </>
             )
            })}
+           <Col span={6}>
+             <div  onClick={()=>{navigate("/admin/create-plan")}} className="!w-full !h-full flex justify-center items-center shadow-2xl rounded-xl">
+                <PlusOutlined style={{fontSize:"40px"}} />
+             </div>
+           </Col>
         </Row>
         </div>
-        </div>}
+        </div>
         </>
     )
 }

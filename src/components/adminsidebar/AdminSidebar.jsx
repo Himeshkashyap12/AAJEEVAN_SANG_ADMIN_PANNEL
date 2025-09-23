@@ -1,4 +1,4 @@
-import { Image, Menu } from "antd";
+import { Avatar, Image, Menu } from "antd";
 import CustomText from "../common/CustomText";
 import "./adminSidebar.css";
 import { FileFilled, HomeOutlined, UserOutlined } from "@ant-design/icons";
@@ -8,6 +8,10 @@ import Cookies from "js-cookie";
 import logo from "../../assets/logo/logo.png";
 import home from "../../assets/adminSidebar/home.png";
 import { useSelector } from "react-redux";
+import role from "../../assets/adminSidebar/role.png"
+import financial from "../../assets/adminSidebar/financial.png"
+import analytic from "../../assets/adminSidebar/analytic.png"
+import adminLog from "../../assets/adminSidebar/adminlog.png"
 const AdminSidebar = ({ collapsed }) => {
   const [selectKey, setSelectKey] = useState(0);
   const {profile}=useSelector(state=>state?.profile);
@@ -121,7 +125,7 @@ const AdminSidebar = ({ collapsed }) => {
             <div
               className={`border rounded-md p-1 ${collapsed && "border-none"} ${
                 selectKey == 3 ? "border-[#F81B3E]" : "border-[#000]"
-              } border-2px `}
+              } border-[1px] `}
             >
               <FileFilled
                 style={{
@@ -147,16 +151,9 @@ const AdminSidebar = ({ collapsed }) => {
           path: "admin/role",
           icon: (
             <div
-              className={`border rounded-md p-1 ${collapsed && "border-none"} ${
-                selectKey == 4 ? "border-[#F81B3E]" : "border-[#000]"
-              } border-2px `}
+              className={`flex justify-start `}
             >
-              <FileFilled
-                style={{
-                  color: selectKey == 4 ? "#F81B3E" : "#000",
-                  fontSize: "12px",
-                }}
-              />
+              <Image src={role} className={`!size-[28px] ${selectKey != 4 && "grayscale" }`}/>
             </div>
           ),
           label: !collapsed && (
@@ -175,16 +172,9 @@ const AdminSidebar = ({ collapsed }) => {
           path: "admin/financial",
           icon: (
             <div
-              className={`border rounded-md p-1 ${collapsed && "border-none"} ${
-                selectKey == 5 ? "border-[#F81B3E]" : "border-[#000]"
-              } border-2px `}
+              className={`flex justify-start `}
             >
-              <FileFilled
-                style={{
-                  color: selectKey == 5 ? "#F81B3E" : "#000",
-                  fontSize: "12px",
-                }}
-              />
+              <Image src={financial} className={`!size-[28px] ${selectKey != 5 && "grayscale" }`}/>
             </div>
           ),
           label: !collapsed && (
@@ -203,16 +193,9 @@ const AdminSidebar = ({ collapsed }) => {
           path: "admin/analytics",
           icon: (
             <div
-              className={`border rounded-md p-1 ${collapsed && "border-none"} ${
-                selectKey == 6 ? "border-[#F81B3E]" : "border-[#000]"
-              } border-2px `}
+              className={`flex justify-start `}
             >
-              <FileFilled
-                style={{
-                  color: selectKey == 6 ? "#F81B3E" : "#000",
-                  fontSize: "12px",
-                }}
-              />
+              <Image src={analytic} className={`!size-[28px] ${selectKey != 6 && "grayscale" }`}/>
             </div>
           ),
           label: !collapsed && (
@@ -231,17 +214,10 @@ const AdminSidebar = ({ collapsed }) => {
           key: 7,
           path: "admin/logs",
           icon: (
-            <div
-              className={`border rounded-md p-1 ${collapsed && "border-none"} ${
-                selectKey == 7 ? "border-[#F81B3E]" : "border-[#000]"
-              } border-2px `}
+           <div
+              className={`flex justify-start `}
             >
-              <FileFilled
-                style={{
-                  color: selectKey == 7 ? "#F81B3E" : "#000",
-                  fontSize: "12px",
-                }}
-              />
+              <Image src={adminLog} className={`!size-[28px] ${selectKey != 7 && "grayscale" }`}/>
             </div>
           ),
           label: !collapsed && (

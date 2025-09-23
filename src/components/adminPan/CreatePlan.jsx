@@ -7,7 +7,7 @@ import CustomSelect from '../common/CustomSelect';
 import CustomRadio from '../common/CustomRadio';
 import TextArea from 'antd/es/input/TextArea';
 import { useState } from 'react';
-const EditPlan=({setEditPlanStatus})=>{
+const CreatePlan=({setEditPlanStatus})=>{
     const [fetaure,setFeature]=useState("")
     const [planInput,setEditPlan]=useState({
         planName:"",
@@ -96,12 +96,9 @@ const EditPlan=({setEditPlanStatus})=>{
     return(
         <>
        <div>
-        <div onClick={()=>{setEditPlanStatus(false)}} className='flex justify-start gap-2 items-center  cursor-pointer '>
-            <LeftSquareOutlined style={{fontSize:"24px" }} />
-             <CustomText className={"!text-[20px]"} value={"Back"}/>
-            </div>
+      
             <div className='flex justify-start pt-5 '>
-             <CustomText className={"!text-[16px] font-[500]"} value={"Create Plan"}/>
+             <CustomText className={"!text-[20px] font-[500]"} value={"Create Plan"}/>
             </div>
             <div className='flex flex-col gap-10 pt-3   '>
             <div className='flex  flex-col gap-3 '>
@@ -159,13 +156,10 @@ const EditPlan=({setEditPlanStatus})=>{
                 <CustomText className={"!w-[100px] text-start"} value={"VIP Tick"}/>
                 <CustomRadio  value={true} options={[{label:"Yes",value:true},{label:"No",value:"false"}]}/>
             </div>
-           
-           
-
             </div>
             
        </div>
         </>
     )
 }
-export default EditPlan;
+export default CreatePlan;
