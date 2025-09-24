@@ -7,19 +7,24 @@ import { logout } from "../../feature/auth/authSlice";
 import verify from "../../assets/home/verify.png"
 import { getAllNotificationAsync, seenNotificationAsync } from "../../feature/notification/Notification";
 import Cookies from "js-cookie"
+import { useNavigate } from "react-router-dom";
 const AdminHeader = ({ setCollapsed, collapsed }) => {
   const {notification}=useSelector(state=>state?.notification);
   const {profile}=useSelector(state=>state?.profile);
- const token=Cookies.get("token")  
+ const token=Cookies.get("token") ;
+ const navigate=useNavigate() 
         const dispatch=useDispatch();
   const logoutHandler=()=>{
          dispatch(logout())
   }
-  const seenNotificationHandler=async(id)=>{
+  const seenNotificationHandler=async(item)=>{
     try {
-      const data={ntype:id}
+      const data={ntype:item?.id}
       const res=await dispatch(seenNotificationAsync({token,data})).unwrap();
      if(res.code==200 && res.status){
+      if(item?.ntype=="verify"){
+        navigate("/admin/kyc-request")
+      }
       dispatch(getAllNotificationAsync({token}))
      }
       
@@ -62,8 +67,10 @@ const AdminHeader = ({ setCollapsed, collapsed }) => {
                             <CustomText className={"md:!text-[14px] !text-[12px] font-[600] "} value={"Notification"} />
 
             {notification?.data?.map((item,idx)=>{
+              
+              
               return(
-                    <div onClick={()=>{seenNotificationHandler(item?.id)}} key={idx}  className={` ${item?.status=="active"?"bg-gray-300":"bg-[#FDCED5]"} flex flex-wrap gap-2 justify-start  items-start p-2 rounded-md`}>
+                    <div onClick={()=>{seenNotificationHandler(item)}} key={idx}  className={` ${item?.status=="active"?"bg-gray-300":"bg-[#FDCED5]"} flex flex-wrap gap-2 justify-start  items-start p-2 rounded-md cursor-pointer`}>
                           {item?.ntype=="verify"? <div className="!size-[24px]  "><Avatar className="!h-full !w-full object-cover " src={verify}/></div>:
                            <div className="rounded-full p-1"><BellOutlined style={{background:"yellsdow", color:"#fff",fontSize:"20px"}} /></div>
                            }

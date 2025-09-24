@@ -22,7 +22,7 @@ const AdminSidebar = ({ collapsed }) => {
       type: "group",
       label: "General",
       children: [
-       sidebar?.overview?.view && 
+     ( sidebar?.name!="Super Admin" || sidebar?.overview?.view ) && 
           {
           key: 0,
           path: "admin/home",
@@ -52,7 +52,7 @@ const AdminSidebar = ({ collapsed }) => {
             </Link>
           ),
       },
-        sidebar?.pricingplan?.view && {
+        ( sidebar?.name!="Super Admin" || sidebar?.pricingplan?.view )&& {
           key: 1,
           path: "admin/plan",
               icon: (
@@ -87,7 +87,7 @@ const AdminSidebar = ({ collapsed }) => {
       type: "group",
       label: "MAIN MENU",
       children: [
-        sidebar?.usermanagement?.view && {
+        ( sidebar?.name!="Super Admin" || sidebar?.usermanagement?.view ) && {
           key: 2,
           path: "admin/user",
           icon: (
@@ -117,7 +117,7 @@ const AdminSidebar = ({ collapsed }) => {
             </Link>
           ),
         },
-        sidebar?.kycrequest?.view && 
+        ( sidebar?.name!="Super Admin" || sidebar?.kycrequest?.view ) && 
           {
           key: 3,
           path: "admin/kyc",
@@ -146,7 +146,7 @@ const AdminSidebar = ({ collapsed }) => {
             </Link>
           ),
         },
-        sidebar?.rolemanagement?.view && {
+        ( sidebar?.name!="Super Admin" || sidebar?.rolemanagement?.view ) && {
           key: 4,
           path: "admin/role",
           icon: (
@@ -167,7 +167,7 @@ const AdminSidebar = ({ collapsed }) => {
             </Link>
           ),
         },
-        sidebar?.financialoversight?.view && {
+        ( sidebar?.name!="Super Admin" || sidebar?.financialoversight?.view ) && {
           key: 5,
           path: "admin/financial",
           icon: (
@@ -188,7 +188,7 @@ const AdminSidebar = ({ collapsed }) => {
             </Link>
           ),
         },
-        sidebar?.analytics?.view && {
+        ( sidebar?.name!="Super Admin" || sidebar?.analytics?.view ) && {
           key: 6,
           path: "admin/analytics",
           icon: (
@@ -210,7 +210,7 @@ const AdminSidebar = ({ collapsed }) => {
           ),
         
         },
-         sidebar?.analytics?.view && {
+          ( sidebar?.name!="Super Admin" || sidebar?.analytics?.view ) && {
           key: 7,
           path: "admin/logs",
           icon: (
