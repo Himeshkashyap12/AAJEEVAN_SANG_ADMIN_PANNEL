@@ -71,9 +71,7 @@ const WeeeklyActivity=({activeTab})=>{
     
      const  weeklyActivity=async()=>{    
               try{
-                  const res=await dispatch(getAllActiveUser({token,key:"weekly"})).unwrap();
-                  console.log(res)
-                  
+                  const res=await dispatch(getAllActiveUser({token,key:"weekly"})).unwrap();                  
               }catch(error){
              console.log(error);
              

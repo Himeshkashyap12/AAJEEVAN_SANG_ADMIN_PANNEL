@@ -12,9 +12,12 @@ import role from "../../assets/adminSidebar/role.png"
 import financial from "../../assets/adminSidebar/financial.png"
 import analytic from "../../assets/adminSidebar/analytic.png"
 import adminLog from "../../assets/adminSidebar/adminlog.png"
+import adminPlan from "../../assets/adminSidebar/plan.png"
 const AdminSidebar = ({ collapsed }) => {
   const [selectKey, setSelectKey] = useState(0);
   const {profile}=useSelector(state=>state?.profile);
+  console.log(profile);
+  
   const sidebar=profile?.data?.permission;  
   const navigate = useNavigate();
   const sidebarItems = [
@@ -22,10 +25,10 @@ const AdminSidebar = ({ collapsed }) => {
       type: "group",
       label: "General",
       children: [
-     ( sidebar?.name!="Super Admin" || sidebar?.overview?.view ) && 
+     (  sidebar?.overview?.view ) && 
           {
           key: 0,
-          path: "admin/home",
+          path: "/admin/home",
           icon: (
             <div
               className={`border rounded-md p-1 ${collapsed && "border-none"} ${
@@ -52,7 +55,7 @@ const AdminSidebar = ({ collapsed }) => {
             </Link>
           ),
       },
-        ( sidebar?.name!="Super Admin" || sidebar?.pricingplan?.view )&& {
+        ( sidebar?.pricingplan?.view )&& {
           key: 1,
           path: "admin/plan",
               icon: (
@@ -66,7 +69,7 @@ const AdminSidebar = ({ collapsed }) => {
                     className={selectKey != 1 && "grayscale"}
                     height={"16px"}
                     width={"16px"}
-                    src={home}
+                    src={adminPlan}
                   />
                 </div>
               ),
@@ -87,7 +90,7 @@ const AdminSidebar = ({ collapsed }) => {
       type: "group",
       label: "MAIN MENU",
       children: [
-        ( sidebar?.name!="Super Admin" || sidebar?.usermanagement?.view ) && {
+        ( sidebar?.usermanagement?.view ) && {
           key: 2,
           path: "admin/user",
           icon: (
@@ -117,7 +120,7 @@ const AdminSidebar = ({ collapsed }) => {
             </Link>
           ),
         },
-        ( sidebar?.name!="Super Admin" || sidebar?.kycrequest?.view ) && 
+        ( sidebar?.kycrequest?.view ) && 
           {
           key: 3,
           path: "admin/kyc",
@@ -146,7 +149,7 @@ const AdminSidebar = ({ collapsed }) => {
             </Link>
           ),
         },
-        ( sidebar?.name!="Super Admin" || sidebar?.rolemanagement?.view ) && {
+        ( sidebar?.rolemanagement?.view ) && {
           key: 4,
           path: "admin/role",
           icon: (
@@ -167,7 +170,7 @@ const AdminSidebar = ({ collapsed }) => {
             </Link>
           ),
         },
-        ( sidebar?.name!="Super Admin" || sidebar?.financialoversight?.view ) && {
+        (  sidebar?.financialoversight?.view ) && {
           key: 5,
           path: "admin/financial",
           icon: (
@@ -188,7 +191,7 @@ const AdminSidebar = ({ collapsed }) => {
             </Link>
           ),
         },
-        ( sidebar?.name!="Super Admin" || sidebar?.analytics?.view ) && {
+        (  sidebar?.analytics?.view ) && {
           key: 6,
           path: "admin/analytics",
           icon: (
@@ -210,7 +213,7 @@ const AdminSidebar = ({ collapsed }) => {
           ),
         
         },
-          ( sidebar?.name!="Super Admin" || sidebar?.analytics?.view ) && {
+          (  sidebar?.analytics?.view ) && {
           key: 7,
           path: "admin/logs",
           icon: (
@@ -245,9 +248,13 @@ const AdminSidebar = ({ collapsed }) => {
       navigate(selectedItem.path);
     }
   };
-  useEffect(() => {
-    navigate("/admin/home");
-  }, []);
+useEffect(() => {
+  const firstChild = sidebarItems[0]?.children?.find(Boolean); 
+  if (firstChild?.path) {
+    navigate(firstChild.path);
+    setSelectKey(firstChild?.key)
+  }
+}, []);
 
   return (
     <div className="admin-sidebar ">

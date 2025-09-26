@@ -14,8 +14,6 @@ import Documents from "./Documents";
 import BasicInformation from "./AdminBasicInformation";
 import AdminImages from "./AdminImages";
 const AdminUserDetails=({id})=>{
-  console.log(id);
-  
   const [key,setTabKeyHandler]=useState("1");
   const token=Cookies.get("token");
   const {isLoading}=useSelector(state=>state?.users)
@@ -44,7 +42,7 @@ const AdminUserDetails=({id})=>{
    {
     key: 5,
     label: <CustomText className={`${key=="5" ?"!text-[#F81B3E]":"text-[#000]"}`} value={"KYC Veification"}/>,
-    children:<Documents/>,
+    children:<Documents />,
   },
     {
     key: 6,

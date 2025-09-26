@@ -45,7 +45,6 @@ const options = {
                 const res=await dispatch(getFinancialgraph({token})).unwrap();  
                 if(res.status && res.code===200){
                   const data=res?.data?.yearchart?.map((item)=>item.revenue);
-                  console.log(data,"jbh");
                     setSeries([{data}])
                 }              
             }catch(error){
@@ -56,8 +55,7 @@ const options = {
         useEffect(()=>{
               getRevenueGraph();
           },[])
-console.log(series,"revenuegraph");
-        if(isLoading) return <Loader/>
+      if(isLoading) return <Loader/>
 
   return (
     <div className="border-1 border-[#E6E7E9] p-5 rounded-xl">
@@ -70,11 +68,11 @@ console.log(series,"revenuegraph");
         <CustomText className={"!text-[18px] !text-[#000] font-[400]"} value={`₹ ${ financialOversight?.data && financialOversight?.data[7]}`}/>
       </div>
       <div className="flex flex-col gap-2">
-        <CustomText className={"!text-[14px] !text-[#1818196B] font-[500]"} value={"Past 7 days"}/>
+        <CustomText className={"!text-[14px] !text-[#1818196B] font-[500]"} value={"Past 30 days"}/>
         <CustomText className={"!text-[18px] !text-[#000] font-[400]"} value={`₹ ${ financialOversight?.data && financialOversight?.data[30]}`}/>
       </div>
       <div className="flex flex-col gap-2">
-        <CustomText className={"!text-[14px] !text-[#1818196B] font-[500]"} value={"Past 7 days"}/>
+        <CustomText className={"!text-[14px] !text-[#1818196B] font-[500]"} value={"Total Revenue"}/>
         <CustomText className={"!text-[18px] !text-[#000] font-[400]"} value={`₹ ${ financialOversight?.data && financialOversight?.data?.totalRevenu}`}/>
       </div>
       </div>

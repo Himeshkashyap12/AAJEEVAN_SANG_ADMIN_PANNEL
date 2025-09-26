@@ -30,9 +30,7 @@ const AdminBlockUsers=({activeTab})=>{
           dispatch(getAllUserAsync({token,data,status:"block"}))
            toast.success(res.message)
 
-         }
-         console.log(res);
-         
+         }         
        } catch (error) {
          console.log(error);
          
@@ -114,9 +112,7 @@ const AdminBlockUsers=({activeTab})=>{
    const getAllUsers=async()=>{
         try{
             const data={page:pageNumber,filter:serachInput!="" && {search: serachInput}}
-            const res=await dispatch(getAllUserAsync({token,data,status:"block"})).unwrap();
-            console.log(res)
-            
+            const res=await dispatch(getAllUserAsync({token,data,status:"block"})).unwrap();            
         }catch(error){
     
         }

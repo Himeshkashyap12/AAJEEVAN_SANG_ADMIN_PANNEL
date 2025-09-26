@@ -18,9 +18,7 @@ const AdminRole=()=>{
     const token=Cookies.get("token");
     const [pageNumber,setPageNumber]=useState(1)
     const {role,isLoading}=useSelector(state=>state?.role);
-    const navigate=useNavigate();
-    console.log(role);
-    
+    const navigate=useNavigate();    
       const columns = [
      {
       title: <TableHeaderText className={"font-semibold "} value={"UID"} />,

@@ -14,27 +14,6 @@ const AdminLog=()=>{
     const token=Cookies.get("token")
     const {adminLogs,isLoading}=useSelector(state=>state?.adminLog);
      const [pageNumber,setPageNumber]=useState(1);
-    
-    console.log(adminLogs);
-
-//     createdon
-// : 
-// "4:50 pm, 17/09/2025"
-// id
-
-// image
-
-// kycststus
-
-// name
-
-// phone
-
-// status
-
-// uid
-
-
      const columns = [
      {
       title: <TableHeaderText className={"font-semibold "} value={"UID"} />,
@@ -45,7 +24,7 @@ const AdminLog=()=>{
       render: (_,record) => <CustomText   value={record?.uid} />,
      },
       {
-      title: <TableHeaderText className={"font-semibold "} value={"Name"} />,
+      title: <TableHeaderText className={"font-semibold "} value={"Email"} />,
       dataIndex: "name",
       key: "name",
       width:50,
@@ -93,7 +72,6 @@ const AdminLog=()=>{
     useEffect(()=>{
         getAdminLog()
     },[pageNumber])
-    console.log(pageNumber);
     if(isLoading) return <Loader/>
     return(
         <div className="flex flex-col gap-5">

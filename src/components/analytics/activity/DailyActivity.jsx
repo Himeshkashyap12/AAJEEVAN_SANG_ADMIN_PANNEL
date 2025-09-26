@@ -71,12 +71,9 @@ const DailyActivity=({activeTab})=>{
     
      const dailyActivity=async()=>{    
               try{
-                  const res=await dispatch(getAllActiveUser({token,key:"daily"})).unwrap();
-                  console.log(res)
-                  
+                  const res=await dispatch(getAllActiveUser({token,key:"daily"})).unwrap();                  
               }catch(error){
              console.log(error);
-             
               }
           
           }

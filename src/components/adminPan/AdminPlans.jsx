@@ -35,7 +35,7 @@ const AdminPlan=()=>{
 
         </div>
         <div>
-        <Row gutter={[20,20]}>
+        {/* <Row gutter={[20,20]}>
         <Col span={4}>
             <div onClick={()=>{navigate("/admin/create-plan")}} className="flex items-center justify-between  bg-[#DBEADC] px-5 py-5 rounded-xl ">
              <CustomText value={"Edit Basic plan"}/>
@@ -67,7 +67,7 @@ const AdminPlan=()=>{
              <Avatar  src={admiPlanEditImage}/>
             </div>
         </Col>
-        </Row>
+        </Row> */}
 
 
         <Row gutter={[20,20]} className="pt-7">
@@ -102,11 +102,11 @@ const AdminPlan=()=>{
                 </>
             )
            })}
-           <Col span={6}>
+           {/* <Col span={6}>
              <div  onClick={()=>{navigate("/admin/create-plan")}} className="!w-full !h-full flex justify-center items-center shadow-2xl rounded-xl">
                 <PlusOutlined style={{fontSize:"40px"}} />
              </div>
-           </Col>
+           </Col> */}
         </Row>
         </div>
         </div>

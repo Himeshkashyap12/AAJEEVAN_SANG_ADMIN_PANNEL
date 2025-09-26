@@ -10,10 +10,7 @@ import AdminKycRequestStatus from "./AdminKycRequestStatus";
 const AdminKycRequestDetails=()=>{
     const {id}=useParams();
     const {kycRequest,isLoading}=useSelector(state=>state.kyc);
-    const kycDetails=kycRequest?.data?.filter((item)=>item?.id==id);
-    console.log(kycDetails);
-    
-  
+    const kycDetails=kycRequest?.data?.filter((item)=>item?.id==id);    
     
     return(
         <>

@@ -80,11 +80,9 @@ const CreateRole = () => {
   { label: "Pricing Plan", value: "pricingplan" },
   { label: "User Management", value: "usermanagement" },
   { label: "KYC Request", value: "kycrequest" },
-  { label: "Role Management", value: "rolemanagement" },
   { label: "Financial Oversight", value: "financialoversight" },
   { label: "Analytics", value: "analytics" },
   { label: "Admin Logs", value: "adminlogs" },
-  { label: "Notification", value: "notification" }
   ]
 
   const roleInputHandler = (e,item) => {
@@ -104,9 +102,7 @@ const CreateRole = () => {
     if(roleInput?.name=="" || roleInput?.email=="" || roleInput?.password=="" || roleInput?.confirmpassword=="" || roleInput?.role=="" ) return toast.error("Please fill all required field")
 
     try {
-        const res=await dispatch(createRoleAsync({token,data:roleInput})).unwrap();
-        console.log(res);
-        if(res.code==200 && res.status){
+        const res=await dispatch(createRoleAsync({token,data:roleInput})).unwrap();        if(res.code==200 && res.status){
             toast.success("Role created successfully");
             setRoleInput({
                   name: "",

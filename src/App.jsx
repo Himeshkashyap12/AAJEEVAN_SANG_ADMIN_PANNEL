@@ -2,36 +2,40 @@
 
 import { Route, Routes } from 'react-router-dom'
 import AdminLayout from './layout/AdminLayout'
-
 import { ToastContainer } from 'react-toastify'
-import AdminLoginPage from './pages/AdminLoaginPage'
-import UserManagement from './components/usermanagement/UserManagement'
-import AdminProtected from './protected/AdminProtected'
-import AdmiKycRequestPage from './pages/AdminKycRequestPage'
-import AdminUserDetailsPage from './pages/AdminUserDetailsPage'
-import AdminKycRequestDetails from './components/kycRequest/AdminKycRequestDetails'
-import AdminOverViewPage from './pages/AdminOverviewPage'
-import AdminPlanPage from "./pages/AdminPlanPage"
-import AdminRolePage from './pages/AdminRolePages'
-import AdminFinancialOversightPage from './pages/AdminFinancialSightPage'
-import AdminAnalyticsPage from './pages/AdminAnalyticsPage'
-import AdminLogPage from './pages/AdminLogPage'
-import CreateRolePage from './pages/CreateRolePage'
-import AnalyticsActivityPage from './pages/AnalyticsActivityPage'
-import TireWiseSubscriptionPage from './pages/TireWiseSubscriptionPage'
-import CreatePlanPage from './pages/CreatePlanPage'
+import { lazy, Suspense } from 'react'
+import Loader from './components/loader/Loader'
+const AdminLoginPage = lazy(() => import("./pages/AdminLoaginPage"))
+const UserManagement = lazy(() => import("./components/usermanagement/UserManagement"))
+const AdminProtected = lazy(() => import("./protected/AdminProtected"))
+const AdmiKycRequestPage = lazy(() => import("./pages/AdminKycRequestPage"))
+const AdminUserDetailsPage = lazy(() => import("./pages/AdminUserDetailsPage"))
+const AdminKycRequestDetails = lazy(() => import("./components/kycRequest/AdminKycRequestDetails"))
+const AdminOverViewPage = lazy(() => import("./pages/AdminOverviewPage"))
+const AdminPlanPage = lazy(() => import("./pages/AdminPlanPage"))
+const AdminRolePage = lazy(() => import("./pages/AdminRolePages"))
+const AdminFinancialOversightPage = lazy(() => import("./pages/AdminFinancialSightPage"))
+const AdminAnalyticsPage = lazy(() => import("./pages/AdminAnalyticsPage"))
+const AdminLogPage = lazy(() => import("./pages/AdminLogPage"))
+const CreateRolePage = lazy(() => import("./pages/CreateRolePage"))
+const AnalyticsActivityPage = lazy(() => import("./pages/AnalyticsActivityPage"))
+const TireWiseSubscriptionPage = lazy(() => import("./pages/TireWiseSubscriptionPage"))
+const CreatePlanPage = lazy(() => import("./pages/CreatePlanPage"))
+const AdminUserReportedDetailsPage = lazy(() => import("./pages/AdminUserReportedDetailsPage"))
 
 
 function App() {
   return (
     <>
           <ToastContainer />
+          <Suspense fallback={<Loader/>}>
      <Routes >
      <Route path="/login" element={<AdminLoginPage />} />
       <Route path="/" element={<AdminProtected><AdminLayout /></AdminProtected>}  >
         <Route path="/admin/home" element={<AdminOverViewPage />} />
         <Route path="/admin/user" element={<UserManagement />} />
-        <Route path='/admin/user-details/:id' element={<     AdminUserDetailsPage/>}/>
+        <Route path="/admin/reported-user/:id" element={<AdminUserReportedDetailsPage />} />
+        <Route path='/admin/user-details/:id' element={<AdminUserDetailsPage/>}/>
         <Route path='/admin/kyc-request' element={<AdmiKycRequestPage/>}/>
         <Route path='/admin/kyc-request-details/:id' element={<AdminKycRequestDetails/>}/>
         <Route path='/admin/plan' element={<AdminPlanPage/>}/>
@@ -45,6 +49,7 @@ function App() {
         <Route path='/admin/logs' element={<AdminLogPage/>}/>
       </Route>
     </Routes>
+    </Suspense>
     </>
   )
 }

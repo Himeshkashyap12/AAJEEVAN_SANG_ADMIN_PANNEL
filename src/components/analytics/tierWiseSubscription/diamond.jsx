@@ -7,9 +7,11 @@ import TableHeaderText from "../../common/TableHeaderText";
 import { Avatar } from "antd";
 import CustomTable from "../../common/CustomTable";
 import Loader from "../../loader/Loader";
+import CustomPagination from "../../common/CustomPagination";
 const DiamondPlan = ({ activeTab }) => {
   const dispatch = useDispatch();
   const token = Cookies.get("token");
+  const [pageNumber,setPageNumber]=useState(1)
   const { activeUser, isLoading } = useSelector((state) => state?.analytics);
   const coloumn = [
     {
@@ -83,7 +85,6 @@ const DiamondPlan = ({ activeTab }) => {
       const res = await dispatch(
         getAllActiveUser({ token, key: "diamond" })
       ).unwrap();
-      console.log(res);
     } catch (error) {
       console.log(error);
     }
@@ -102,6 +103,9 @@ const DiamondPlan = ({ activeTab }) => {
         columns={coloumn}
         dataSource={activeUser?.data}
       />
+       <div className="flex  !justify-center ">
+      <CustomPagination  total={activeUser?.totalpage} onchange={(e)=>setPageNumber(e)} pageNumber={pageNumber}/>
+      </div>
     </>
   );
 };

@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 import CustomText from "../../common/CustomText";
 import CustomUserData from "../../common/CustomUserData";
 import AdminKycRequestStatus from "../../kycRequest/AdminKycRequestStatus";
-const Documents = () => {
+const Documents = ({id}) => {
   const { userDetails, isLoading } = useSelector((state) => state?.users);
   const document = userDetails?.data;
   return (
@@ -34,9 +34,6 @@ const Documents = () => {
           <Col xxl={12} xl={12} md={12} sm={24} xs={24}>
             <div className="flex flex-col gap-10 justify-start">
               {document?.documentverify?.map((item) => {
-                console.log(item,"kyc");
-                console.log(document,"document");
-                
                 return (
                   <>
                     <div className="flex justify-between items-center">
@@ -75,7 +72,10 @@ const Documents = () => {
                       
                     </Row>
                      <div  className="flex justify-start">
-                    <AdminKycRequestStatus type={item?.name} id={document?.id}/>
+                   {item?.status=="requested" ? <AdminKycRequestStatus  type={item?.name} id={document?.id}/>:<CustomUserData
+                        label={"Status"}
+                        value={item?.status}
+                      />}
                     </div>
                    
                   </>

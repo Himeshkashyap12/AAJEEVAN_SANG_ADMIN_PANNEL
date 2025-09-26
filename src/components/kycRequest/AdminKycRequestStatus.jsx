@@ -8,6 +8,7 @@ import { toast } from "react-toastify";
 import Loader from "../loader/Loader";
 import { Input } from "antd";
 import TextArea from "antd/es/input/TextArea";
+import { getAllUserDetailsAsync } from "../../feature/userManagement/userManagementSlice";
 const AdminKycRequestStatus=({id,type})=>{
     const [kycRequestModel,setKycRequestModel]=useState(false);
     const [status,setStatus]=useState("");
@@ -17,9 +18,6 @@ const AdminKycRequestStatus=({id,type})=>{
     const [remark,setRemark]=useState("")
 
     const kycRequesthandler=async()=>{
-     
-        
-        
           try {
                if(status=="reject" && !remark)   return;          
             
@@ -27,12 +25,11 @@ const AdminKycRequestStatus=({id,type})=>{
             const res= await dispatch(updateKycRequestAsync({token,data,id})).unwrap();
             if(res.code==200 && res.status){
                 toast.success(res.message)
-                dispatch(getAllKycRequestAsync({token,page:1}));
+                dispatch(getAllUserDetailsAsync({token,id}));
                 setKycRequestModel(false)
                 setRemark("")
                 
             }
-            console.log(res);
           } catch (error) {
             console.log(error);
 

@@ -1,15 +1,17 @@
 import { useDispatch, useSelector } from "react-redux";
 import { getAllActiveUser } from "../../../feature/analytics/analyticSlice";
 import Cookies from "js-cookie";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import CustomText from "../../common/CustomText";
 import TableHeaderText from "../../common/TableHeaderText";
 import { Avatar } from "antd";
 import CustomTable from "../../common/CustomTable";
 import Loader from "../../loader/Loader";
+import CustomPagination from "../../common/CustomPagination";
 const BasicPlan=({activeTab})=>{
      const dispatch=useDispatch();
     const token=Cookies.get("token");
+    const [pageNumber,setPageNumber]=useState(1)
     const {activeUser,isLoading}=useSelector(state=>state?.analytics);
      const coloumn=[
         
@@ -61,9 +63,7 @@ const BasicPlan=({activeTab})=>{
     ]
      const basicPlan=async()=>{    
                   try{
-                      const res=await dispatch(getAllActiveUser({token,key:"free"})).unwrap();
-                      console.log(res)
-                      
+                      const res=await dispatch(getAllActiveUser({token,key:"free"})).unwrap();                      
                   }catch(error){
                  console.log(error);
                  
@@ -86,6 +86,9 @@ const BasicPlan=({activeTab})=>{
        dataSource={activeUser?.data }
 
       />
+      <div className="flex  !justify-center ">
+      <CustomPagination  total={activeUser?.totalpage} onchange={(e)=>setPageNumber(e)} pageNumber={pageNumber}/>
+      </div>
         </>
     )
 }

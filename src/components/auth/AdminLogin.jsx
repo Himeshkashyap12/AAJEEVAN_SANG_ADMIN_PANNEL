@@ -37,9 +37,7 @@ const AdminLogin = () => {
         } catch (error) {
           console.log(error);
             
-        }
-    console.log(loginInput,"login");
-    
+        }    
     }
 
     if(isLoading) return <Loader/>

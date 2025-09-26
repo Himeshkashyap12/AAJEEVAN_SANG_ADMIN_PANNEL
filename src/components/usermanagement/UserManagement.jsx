@@ -6,6 +6,9 @@ import { getAllUserAsync } from "../../feature/userManagement/userManagementSlic
 import AdminAllUsers from "./AdminAllUsers";
 import AdminBlockUsers from "./AdminBlockUsers";
 import CustomTabs from "../common/CustomTabs.jsx"
+import AdminReportedUsers from "./AdminReportedUser.jsx";
+import AdminInActiveUser from "./AdminInActiveUser.jsx";
+import AdmiDeletedUser from "./AdminDeletedUser.jsx";
 const UserManagement=()=>{
    const [key,setKey]=useState("1");    
 
@@ -17,8 +20,23 @@ const UserManagement=()=>{
         },
         {
           key: '2',
-          label: <CustomText className={key==2 && "!text-[#F81B3E]"} value={"Block User"} />,
+          label: <CustomText className={key==2 && "!text-[#F81B3E]"} value={"Block Users"} />,
           children:  <AdminBlockUsers  activeTab={key === "2"}/>,
+        },
+        {
+          key: '3',
+          label: <CustomText className={key==3 && "!text-[#F81B3E]"} value={"Reported Users"} />,
+          children:  <AdminReportedUsers activeTab={key === "3"}/>,
+        },
+        {
+          key: '4',
+          label: <CustomText className={key==4 && "!text-[#F81B3E]"} value={"In Active  Users"} />,
+          children:  <AdminInActiveUser activeTab={key === "4"}/>,
+        },
+        {
+          key: '5',
+          label: <CustomText className={key==5 && "!text-[#F81B3E]"} value={"Deleted Users"} />,
+          children:  <AdmiDeletedUser activeTab={key === "5"}/>,
         },
       ];
         const setTabKeyHandler=(key)=>{

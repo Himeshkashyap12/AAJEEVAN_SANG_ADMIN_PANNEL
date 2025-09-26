@@ -3,6 +3,8 @@ import api from "../../axios/axios";
 const initialState = {
   users:[],
   userDetails:[],  
+  reportedUser:[],
+  reportedDetailsData:[],
   isLoading: false,
   error: null,
 };
@@ -59,6 +61,57 @@ export const blockUserAsync = createAsyncThunk(
   }
 );
 
+export const ReportedUserAsync = createAsyncThunk(
+  "users/reportedUser",
+ async ({token}) => {
+        try {
+      const res = await api.get(`/report/all`,{
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${token}`,
+        }
+      });
+      
+      return res.data; 
+    } catch (error) {
+      throw error;
+    }
+  }
+);
+export const ReportedUserDetailsAsync = createAsyncThunk(
+  "users/reportedUserDetails",
+ async ({token,id}) => {
+        try {
+      const res = await api.get(`/report/${id}`,{
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${token}`,
+        }
+      });
+      
+      return res.data; 
+    } catch (error) {
+      throw error;
+    }
+  }
+);
+  export const UpdateReportedUserDetailsAsync = createAsyncThunk(
+  "users/UpdatereportedUser",
+ async ({token,id,data}) => {
+        try {
+      const res = await api.put(`/report/${id}/status`,data,{
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${token}`,
+        }
+      });
+      
+      return res.data; 
+    } catch (error) {
+      throw error;
+    }
+  }
+);
 export const userSlice = createSlice({
   name: "users",
   initialState,
@@ -99,6 +152,38 @@ export const userSlice = createSlice({
       state.error = action;
     });
    
+    builder.addCase(ReportedUserAsync.pending, (state) => {
+      state.isLoading = true;
+    });
+    builder.addCase(ReportedUserAsync.fulfilled, (state, action) => {                
+      state.isLoading = false;
+      state.reportedUser=action.payload;
+    });
+    builder.addCase(ReportedUserAsync.rejected, (state, action) => {
+      state.isLoading = false;
+      state.error = action;
+    });
+    builder.addCase(ReportedUserDetailsAsync.pending, (state) => {
+      state.isLoading = true;
+    });
+    builder.addCase(ReportedUserDetailsAsync.fulfilled, (state, action) => {                
+      state.isLoading = false;
+      state.reportedDetailsData=action.payload;
+    });
+    builder.addCase(ReportedUserDetailsAsync.rejected, (state, action) => {
+      state.isLoading = false;
+      state.error = action;
+    });
+     builder.addCase(UpdateReportedUserDetailsAsync.pending, (state) => {
+      state.isLoading = true;
+    });
+    builder.addCase(UpdateReportedUserDetailsAsync.fulfilled, (state, action) => {                
+      state.isLoading = false;
+    });
+    builder.addCase(UpdateReportedUserDetailsAsync.rejected, (state, action) => {
+      state.isLoading = false;
+      state.error = action;
+    });
    
    
   },

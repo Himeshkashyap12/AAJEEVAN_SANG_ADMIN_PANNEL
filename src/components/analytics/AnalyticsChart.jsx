@@ -56,9 +56,7 @@ const options = {
         useEffect(()=>{
               getRevenueGraph();
           },[])
-console.log(series,"revenuegraph");
-        if(isLoading) return <Loader/>
-
+      if(isLoading) return <Loader/>
   return (
     <div className="border-1 border-[#E6E7E9] p-5 rounded-xl">
       <div className="flex justify-start">

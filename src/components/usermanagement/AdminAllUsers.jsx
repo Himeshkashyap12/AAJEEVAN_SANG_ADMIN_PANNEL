@@ -27,10 +27,9 @@ const AdminAllUsers=({activeTab})=>{
       if(res.status && res.code==200){
         toast.success(res.message)
        dispatch(getAllUserAsync({token,data,status:"all"}))
-      }
-      console.log(res);
-      
+      }      
     } catch (error) {
+      console.log(error);
       
     }
    }
@@ -118,9 +117,7 @@ const AdminAllUsers=({activeTab})=>{
   const getAllUsers=async()=>{    
       try{
           const data={page:pageNumber,filter:{search:serachInput}}
-          const res=await dispatch(getAllUserAsync({token,data,status:"all"})).unwrap();
-          console.log(res)
-          
+          const res=await dispatch(getAllUserAsync({token,data,status:"all"})).unwrap();          
       }catch(error){
   
       }

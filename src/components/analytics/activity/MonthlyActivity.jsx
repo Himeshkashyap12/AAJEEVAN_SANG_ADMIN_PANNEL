@@ -72,9 +72,7 @@ const MonthlyActivity=({activeTab})=>{
     
      const monthlyActivity=async()=>{    
               try{
-                  const res=await dispatch(getAllActiveUser({token,key:"monthly"})).unwrap();
-                  console.log(res)
-                  
+                  const res=await dispatch(getAllActiveUser({token,key:"monthly"})).unwrap();                  
               }catch(error){
              console.log(error);
              

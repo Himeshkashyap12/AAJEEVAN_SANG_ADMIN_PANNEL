@@ -5,7 +5,6 @@ import TableHeaderText from "../common/TableHeaderText.jsx";
 import { useDispatch, useSelector } from "react-redux";
 import Cookies from "js-cookie"
 import { useEffect } from "react";
-import Loader from "../loader/Loader.jsx";
 import { getAllAnalyticsAsync } from "../../feature/analytics/analyticSlice.js";
 import { useNavigate } from "react-router-dom";
 import AnalyticsChart from "./AnalyticsChart.jsx";
@@ -40,7 +39,8 @@ const AdminAnalytics=()=>{
       key: "timespent",
       width: 50,
       align: "center",
-      render: (_,record) => <CustomText  value={`${record?.timespent} min`} />,
+      render: (_,record) => <CustomText  value={record?.timespent<=60?record?.timespent + " "+"min":Math.floor(record?.timespent/60)+"h" +" "+ (record?.timespent%60)+"min"} />,
+
 
     },
     ]
@@ -69,16 +69,15 @@ const AdminAnalytics=()=>{
       key: "timespent",
       width: 50,
       align: "center",
-      render: (_,record) => <CustomText  value={`${record?.timespent} min`} />,
+      render: (_,record) => <CustomText  value={record?.timespent<=60?record?.timespent + " "+"min":Math.floor(record?.timespent/60)+"h" +" "+ (record?.timespent%60)+"min"} />,
+
 
     },
     ]
 
       const getAnalytics=async()=>{    
           try{
-              const res=await dispatch(getAllAnalyticsAsync({token})).unwrap();
-              console.log(res)
-              
+              const res=await dispatch(getAllAnalyticsAsync({token})).unwrap();              
           }catch(error){
          console.log(error);
          

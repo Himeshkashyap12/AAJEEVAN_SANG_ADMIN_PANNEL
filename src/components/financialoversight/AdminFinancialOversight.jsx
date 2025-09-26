@@ -15,15 +15,11 @@ import FinancialChart from "./FinancialChart.jsx";
 import Loader from "../loader/Loader.jsx";
 const AdminFinancialOversight=()=>{
      const token=Cookies.get("token");
-     const {financialOversight,isLoading}=useSelector(state=>state?.financial);
-     console.log(financialOversight);
-     
+     const {financialOversight,isLoading}=useSelector(state=>state?.financial);     
     const dispatch=useDispatch();
       const getAllFinancialOversight=async()=>{    
           try{
-              const res=await dispatch(getAllFinancialRevenueAsync({token})).unwrap();
-              console.log(res)
-              
+              const res=await dispatch(getAllFinancialRevenueAsync({token})).unwrap();              
           }catch(error){
       
           }

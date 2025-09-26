@@ -12,7 +12,7 @@ createRoot(document.getElementById('root')).render(
     <BrowserRouter>
     <Provider store={store}>
        <ConfigProvider theme={{ token: { colorPrimary: '#F81B3E' } }}>
-    <App />
+       <App/>
     </ConfigProvider>
     </Provider>
     </BrowserRouter>

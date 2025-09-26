@@ -31,23 +31,14 @@ const CreatePlan=({setEditPlanStatus})=>{
                 setEditPlan({...planInput,features:[...planInput?.features,fetaure]});
                 setFeature("");
             }
-            const deleteFeatureHandler=(idx)=>{
-                console.log(idx);
-                
-                const data={...planInput};
-                console.log(data);
-                
+            const deleteFeatureHandler=(idx)=>{                
+                const data={...planInput};                
                 data?.features?.splice(idx,1);
-                setEditPlan({...planInput,features:data.features})
-                
-                
+                setEditPlan({...planInput,features:data.features})  
             }
 
 
     const planInputHandler=(e,status,idx)=>{
-        console.log(idx);
-
-        
        if(status=="days"){
             setEditPlan({
                      ...planInput,
@@ -72,9 +63,7 @@ const CreatePlan=({setEditPlanStatus})=>{
         {label:"Select days",value:"select days"}
     ]
 
-    const addDurationHandle=(status)=>{
-        console.log(status?.id);
-        
+    const addDurationHandle=(status)=>{        
         if(status.key=="add"){
            setEditPlan({...planInput,duration:[...planInput?.duration,{
                 days:null,
@@ -83,16 +72,10 @@ const CreatePlan=({setEditPlanStatus})=>{
                 free:false}]})
         }else{
             const data={...planInput}
-            console.log(data,"data1");
-            
             data.duration?.splice(status?.id,1);
-            console.log(data,"data1");
-
             setEditPlan(data)
         }
-    }
-    console.log(planInput);
-    
+    }    
     return(
         <>
        <div>

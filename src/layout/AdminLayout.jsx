@@ -71,8 +71,7 @@ const AdminLayout = () => {
           >
             <Outlet />
           </div>
-      <div className="flex justify-end pb-5 pe-5"><CustomText className={"text-[16px] font-[400] "} value={"Developed and managed by Celestialit verse pvt. ltd."}/></div>
-
+         <div className="flex justify-end pb-5 pe-5"><CustomText className={"text-[16px] font-[400] "} value={"Developed and managed by Celestial it verse pvt. ltd."}/></div>
         </Content>
 
       </Layout>

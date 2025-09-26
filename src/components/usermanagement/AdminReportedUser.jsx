@@ -3,7 +3,7 @@ import TableHeaderText from "../common/TableHeaderText";
 import { Avatar, Popover } from "antd";
 import CustomTable from "../common/CustomTable";
 import CustomSearch from "../common/CustomSearch";
-import { blockUserAsync, getAllUserAsync } from "../../feature/userManagement/userManagementSlice";
+import { blockUserAsync, getAllUserAsync, ReportedUserAsync } from "../../feature/userManagement/userManagementSlice";
 import Cookies from "js-cookie";
 import { useEffect, useState } from "react";
 import CustomText from "../common/CustomText";
@@ -13,32 +13,14 @@ import Loader from "../loader/Loader";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import CustomCard from "../common/CustomCard";
+import { isoToIST } from "../../constant/constant";
 const AdminReportedUsers=({activeTab})=>{
-  
      const [pageNumber,setPageNumber]=useState(1);
     const [serachInput,setSearchInput]=useState("");
-    const {users,isLoading}=useSelector(state=>state.users);
+    const {reportedUser,isLoading}=useSelector(state=>state.users);
     const token=Cookies.get("token");
     const dispatch=useDispatch();
     const navigate=useNavigate();
-      const blockUserHandler=async(id)=>{
-        
-       try {
-         const data={type:"active"}
-         const res=await dispatch(blockUserAsync({token,id,data})).unwrap();
-         if(res.status && res.code==200){
-          dispatch(getAllUserAsync({token,data,status:"block"}))
-           toast.success(res.message)
-
-         }
-         console.log(res);
-         
-       } catch (error) {
-         console.log(error);
-         
-       }
-  }
-
      const columns = [
     {
       title: <TableHeaderText className={"font-semibold "} value={"UID"} />,
@@ -46,15 +28,15 @@ const AdminReportedUsers=({activeTab})=>{
       key: "uid",
       width:100,
       align:"center",
-      render: (_,record) => <div className="cursor-pointer"  > <CustomText   value={record?.uid} /></div>,
+      render: (_,record) => <div className="cursor-pointer"  > <CustomText   value={record?.reportedUser?.uuid} /></div>,
     },
     {
-      title: <TableHeaderText className={"font-semibold"} value={"Profile Pic"} />,
-      dataIndex: "profilePic",
-      key: "profilePic",
+      title: <TableHeaderText className={"font-semibold"} value={"Reported User"} />,
+      dataIndex: "reportedUser",
+      key: "reportedUser",
       width:200,
-      align:"center",
-      render: (_,record) => <div onClick={()=>{navigate(`/admin/user-details/${record?.id}`)}} className="flex gap-2 items-center cursor-pointer" ><Avatar  size={30} src={record?.image}/><CustomText  value={record?.name} /></div>,
+      align:"start",
+      render: (_,record) => <div onClick={()=>{navigate(`/admin/reported-user/${record?._id}`)}} className="flex gap-2 items-center cursor-pointer" ><Avatar  size={30} src={record?.reportedUser?.image}/><CustomText  value={record?.reportedUser?.name} /></div>,
 
     },
     {
@@ -64,44 +46,49 @@ const AdminReportedUsers=({activeTab})=>{
       width:150,
       align:"center",
 
-      render: (_,record) =><div className="cursor-pointer"  > <CustomText  value={record?.phone} /></div>,
+      render: (_,record) =><div className="cursor-pointer"  > <CustomText  value={record?.reportedUser?.phone} /></div>,
 
     },
     {
-      title: <TableHeaderText className={"font-semibold"} value={"Blocked by"} />,
-      dataIndex: "blockedby",
-      key: "blockedby",
-      width:100,
-      align:"center",
+      title: <TableHeaderText className={"font-semibold"} value={"Reported by"} />,
+      dataIndex: "reportedBy",
+      key: "reportedBy",
+      width:200,
+      align:"start",
+      render: (_,record) => <div   className="flex gap-2 items-center cursor-pointer" ><Avatar  size={30} src={record?.reportedBy?.image}/><CustomText  value={record?.reportedBy?.name} /></div>,
 
-      render: (text) => <CustomText  value={text} />,
 
     },
     
       {
-      title: <TableHeaderText className={"font-semibold"} value={"Blocked At"} />,
-      dataIndex: "blockedon",
-      key: "blockedon",
+      title: <TableHeaderText className={"font-semibold"} value={"Reported  At"} />,
+      dataIndex: "createdAt",
+      key: "createdAt",
       width:150,
       align:"center",
 
-      render: (_,record) => <CustomText  value={record?.blockedon} />,
+      render: (_,record) => <CustomText  value={isoToIST(record?.createdAt)} />,
 
     },
-    
-   
+     {
+      title: <TableHeaderText className={"font-semibold"} value={"Status"} />,
+      dataIndex: "status",
+      key: "status",
+      width:150,
+      align:"center",
+      render: (_,record) => <CustomText className={record.status=="Resolved" && "!text-green-400" ||record.status=="Rejected" &&  "!text-red-400" || record.status=="Pending" &&  "!text-yellow-400"}  value={record?.status} />,
+    },
      {
       title: <TableHeaderText className={"font-semibold"} value={"Action"} />,
       dataIndex: "email",
       key: "email",
       width:100,
       align:"center",
-      render: (_,record) => {
+      render: (_,record) => {        
         return(
           <Popover content={<div className="flex flex-col gap-2 w-[100px]">
-           <div onClick={()=>{navigate(`/admin/user-details/${record?.id}`)}}  className="cursor-pointer" > <CustomText value={"View"}/></div>
-            <div className="cursor-pointer" onClick={()=>{blockUserHandler(record.id)}} ><CustomText value={"UnBlock"}/></div>
-            {/* <div className="cursor-pointer" ><CustomText value={`${record?.status==="SUSPENDED" ? "UnSuspend":"Suspend"}`}/></div> */}
+           <div onClick={()=>{navigate(`/admin/reported-user/${record?._id}`)}}  className="cursor-pointer" > <CustomText value={"View"}/></div>
+
           </div>}  trigger="click" placement="bottomLeft" >
                 {/* <EllipsisOutlined /> */}
                 <EllipsisOutlined />
@@ -109,19 +96,18 @@ const AdminReportedUsers=({activeTab})=>{
         )
       },
 
-    },
-  ];
-   const getAllReportedUser=async()=>{
-        try{
-            const data={page:pageNumber,filter:serachInput!="" && {search: serachInput}}
-            const res=await dispatch(getAllUserAsync({token,data,status:"block"})).unwrap();
-            console.log(res)
-            
-        }catch(error){
-    
-        }
-    
     }
+  ];
+ const getAllReportedUser=async(id)=>{
+        
+       try {
+         const res=await dispatch(ReportedUserAsync({token})).unwrap();         
+       } catch (error) {
+         console.log(error);
+         
+       }
+  }
+
     
     useEffect(()=>{
       if(activeTab){
@@ -129,26 +115,22 @@ const AdminReportedUsers=({activeTab})=>{
 
       }
 
-    },[dispatch,pageNumber,activeTab,serachInput]);
+    },[dispatch,pageNumber,activeTab]);
         if(isLoading  && serachInput=="") return <Loader/>;
 
     return(
         <div className="">
-            <div className="flex gap-2">
-            <CustomCard data={users?.totalpage} value={"Total Users"} />
+            <div className="flex gap-2 py-2">
+            <CustomCard data={reportedUser?.totalpage} value={"Total Users"} />
             </div>
-            <div className="flex flex-wrap gap-2 justify-between py-2">
-            <CustomSearch  value={serachInput} onchange={(e)=>{setSearchInput(e.target.value)}}/>  
-
             
-        </div>
         <CustomTable
         scroll={{x:1500}}
         columns={columns}
-        dataSource={users?.data}
+        dataSource={reportedUser?.data}
       />
       <CustomPagination
-        total={users?.totalpage}
+        total={reportedUser?.totalpage}
         onchange={(e)=>setPageNumber(e)}
         pageNumber={pageNumber}
        />
