@@ -24,6 +24,25 @@ export const logInAsyncHandler = createAsyncThunk(
     }
   }
 );
+export const changePasswordAsyncHandler = createAsyncThunk(
+  "auth/forget",
+ async ({data,token}) => {
+  console.log(token);
+  
+        try {
+      const res = await api.put("admin/password",data,{
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${token}`
+
+        }
+      });
+      return res.data; // No need for `await res.data`
+    } catch (error) {
+      throw error;
+    }
+  }
+);
 
 export const authSlice = createSlice({
   name: "auth",
@@ -50,6 +69,17 @@ export const authSlice = createSlice({
       });
     });
     builder.addCase(logInAsyncHandler.rejected, (state, action) => {
+      state.isLoading = false;
+      state.error = action;
+    });
+     builder.addCase(changePasswordAsyncHandler.pending, (state) => {
+      state.isLoading = true;
+    });
+    builder.addCase(changePasswordAsyncHandler.fulfilled, (state, action) => {      
+      state.isLoading = false;
+      state.isAuthenticated = true;
+    });
+    builder.addCase(changePasswordAsyncHandler.rejected, (state, action) => {
       state.isLoading = false;
       state.error = action;
     });

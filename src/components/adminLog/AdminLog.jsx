@@ -5,7 +5,6 @@ import { useEffect, useState } from "react";
 import CustomTable from "../common/CustomTable";
 import TableHeaderText from "../common/TableHeaderText";
 import CustomText from "../common/CustomText";
-import { Avatar } from "antd";
 import CustomPagination from "../common/CustomPagination";
 import Loader from "../loader/Loader";
 import CustomCard from "../common/CustomCard";
@@ -25,11 +24,11 @@ const AdminLog=()=>{
      },
       {
       title: <TableHeaderText className={"font-semibold "} value={"Email"} />,
-      dataIndex: "name",
-      key: "name",
+      dataIndex: "email",
+      key: "email",
       width:50,
       align:"start",
-      render: (_,record) =><CustomText  value={record?.name} />,
+      render: (_,record) =><CustomText  value={record?.email} />,
 
      },
      {
@@ -72,7 +71,7 @@ const AdminLog=()=>{
     useEffect(()=>{
         getAdminLog()
     },[pageNumber])
-    if(isLoading) return <Loader/>
+    if(isLoading ) return <Loader/>
     return(
         <div className="flex flex-col gap-5">
             
@@ -82,6 +81,7 @@ const AdminLog=()=>{
          <div className="flex gap-2">
             <CustomCard data={adminLogs?.totalpage} value={"Total Admin Logs"} />
             </div>
+            
           <CustomTable
             scroll={{x:900}}
             columns={columns}

@@ -23,6 +23,25 @@ export const getAllKycRequestAsync = createAsyncThunk(
     }
   }
 );
+export const getAllActionAsync = createAsyncThunk(
+  "kyc/allActionKyc",
+ async ({data,token,status}) => {
+        try {
+      const res = await api.get(`/admin/kyc/${status}`,{
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${token}`,
+        },
+        params:{
+          ...data
+        }
+      });
+      return res.data;
+    } catch (error) {
+      throw error;
+    }
+  }
+);
 export const updateKycRequestAsync = createAsyncThunk(
   "kyc/updateycRequest",
  async ({data,token,id}) => {
@@ -67,6 +86,18 @@ export const kycRequestSlice = createSlice({
       state.isLoading = false;
     });
     builder.addCase(updateKycRequestAsync.rejected, (state, action) => {
+      state.isLoading = false;
+      state.error = action;
+    });
+     builder.addCase(getAllActionAsync.pending, (state) => {
+      state.isLoading = true;
+    });
+    builder.addCase(getAllActionAsync.fulfilled, (state, action) => {                
+      state.isLoading = false;
+      state.kycRequest = action.payload;
+
+    });
+    builder.addCase(getAllActionAsync.rejected, (state, action) => {
       state.isLoading = false;
       state.error = action;
     }); 

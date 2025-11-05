@@ -5,6 +5,8 @@ import AdminLayout from './layout/AdminLayout'
 import { ToastContainer } from 'react-toastify'
 import { lazy, Suspense } from 'react'
 import Loader from './components/loader/Loader'
+import RoleDetailsPage from './pages/RoleDetailsPage'
+import AdminChangePasswordPage from './pages/AdminChangePasswordPage'
 const AdminLoginPage = lazy(() => import("./pages/AdminLoaginPage"))
 const UserManagement = lazy(() => import("./components/usermanagement/UserManagement"))
 const AdminProtected = lazy(() => import("./protected/AdminProtected"))
@@ -31,6 +33,7 @@ function App() {
           <Suspense fallback={<Loader/>}>
      <Routes >
      <Route path="/login" element={<AdminLoginPage />} />
+     <Route path="/change-password" element={<AdminChangePasswordPage />} />
       <Route path="/" element={<AdminProtected><AdminLayout /></AdminProtected>}  >
         <Route path="/admin/home" element={<AdminOverViewPage />} />
         <Route path="/admin/user" element={<UserManagement />} />
@@ -41,6 +44,7 @@ function App() {
         <Route path='/admin/plan' element={<AdminPlanPage/>}/>
         <Route path='/admin/create-plan' element={<CreatePlanPage/>}/>
         <Route path='/admin/role' element={<AdminRolePage/>}/>
+        <Route path='/admin/role-details/:id' element={<RoleDetailsPage/>}/>
         <Route path='/admin/create-role' element={<CreateRolePage/>}/>
         <Route path='/admin/financial' element={<AdminFinancialOversightPage/>}/>
         <Route path='/admin/analytics' element={<AdminAnalyticsPage/>}/>
@@ -55,3 +59,4 @@ function App() {
 }
 
 export default App
+

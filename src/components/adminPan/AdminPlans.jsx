@@ -74,8 +74,8 @@ const AdminPlan=()=>{
            {plan?.data?.map((items)=>{
             return(
                 <>
-                <Col span={6}>
-            <div className="shadow-2xl rounded-2xl p-10 h-[50vh]">
+                <Col xxl={6} xl={8} md={24} sm={24} xs={24}>
+            <div className="shadow-2xl rounded-2xl p-10 h-[500px]">
                 <div className="flex flex-col gap-[50px]">
                     <div className="flex flex-col gap-[10px] items-start">
                         <CustomText className={"!text-[30px] font-[600]"} value={items?.name=="Basic"?`${items?.name} (Free)`:items?.name}/>

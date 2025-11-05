@@ -2,15 +2,19 @@ import { useDispatch, useSelector } from "react-redux";
 import CustomSearch from "../../common/CustomSearch";
 import CustomTable from "../../common/CustomTable";
 import Cookies from "js-cookie"
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { getAllActiveUser } from "../../../feature/analytics/analyticSlice";
 import TableHeaderText from "../../common/TableHeaderText";
 import { Avatar } from "antd";
 import CustomText from "../../common/CustomText";
 import Loader from "../../loader/Loader";
+import CustomPagination from "../../common/CustomPagination";
+import CustomCard from "../../common/CustomCard";
 const WeeeklyActivity=({activeTab})=>{
     const dispatch=useDispatch();
-    const token=Cookies.get("token")
+    const token=Cookies.get("token");
+    const [pageNumber,setPageNumber]=useState(1);
+    const [searchInput,setSearchInput]=useState("")
     const {activeUser,isLoading}=useSelector(state=>state?.analytics);
     const coloumn=[
          {
@@ -69,9 +73,10 @@ const WeeeklyActivity=({activeTab})=>{
     },
     ]
     
-     const  weeklyActivity=async()=>{    
+     const  weeklyActivity=async()=>{   
               try{
-                  const res=await dispatch(getAllActiveUser({token,key:"weekly"})).unwrap();                  
+             const data={page:pageNumber,search:searchInput} 
+                  const res=await dispatch(getAllActiveUser({token,key:"weekly",data})).unwrap();                  
               }catch(error){
              console.log(error);
              
@@ -82,17 +87,27 @@ const WeeeklyActivity=({activeTab})=>{
           useEffect(()=>{
             if(activeTab)
                 weeklyActivity();
-            },[activeTab])
-      if(isLoading) return <Loader/>;
+            },[activeTab,pageNumber,searchInput])
+      if(isLoading && searchInput=="") return <Loader/>;
             
     return(
         <>
+        <div className="flex gap-2. py-2">
+            <CustomCard data={activeUser?.totalpage} value={"Weekly Active Users (W A U)"} />
+            </div>
+             <div className="flex justify-start py-2">
+              <CustomSearch  onchange={(e)=>{setSearchInput(e.target.value)}}/>
+            </div>
       <CustomTable 
        scroll={{ x: 400 }}
        columns={coloumn}
        dataSource={activeUser?.data }
 
       />
+
+      <div className="flex  !justify-center ">
+      <CustomPagination  total={activeUser?.totalpage} onchange={(e)=>setPageNumber(e)} pageNumber={pageNumber}/>
+      </div>
 
         </>
     )

@@ -36,7 +36,7 @@ const AdminOverview=()=>{
           <HomeCard heading={"Total Users"} background={"#F5E8F3"} data={dashboard?.data?.totalUser} value={<div><Image preview={false} width={20} height={20} src={activeSubscription}/></div>}/>
           </Col>
           <Col xxl={4} xl={4} lg={12} md={12} sm={12} xs={24}>
-          <HomeCard heading={"Active Users"} background={"#E8F5E9"} data={dashboard?.data?.activeUser} value={<div><PlusSquareFilled  style={{color:'#29CC6A',fontSize:"24px"}}/></div>}/>
+          <HomeCard heading={"Completed Users"} background={"#E8F5E9"} data={dashboard?.data?.activeUser} value={<div><PlusSquareFilled  style={{color:'#29CC6A',fontSize:"24px"}}/></div>}/>
           </Col>
            <Col xxl={4} xl={4} lg={12} md={12} sm={12} xs={24}>
           <HomeCard heading={"Deleted Users"} background={"#E1F5FD"} data={dashboard?.data?.deleteUser} value={<div><Image preview={false} width={20} height={20} src={activeSubscription}/></div>}/>
@@ -45,7 +45,7 @@ const AdminOverview=()=>{
           <HomeCard heading={"Blocked Users"} background={"#F5E8F3"} data={dashboard?.data?.blockUser} value={<div><Image preview={false} width={20} height={20} src={activeSubscription}/></div>}/>
           </Col>
           <Col xxl={4} xl={4} lg={12} md={12} sm={12} xs={24}>
-          <HomeCard heading={"Inactive Users"} background={"#E1F5FD"} data={dashboard?.data?.incativeUser} value={<div><Image preview={false} width={20} height={20} src={activeSubscription}/></div>}/>
+          <HomeCard heading={"Incompleted Users"} background={"#E1F5FD"} data={dashboard?.data?.incativeUser} value={<div><Image preview={false} width={20} height={20} src={activeSubscription}/></div>}/>
           </Col>
             
          

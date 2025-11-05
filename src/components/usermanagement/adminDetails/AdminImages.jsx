@@ -1,10 +1,17 @@
 import { Image } from "antd";
 import { useSelector } from "react-redux";
 import CustomText from "../../common/CustomText";
-
+import {CloseOutlined} from "@ant-design/icons"
+import CustomModal from "../../common/CustomModal";
+import DeleteImageModel from "./DeleteImageModel";
+import { useState } from "react";
 const AdminImages=()=>{
+  const [deleteImageModel,setDeleteImageModel]=useState(false);
+  const [imageIndex,setImageIndex]=useState(null);
     const {userDetails}=useSelector(state=>state?.users);
     const basicInformation=userDetails?.data;
+    console.log(basicInformation,"gffggf");
+    
     return(
          <div className="border-[1px] border-[#A2A1A833] rounded-md  p-2">
       <div className="flex gap-3 border-b-1 border-[#A2A1A833] pb-5">
@@ -26,17 +33,23 @@ const AdminImages=()=>{
             className={"text-[18px] font-[400]"}
             value={`UID : ${basicInformation?.uid}`}
           />
+            <CustomText
+            className={"text-[18px] font-[400]"}
+            value={`Profile Managed By : ${userDetails?.data?.pdetail?.ptype}`}
+          />
         </div>
       </div>
-        <div className="flex gap-2 py-2">
-        {userDetails?.data?.multiimage.map((item)=>{
+        <div className="flex gap-4 py-2">
+        {userDetails?.data?.multiimage.map((item,idx)=>{
             return(
-               <div >
-               <Image  src={item} className="rounded-md !h-[200px] w-full object-cover"/>
+               <div className="relative" >
+               <Image  src={item?.imageUrl??item} className="rounded-md !h-[200px] !w-[200px] object-cover"/>
+               <div onClick={()=>{setDeleteImageModel(true),setImageIndex(idx)}} className="absolute -top-2 -right-2 bg-[#ff2d55]  px-1 rounded-full"><CloseOutlined style={{color:"#fff",fontSize:"14px"}} /></div>
                </div> 
             )
         })}
         </div>
+        <CustomModal footer={false} setOpen={setDeleteImageModel} open={deleteImageModel} modalBody={<DeleteImageModel id={basicInformation?.id} setOpen={setDeleteImageModel} imageIndex={imageIndex}/>} />
         </div>
     )
 }

@@ -6,6 +6,8 @@ import { getAllUserAsync } from "../../feature/userManagement/userManagementSlic
 import AdminKycRequest from "./AdminKycRequest";
 import { getAllKycRequestAsync } from "../../feature/kycRequest/KycRequestSlice";
 import CustomTabs from "../common/CustomTabs"
+import ApprovedKycRequest from "./ApprovedKycRequest";
+import RejectedKycRequest from "./RejectedKycRequest";
 
 const KycManagement=()=>{
    const [key,setKey]=useState(1);    
@@ -17,8 +19,18 @@ const KycManagement=()=>{
      const tabItems = [
   {
     key: "1",
-    label: <CustomText className={key==1 && "!text-[#F81B3E]"}    value={"KYC Request"}/>,
+    label: <CustomText className={key==1 && "!text-[#F81B3E]"}    value={"Pending KYC Request"}/>,
     children: <AdminKycRequest  activeTab={key == "1"} />,
+  },
+  {
+    key: "2",
+    label: <CustomText className={key==2 && "!text-[#F81B3E]"}    value={"Approved KYC Request"}/>,
+    children: <ApprovedKycRequest  activeTab={key == "2"} />,
+  },
+  {
+    key: "3",
+    label: <CustomText className={key==3 && "!text-[#F81B3E]"}    value={"Rejected KYC Request"}/>,
+    children: <RejectedKycRequest  activeTab={key == "3"} />,
   },
  
 ]; 

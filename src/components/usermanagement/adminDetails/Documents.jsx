@@ -28,6 +28,10 @@ const Documents = ({id}) => {
               className={"text-[18px] font-[400]"}
               value={`UID : ${document?.uid}`}
             />
+             <CustomText
+                          className={"text-[18px] font-[400]"}
+                          value={`Profile Managed By : ${userDetails?.data?.pdetail?.ptype}`}
+                        />
           </div>
         </div>
         <Row>
@@ -45,6 +49,7 @@ const Documents = ({id}) => {
                         label={"Document number"}
                         value={item?.number}
                       />
+                       
                     </div>
                     <Row>
                       <Col span={12}>

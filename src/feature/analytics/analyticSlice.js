@@ -31,12 +31,15 @@ export const getAllAnalyticsAsync = createAsyncThunk(
 
 export const getAllActiveUser= createAsyncThunk(
   "analytics/activeUsers",
- async ({token,key}) => {
+ async ({token,key,data}) => {
         try {
       const res = await api.get(`/admin/analytics/${key}/logs`,{
         headers: {
           "Content-Type": "application/json",
           "Authorization": `Bearer ${token}`,
+        },
+        params:{
+          ...data
         }
       });
       return res.data; // No need for `await res.data`

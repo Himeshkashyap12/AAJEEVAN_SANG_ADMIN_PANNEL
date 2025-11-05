@@ -7,35 +7,38 @@ import CustomButton from "../common/CustomButton";
 import { useState } from "react";
 import Password from "antd/es/input/Password";
 import { useDispatch, useSelector } from "react-redux";
-import { logInAsyncHandler } from "../../feature/auth/authSlice";
+import {  changePasswordAsyncHandler, logInAsyncHandler } from "../../feature/auth/authSlice";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
+import Cookies from "js-cookie"
 import Loader from "../loader/Loader";
-const AdminLogin = () => {
+const ChangePassword = () => {
     const dispatch=useDispatch();
     const navigate=useNavigate();
+    const token=Cookies.get("token")
     const {isLoading}=useSelector(state=>state.auth)
-    const [loginInput,setLoginInput]=useState({
-        email:"",
-        password:""
+    const [forgetPassword,setForgetPassword]=useState({
+        password:"",
+        confirmpassword:""
     })
 
-    const loginInputHandler=(e)=>{
+    const forgetPassworInputdHandler=(e)=>{
         const {name,value}=e.target;
-        setLoginInput({...loginInput,[name]:value})
+        setForgetPassword({...forgetPassword,[name]:value})
 
     }
 
-    const loginHandler=async()=>{
+    const forgetPasswordHandler=async()=>{        
         try {
-            const data={...loginInput}
-            const res=await dispatch(logInAsyncHandler({data})).unwrap();
+            const data={...forgetPassword}
+            console.log(token);
+            
+            const res=await dispatch(changePasswordAsyncHandler({data,token})).unwrap();
             if(res.status && res.code==200){
                 toast.success(res.message);
                 navigate("/admin/home")
             }
         } catch (error) {
-          console.log(error);
               toast.error("You entered wrong credential") 
         }    
     }
@@ -44,40 +47,40 @@ const AdminLogin = () => {
   return (
     <div className="login">
       <Row>
-        <Col xxl={8} xl={12} lg={12} md={12} sm={24} xs={24}>
-          <div className="pt-[50px] px-[50px] relative h-[100vh]">
+        <Col span={24}>
+          <div className="pt-[50px] px-[50px] relative h-[100vh] w-[40%] mx-auto">
             <div className="flex flex-col gap-10 ">
               <Image className="!w-[300px]" src={logo} preview={false} />
               <CustomText
                 className={"!text-[40px] font-[600] !text-[#000]"}
-                value={"Login"}
+                value={"Change Password"}
               />
             </div>
             <div className="flex flex-col gap-10 pt-10">
               <div>
-                <CustomInput placeholder={"Enter Your Email"} name={"email"} value={loginInput?.email} onchange={(e)=>{loginInputHandler(e)}} className={"!py-[16px]"} label={"Username"} />
+                <CustomInput placeholder={"Enter Your Password"} name={"password"} value={forgetPassword?.password} onchange={(e)=>{forgetPassworInputdHandler(e)}} className={"!py-[16px]"} label={"Password"} />
               </div>
               <div>
-                <CustomInput placeholder={"Enter Your Password"} name={"password"} value={loginInput?.password} onchange={(e)=>{loginInputHandler(e)}} className={"!py-[16px]"} label={"Password"} />
+                <CustomInput placeholder={"Confirm Password"} name={"confirmpassword"} value={forgetPassword?.confirmpassword} onchange={(e)=>{forgetPassworInputdHandler(e)}} className={"!py-[16px]"} label={"confirm Password"} />
               </div>
               <div className=" py-[30px ]">
                 <CustomButton
                   className={"!bg-[#F81B3E] !py-[28px] !w-full !text-[#fff]"}
-                  value={"Login"}
-                  onclick={()=>{loginHandler()}}
+                  value={"Change Password"}
+                  onclick={()=>{forgetPasswordHandler()}}
                 />
               </div>
             </div>
+           
             <div className="absolute bottom-3  text-center hidden md:block ">
                 <CustomText className={""} value={"©2025–2026 All Rights Reserved. Aajeevansang® is a registered trademark."}/>
                 <CustomText className={"!text-[#3855B3]"} value={"Cookie Preferences, Privacy, and Terms"}/>
             </div>
-            <div className="flex justify-center pt-5 cursor-pointer" onClick={()=>{navigate("/forget-password")}} >
-            <CustomText className={"!text-[#3855B3] "} value={"Forget your Password ?"}/>
-            </div>
+            
+           
           </div>
         </Col>
-        <Col xxl={16} xl={12} lg={12} md={12} sm={24} xs={24}>
+        {/* <Col xxl={16} xl={12} lg={12} md={12} sm={24} xs={24}>
           <div className="bg-[#F81B3E] h-[100vh] relative hidden md:block">
             <div className="absolute bottom-0">
               <div className="flex flex-col gap-[50px]">
@@ -101,9 +104,9 @@ const AdminLogin = () => {
               </div>
             </div>
           </div>
-        </Col>
+        </Col> */}
       </Row>
     </div>
   );
 };
-export default AdminLogin;
+export default ChangePassword;

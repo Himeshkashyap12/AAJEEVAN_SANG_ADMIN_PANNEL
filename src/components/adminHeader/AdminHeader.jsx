@@ -4,33 +4,14 @@ import CustomText from "../common/CustomText";
 import profilePic from "../../assets/logo/logoAdmin.png"
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../../feature/auth/authSlice";
-import verify from "../../assets/home/verify.png"
-import { getAllNotificationAsync, seenNotificationAsync } from "../../feature/notification/Notification";
-import Cookies from "js-cookie"
+import AdminNotification from "../notification/AdminNotification";
 import { useNavigate } from "react-router-dom";
 const AdminHeader = ({ setCollapsed, collapsed }) => {
-  const {notification}=useSelector(state=>state?.notification);
   const {profile}=useSelector(state=>state?.profile);
- const token=Cookies.get("token") ;
- const navigate=useNavigate() 
-        const dispatch=useDispatch();
+  const dispatch=useDispatch();
+  const navigate=useNavigate()
   const logoutHandler=()=>{
          dispatch(logout())
-  }
-  const seenNotificationHandler=async(item)=>{
-    try {
-      const data={ntype:item?.id}
-      const res=await dispatch(seenNotificationAsync({token,data})).unwrap();
-     if(res.code==200 && res.status){
-      if(item?.ntype=="verify"){
-        navigate("/admin/kyc-request")
-      }
-      dispatch(getAllNotificationAsync({token}))
-     }
-      
-    } catch (error) {
-      
-    }
   }
   return (
     <div className={`flex justify-between bg-[#fff]   `}>
@@ -58,29 +39,11 @@ const AdminHeader = ({ setCollapsed, collapsed }) => {
         />
       </div>
 
-      <div className={`flex justify-end gap-5 items-center pe-5`}>
-        <div className="flex items-center gap-8">
+      <div className={`flex justify-end gap-5 items-center pe-5 `}>
+        <div className="flex items-center gap-8 cursor-pointer">
            <Popover
-         
           title={
-                   <div  className={`  rounded-xl w-[600px] flex flex-col gap-2`}>
-                            <CustomText className={"md:!text-[14px] !text-[12px] font-[600] "} value={"Notification"} />
-
-            {notification?.data?.map((item,idx)=>{
-              
-              
-              return(
-                    <div onClick={()=>{seenNotificationHandler(item)}} key={idx}  className={` ${item?.status=="active"?"bg-gray-300":"bg-[#FDCED5]"} flex flex-wrap gap-2 justify-start  items-start p-2 rounded-md cursor-pointer`}>
-                          {item?.ntype=="verify"? <div className="!size-[24px]  "><Avatar className="!h-full !w-full object-cover " src={verify}/></div>:
-                           <div className="rounded-full p-1"><BellOutlined style={{background:"yellsdow", color:"#fff",fontSize:"20px"}} /></div>
-                           }
-
-                            <div ><CustomText className={"md:!text-[14px] !text-[12px] font-[500]  "} value={item?.title} /></div>
-                    </div>
-              )
-            })}
-                </div>
-          
+                  <AdminNotification/>
           }
           placement="bottomRight"
           trigger="click"
@@ -107,6 +70,9 @@ const AdminHeader = ({ setCollapsed, collapsed }) => {
                 </div>
               <div onClick={()=>{logoutHandler()}} className="bg-[#F2F2F2] p-2 cursor-pointer ">
             <CustomText value={"Logout"} />
+            </div>
+            <div onClick={()=>{navigate("/change-password")}} className="bg-[#F2F2F2] p-2 cursor-pointer ">
+            <CustomText value={"Change Password"} />
             </div>
               </div>
             </div>

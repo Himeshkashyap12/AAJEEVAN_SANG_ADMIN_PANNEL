@@ -29,6 +29,10 @@ const SocialInformation=()=>{
             className={"text-[18px] font-[400]"}
             value={`UID : ${socialInformation?.uid}`}
           />
+          <CustomText
+            className={"text-[18px] font-[400]"}
+            value={`Profile Managed By : ${userDetails?.data?.pdetail?.ptype}`}
+          />
         </div>
       </div>
       <Row>

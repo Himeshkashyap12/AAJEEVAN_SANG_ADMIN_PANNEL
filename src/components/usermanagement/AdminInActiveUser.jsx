@@ -13,6 +13,8 @@ import Loader from "../loader/Loader";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import CustomCard from "../common/CustomCard";
+import CustomButton from "../common/CustomButton";
+import { getInactiveDataAsync } from "../../feature/role/roleSlice";
 const AdminInActiveUser=({activeTab})=>{
   
      const [pageNumber,setPageNumber]=useState(1);
@@ -61,6 +63,18 @@ const AdminInActiveUser=({activeTab})=>{
 
     
   ];
+
+
+  const downloadHandler=async()=>{
+    try {
+      const res=await dispatch(getInactiveDataAsync({token})).unwrap();
+      console.log(res);
+      
+      
+    } catch (error) {
+      
+    }
+  }
    const getAllInActiveUsers=async()=>{
         try{
             const data={page:pageNumber,filter:serachInput!="" && {search: serachInput}}
@@ -88,7 +102,7 @@ const AdminInActiveUser=({activeTab})=>{
             </div>
             <div className="flex flex-wrap gap-2 justify-between py-2">
             <CustomSearch  value={serachInput} onchange={(e)=>{setSearchInput(e.target.value)}}/>  
-
+            <CustomButton onclick={()=>{downloadHandler()}} className={"!bg-[red]"} value={"Download"}/>
             
         </div>
         <CustomTable

@@ -3,67 +3,34 @@ import CustomButton from "../common/CustomButton";
 import CustomInput from "../common/CustomInput";
 import CustomText from "../common/CustomText";
 import CustomSelect from "../common/CustomSelect";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Cookies from "js-cookie"
-import { createRoleAsync } from "../../feature/role/roleSlice";
+import { createRoleAsync, getAllRolebyIdAsync, updateRoleAsync } from "../../feature/role/roleSlice";
 import { toast } from "react-toastify";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import Loader from "../loader/Loader";
+import {  getChangedData } from "../../constant/constant";
 const CreateRole = () => {
+  const location=useLocation();
+  const id=location.state?.id;
+  const [editData,setEditData]=useState(null);
   const [roleInput, setRoleInput] = useState({
     name: "",
     email: "",
     password: "",
     confirmpassword: "",
     role: "Content Moderator",
-    permission: {
-      overview: {
-        edit: true,
-        delete: true,
-        view: false,
-      },
-      pricingplan: {
-        edit: true,
-        delete: true,
-        view: false,
-      },
-      usermanagement: {
-        edit: true,
-        delete: true,
-        view: false,
-      },
-      kycrequest: {
-        edit: true,
-        delete: true,
-        view: false,
-      },
-      rolemanagement: {
-        edit: true,
-        delete: true,
-        view: false,
-      },
-      financialoversight: {
-        edit: true,
-        delete: true,
-        view: false,
-      },
-      analytics: {
-        edit: true,
-        delete: true,
-        view: false,
-      },
-      adminlogs: {
-        edit: true,
-        delete: true,
-        view: false,
-      },
-      notification: {
-        edit: true,
-        delete: true,
-        view: false,
-      },
-    },
+    permission: [
+  { overview: { edit: true, delete: true, view: false } },
+  { pricingplan: { edit: true, delete: true, view: false } },
+  { usermanagement: { edit: true, delete: true, view: false } },
+  { kycrequest: { edit: true, delete: true, view: false } },
+  { rolemanagement: { edit: true, delete: true, view: false } },
+  { financialoversight: { edit: true, delete: true, view: false } },
+  { analytics: { edit: true, delete: true, view: false } },
+  { adminlogs: { edit: true, delete: true, view: false } },
+]
   });
   const dispatch=useDispatch();
   const token=Cookies.get("token");
@@ -75,54 +42,101 @@ const CreateRole = () => {
     { label: "User Support", value: "User Support" },
     { label: "Custom Role", value: "Custom Role" },
   ];
-  const moduleOption=[
-  { label: "Overview", value: "overview" },
-  { label: "Pricing Plan", value: "pricingplan" },
-  { label: "User Management", value: "usermanagement" },
-  { label: "KYC Request", value: "kycrequest" },
-  { label: "Financial Oversight", value: "financialoversight" },
-  { label: "Analytics", value: "analytics" },
-  { label: "Admin Logs", value: "adminlogs" },
-  ]
+ 
 
   const roleInputHandler = (e,item) => {
+  
+    
     if(!item){
         setRoleInput({...roleInput,[e.target.name]:e.target.value});
         
-    }else if(item=="role"){
-        setRoleInput({...roleInput,[item]:e});
-     
-        
-    }else{        
-        setRoleInput({...roleInput,permission:{...roleInput?.permission,[item?.value]:{...roleInput?.permission[item?.value],view:e.target.checked?true:false}}})
     }
+    else if(item=="role"){
+        setRoleInput({...roleInput,[item]:e}); 
+    }
+    else{
+    setRoleInput({
+          ...roleInput,
+          permission: roleInput.permission.map((perm) => {
+            if (perm[item]) {
+              return {
+                [item]: {
+                  ...perm[item],
+                  view: e.target.checked
+                }
+              };
+    }
+    return perm; 
+  })
+});
+    }
+
     
   };
   const roleSaveHandler=async()=>{
     if(roleInput?.name=="" || roleInput?.email=="" || roleInput?.password=="" || roleInput?.confirmpassword=="" || roleInput?.role=="" ) return toast.error("Please fill all required field")
+    if(!id && (roleInput?.password != roleInput?.confirmpassword)) return toast?.error("password and confirm passord not matched")
+   
+   if(!id){
+        try {
+                const res=await dispatch(createRoleAsync({token,data:roleInput})).unwrap();     
+                  if(res.code==200 && res.status){
+                    toast.success("Role created successfully");
+                    navigate("/admin/role")
+                }else{
+                    toast.error(res.message)
+                }    
+                } catch (error) {
+                    console.log(error);
+                    
+                }
+              }else{
 
+                try {
+                 
+                  
+                  const data=getChangedData({oldObj:editData,newObj:roleInput});
+                  
+                  
+                  const res=await dispatch(updateRoleAsync({token,data,id})).unwrap();     
+                              if(res.code==200 && res.status){
+                                toast.success("Role created successfully");
+                                navigate("/admin/role")
+                            }else{
+                                toast.error(res.message)
+                            }
+                  
+                } catch (error) {
+                  console.log(error);
+                }
+
+              }
+                
+                
+              }
+
+
+
+
+
+  const getDetailsById=async()=>{
     try {
-        const res=await dispatch(createRoleAsync({token,data:roleInput})).unwrap();        if(res.code==200 && res.status){
-            toast.success("Role created successfully");
-            setRoleInput({
-                  name: "",
-                    email: "",
-                    password: "",
-                    confirmpassword: "",
-            });
-            navigate("/admin/role")
-        }else{
-        toast.error(res.message)
-        }
-        
-
-        
+      const res=await dispatch(getAllRolebyIdAsync({token,id})).unwrap();
+      setRoleInput(res?.data);
+      setEditData(res?.data)
+      
+      
     } catch (error) {
-        console.log(error);
-        
+      console.log(error);
+      
     }
-    
   }
+  useEffect(()=>{
+    if(id){
+      getDetailsById()
+    }
+
+  },[])
   
   if(isLoading) return <Loader/>
   return (
@@ -157,6 +171,7 @@ const CreateRole = () => {
               <CustomText value={"Name"} />
               <CustomInput
                 name={"name"}
+                inputValue={roleInput?.name}
                 placeholder={"Enter Name"}
                 onchange={(e) => {
                   roleInputHandler(e);
@@ -170,6 +185,7 @@ const CreateRole = () => {
               <CustomText value={"Email"} />
               <CustomInput
                 name={"email"}
+                inputValue={roleInput?.email}
                 placeholder={"Enter Email "}
                 onchange={(e) => {
                   roleInputHandler(e);
@@ -185,6 +201,7 @@ const CreateRole = () => {
               <CustomText value={"Password"} />
               <CustomInput
                 name={"password"}
+                inputValue={roleInput?.password}
                 placeholder={"Enter Password "}
                 onchange={(e) => {
                   roleInputHandler(e);
@@ -198,6 +215,7 @@ const CreateRole = () => {
               <CustomText value={"Confirm Password"} />
               <CustomInput
                 name={"confirmpassword"}
+                inputValue={roleInput?.confirmpassword}
                 placeholder={"Enter Confirm Password "}
                 onchange={(e) => {
                   roleInputHandler(e);
@@ -235,13 +253,30 @@ const CreateRole = () => {
                 <CustomText value={"Module"} />
                 <CustomText value={"View"} />
               </div>
-              {moduleOption?.map((item)=>{
+              {roleInput?.permission?.map((item)=>{
                 return(
                     <div className="flex justify-between px-3 py-5  border-1 border-[#E2E4E9]">
-                        <CustomText value={item?.label}/>
-                         <Checkbox  onChange={(e)=>{roleInputHandler(e,item)}}>
+                      {Object.entries(item)?.map(([key,value])=>{
+                        console.log(key);
+                        
+                        return(
+                          <>
+                          <CustomText value={
+                            key=="overview" && "Overview" ||
+                            key=="pricingplan" && "Pricing Plan" ||
+                            key=="usermanagement" && "User Management" ||
+                            key=="kycrequest" && "Kyc Request" ||
+                            key=="rolemanagement" && "Role Management" ||
+                            key=="financialoversight" && "Financial Oversight" ||
+                            key=="analytics" && "Analytics" ||
+                            key=="adminlogs" && "Admin Logs" 
+                          }/>
+                         <Checkbox checked={value?.view} onChange={(e)=>{roleInputHandler(e,key)}}>
                          </Checkbox>
-                        </div>
+                         </>
+                        )
+                      })}
+                      </div>
                 )
               })}
             </div>

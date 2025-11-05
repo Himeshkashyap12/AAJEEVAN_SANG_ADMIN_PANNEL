@@ -8,10 +8,13 @@ import { Avatar } from "antd";
 import CustomTable from "../../common/CustomTable";
 import Loader from "../../loader/Loader";
 import CustomPagination from "../../common/CustomPagination";
+import CustomCard from "../../common/CustomCard";
+import CustomSearch from "../../common/CustomSearch";
 const SilverPlan = ({ activeTab }) => {
   const dispatch = useDispatch();
   const [pageNumber,setPageNumber]=useState(1)
   const token = Cookies.get("token");
+  const [searchInput,setSearchInput]=useState("")
   const { activeUser, isLoading } = useSelector((state) => state?.analytics);
   const coloumn = [
     {
@@ -82,8 +85,9 @@ const SilverPlan = ({ activeTab }) => {
   ];
   const getSilverPlan = async () => {
     try {
+      const data={page:pageNumber,search:searchInput}
       const res = await dispatch(
-        getAllActiveUser({ token, key: "sliver" })
+        getAllActiveUser({ token, key: "sliver" ,data})
       ).unwrap();
     } catch (error) {
       console.log(error);
@@ -94,10 +98,16 @@ const SilverPlan = ({ activeTab }) => {
     if (activeTab) {
       getSilverPlan();
     }
-  }, [activeTab]);
-  if (isLoading) return <Loader />;
+  }, [activeTab,pageNumber,searchInput]);
+  if (isLoading && searchInput=="") return <Loader />;
   return (
     <>
+         <div className="flex gap-2. py-2">
+            <CustomCard data={activeUser?.totalpage} value={"Silver Plan Users (S P U)"} />
+          </div>
+          <div className="flex justify-start py-2">
+              <CustomSearch  onchange={(e)=>{setSearchInput(e.target.value)}}/>
+            </div>
       <CustomTable
         scroll={{ x: 400 }}
         columns={coloumn}

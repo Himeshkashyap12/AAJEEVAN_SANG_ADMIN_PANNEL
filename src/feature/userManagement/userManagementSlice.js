@@ -43,6 +43,26 @@ export const getAllUserDetailsAsync = createAsyncThunk(
     }
   }
 );
+
+
+
+export const deleImageInUserAsync = createAsyncThunk(
+  "users/deleteUser",
+ async ({token,id,data}) => {
+        try {
+      const res = await api.put(`admin/user/${id}`,data,{
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${token}`,
+        }
+      });
+      
+      return res.data; 
+    } catch (error) {
+      throw error;
+    }
+  }
+);
 export const blockUserAsync = createAsyncThunk(
   "users/blockusers",
  async ({data,token,id}) => {
@@ -181,6 +201,17 @@ export const userSlice = createSlice({
       state.isLoading = false;
     });
     builder.addCase(UpdateReportedUserDetailsAsync.rejected, (state, action) => {
+      state.isLoading = false;
+      state.error = action;
+    });
+    
+     builder.addCase(deleImageInUserAsync.pending, (state) => {
+      state.isLoading = true;
+    });
+    builder.addCase(deleImageInUserAsync.fulfilled, (state, action) => {                
+      state.isLoading = false;
+    });
+    builder.addCase(deleImageInUserAsync.rejected, (state, action) => {
       state.isLoading = false;
       state.error = action;
     });

@@ -44,6 +44,24 @@ export const seenNotificationAsync = createAsyncThunk(
   }
 );
 
+export const clearNotificationAsync = createAsyncThunk(
+  "notification/clearNotification",
+ async ({token}) => {
+        try {
+      const res = await api.get(`admin/notification/clean`,{
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${token}`,
+        }
+      });
+      
+      return res.data; // No need for `await res.data`
+    } catch (error) {
+      throw error;
+    }
+  }
+);
+
 
 
 export const notificationSlice = createSlice({
@@ -71,6 +89,16 @@ export const notificationSlice = createSlice({
       state.isLoading = false;
     });
     builder.addCase(seenNotificationAsync.rejected, (state, action) => {
+      state.isLoading = false;
+      state.error = action;
+    }); 
+      builder.addCase(clearNotificationAsync.pending, (state) => {
+      state.isLoading = true;
+    });
+    builder.addCase(clearNotificationAsync.fulfilled, (state, action) => {                
+      state.isLoading = false;
+    });
+    builder.addCase(clearNotificationAsync.rejected, (state, action) => {
       state.isLoading = false;
       state.error = action;
     }); 

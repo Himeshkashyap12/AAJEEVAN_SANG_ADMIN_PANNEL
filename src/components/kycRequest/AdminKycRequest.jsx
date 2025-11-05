@@ -105,7 +105,7 @@ if(isLoading  && serachInput=="") return <Loader/>;
     return(
           <div className="">
              <div className="flex gap-2">
-            <CustomCard data={kycRequest?.totalpage} value={"Total Request"} />
+            <CustomCard data={kycRequest?.totalpage} value={"Total Pending Request"} />
             </div>
             <div className="flex flex-wrap gap-2 justify-between py-2">
             <CustomSearch  value={serachInput} onchange={(e)=>{setSearchInput(e.target.value)}} />  

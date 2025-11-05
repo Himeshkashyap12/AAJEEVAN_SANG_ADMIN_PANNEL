@@ -3,157 +3,210 @@ import TableHeaderText from "../common/TableHeaderText";
 import { Avatar, Popover } from "antd";
 import CustomTable from "../common/CustomTable";
 import CustomSearch from "../common/CustomSearch";
-import { blockUserAsync, getAllUserAsync } from "../../feature/userManagement/userManagementSlice";
+import {
+  blockUserAsync,
+  getAllUserAsync,
+} from "../../feature/userManagement/userManagementSlice";
 import Cookies from "js-cookie";
 import { useEffect, useState } from "react";
 import CustomText from "../common/CustomText";
 import CustomPagination from "../common/CustomPagination";
-import {EllipsisOutlined} from '@ant-design/icons';
+import { EllipsisOutlined } from "@ant-design/icons";
 import Loader from "../loader/Loader";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import CustomCard from "../common/CustomCard";
-const AdminAllUsers=({activeTab})=>{
-    const [pageNumber,setPageNumber]=useState(1);
-    const [serachInput,setSearchInput]=useState("");
-    const {users,isLoading}=useSelector(state=>state.users);
-    const token=Cookies.get("token");
-    const navigate=useNavigate();
-    const dispatch=useDispatch();
-   const blockUserHandler=async(id)=>{
+import CustomFiter from "../../../../AAPKA_APNA_GAME-main/src/components/common/CustomFilter";
+const AdminAllUsers = ({ activeTab  }) => {
+  const page=Cookies.get("page");
+  const [pageNumber, setPageNumber] = useState(page??1);
+  const [serachInput, setSearchInput] = useState("");
+  const [filterState,setFilterState]=useState("");
+  const { users, isLoading } = useSelector((state) => state.users);
+  const token = Cookies.get("token");
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  
+  const blockUserHandler = async (id) => {
     try {
-      const data={type:"block"}
-      const res=await dispatch(blockUserAsync({token,id,data})).unwrap();
-      if(res.status && res.code==200){
-        toast.success(res.message)
-       dispatch(getAllUserAsync({token,data,status:"all"}))
-      }      
+      const data = { type: "block" };
+      const res = await dispatch(blockUserAsync({ token, id, data })).unwrap();
+      if (res.status && res.code == 200) {
+        toast.success(res.message);
+        dispatch(getAllUserAsync({ token, data, status: "all" }));
+      }
     } catch (error) {
       console.log(error);
-      
     }
-   }
+  };
+  const pageHandler=(e)=>{
+      setPageNumber(e)
+      Cookies.set("page",e);
+  }
+  
 
-     const columns = [
+  const columns = [
     {
       title: <TableHeaderText className={"font-semibold "} value={"UID"} />,
       dataIndex: "uid",
       key: "uid",
-      width:100,
-      align:"center",
-      render: (_,record) => <div className="cursor-pointer"  > <CustomText   value={record?.uid} /></div>,
+      width: 100,
+      align: "center",
+      render: (_, record) => (
+        <div className="cursor-pointer">
+             <CustomText value={record?.uid} />
+        </div>
+      ),
     },
     {
-      title: <TableHeaderText className={"font-semibold"} value={"Profile Pic"} />,
+      title: (
+        <TableHeaderText className={"font-semibold"} value={"Profile Pic"} />
+      ),
       dataIndex: "profilePic",
       key: "profilePic",
-      width:200,
-      align:"center",
-      render: (_,record) => <div onClick={()=>{navigate(`/admin/user-details/${record?.id}`)}} className="flex gap-2 items-center cursor-pointer" ><Avatar  size={30} src={record?.image}/><CustomText  value={record?.name} /></div>,
-
+      width: 200,
+      align: "center",
+      render: (_, record) => (
+        <div
+          onClick={() => {
+            navigate(`/admin/user-details/${record?.id}`);
+          }}
+          className="flex gap-2 items-center cursor-pointer"
+        >
+          <Avatar size={30} src={record?.image} />
+          <CustomText value={record?.name} />
+        </div>
+      ),
     },
     {
-      title: <TableHeaderText className={"font-semibold"} value={"Mobile Number"} />,
+      title: (
+        <TableHeaderText className={"font-semibold"} value={"Mobile Number"} />
+      ),
       dataIndex: "phone",
       key: "phone",
-      width:150,
-      align:"center",
+      width: 150,
+      align: "center",
 
-      render: (_,record) =><div className="cursor-pointer"  > <CustomText  value={record?.phone} /></div>,
-
+      render: (_, record) => (
+        <div className="cursor-pointer">
+          {" "}
+          <CustomText value={record?.phone} />
+        </div>
+      ),
     },
     {
       title: <TableHeaderText className={"font-semibold"} value={"status"} />,
       dataIndex: "status",
       key: "status",
-      width:100,
-      align:"center",
+      width: 100,
+      align: "center",
 
-      render: (text) => <CustomText  value={text} />,
-
+      render: (text) => <CustomText value={text} />,
     },
-      {
-      title: <TableHeaderText className={"font-semibold"} value={"KYC status"} />,
+    {
+      title: (
+        <TableHeaderText className={"font-semibold"} value={"KYC status"} />
+      ),
       dataIndex: "kycststus",
       key: "kycststus",
-      width:100,
-      align:"center",
+      width: 100,
+      align: "center",
 
-      render: (_,record) => <CustomText  value={record?.kycststus} />,
-
+      render: (_, record) => <CustomText value={record?.kycststus} />,
     },
-      {
-      title: <TableHeaderText className={"font-semibold"} value={"Created At"} />,
+    {
+      title: (
+        <TableHeaderText className={"font-semibold"} value={"Created At"} />
+      ),
       dataIndex: "createdon",
       key: "createdon",
-      width:150,
-      align:"center",
+      width: 150,
+      align: "center",
 
-      render: (_,record) => <CustomText  value={record?.createdon} />,
-
+      render: (_, record) => <CustomText value={record?.createdon} />,
     },
-    
-   
-     {
+
+    {
       title: <TableHeaderText className={"font-semibold"} value={"Action"} />,
       dataIndex: "email",
       key: "email",
-      width:100,
-      align:"center",
-      render: (_,record) => {
-        return(
-          <Popover content={<div className="flex flex-col gap-2 w-[100px]">
-           <div onClick={()=>{navigate(`/admin/user-details/${record?.id}`)}} className="cursor-pointer" > <CustomText value={"View"}/></div>
-            <div className="cursor-pointer" onClick={()=>{blockUserHandler(record?.id)}} ><CustomText value={"Block"}/></div>
-          </div>}  trigger="click" placement="bottomLeft" >
-                <EllipsisOutlined />
-         </Popover>
-        )
+      width: 100,
+      align: "center",
+      render: (_, record) => {
+        return (
+          <Popover
+            content={
+              <div className="flex flex-col gap-2 w-[100px]">
+                <div
+                  onClick={() => {
+                    navigate(`/admin/user-details/${record?.id}`);
+                  }}
+                  className="cursor-pointer"
+                >
+                  {" "}
+                  <CustomText value={"View"} />
+                </div>
+                <div
+                  className="cursor-pointer"
+                  onClick={() => {
+                    blockUserHandler(record?.id);
+                  }}
+                >
+                  <CustomText value={"Block"} />
+                </div>
+              </div>
+            }
+            trigger="click"
+            placement="bottomLeft"
+          >
+            <EllipsisOutlined />
+          </Popover>
+        );
       },
-
     },
   ];
 
-  const getAllUsers=async()=>{    
-      try{
-          const data={page:pageNumber,filter:{search:serachInput}}
-          const res=await dispatch(getAllUserAsync({token,data,status:"all"})).unwrap();          
-      }catch(error){
-  
-      }
-  
-  }
-  
-  useEffect(()=>{
-    if(activeTab){
-        getAllUsers();
+  const getAllUsers = async () => {
+    try {
+      const data = { page: pageNumber, filter: { search: serachInput,gender:filterState[0]} };
+      const res = await dispatch(
+        getAllUserAsync({ token, data, status: "all" })
+      ).unwrap();
+    } catch (error) {}
+  };
 
+  useEffect(() => {
+    if (activeTab) {
+      getAllUsers();
     }
-      
-  },[activeTab,pageNumber,dispatch,serachInput])
-    if(isLoading  && serachInput=="") return <Loader/>;
-
- 
-    return(
-         <div className="">
-          <div className="flex gap-2">
-            <CustomCard data={users?.totalpage} value={"Total Users"} />
+  }, [activeTab, pageNumber, dispatch, serachInput,filterState]);
+  if (isLoading && (serachInput == "" && filterState=="")) return <Loader />;
+  return (
+          <div className="">
+            <div className="flex gap-2">
+              <CustomCard data={users?.totalpage} value={"Total Users"} />
             </div>
-
             <div className="flex flex-wrap gap-2 justify-between py-2">
-            <CustomSearch  value={serachInput} onchange={(e)=>{setSearchInput(e.target.value)}}/>  
-        </div>
-        <CustomTable
-        scroll={{x:1500}}
-        columns={columns}
-        dataSource={users?.data}
-      />
-      <CustomPagination
-        total={users?.totalpage}
-        onchange={(e)=>setPageNumber(e)}
-        pageNumber={pageNumber}
-       />
-      </div>
-    )
-}
+              <CustomSearch
+                value={serachInput}
+                onchange={(e) => {
+                  setSearchInput(e.target.value);
+                }}
+              />
+            <CustomFiter  setFilterState={setFilterState} options={[{label:"Male",value:"male"},{label:"Female",value:"female"}]} />
+
+            </div>
+            <CustomTable
+              scroll={{ x: 1500 }}
+              columns={columns}
+              dataSource={users?.data}
+            />
+            <CustomPagination
+              total={users?.totalpage}
+              onchange={(e) => pageHandler(e)}
+              pageNumber={pageNumber}
+            />
+          </div>
+  );
+};
 export default AdminAllUsers;

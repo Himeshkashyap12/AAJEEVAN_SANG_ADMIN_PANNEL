@@ -20,7 +20,7 @@ const UserManagement=()=>{
         },
         {
           key: '2',
-          label: <CustomText className={key==2 && "!text-[#F81B3E]"} value={"Block Users"} />,
+          label: <CustomText className={key==2 && "!text-[#F81B3E]"} value={"Blocked Users"} />,
           children:  <AdminBlockUsers  activeTab={key === "2"}/>,
         },
         {
@@ -30,7 +30,7 @@ const UserManagement=()=>{
         },
         {
           key: '4',
-          label: <CustomText className={key==4 && "!text-[#F81B3E]"} value={"In Active  Users"} />,
+          label: <CustomText className={key==4 && "!text-[#F81B3E]"} value={"Incompleted  Users"} />,
           children:  <AdminInActiveUser activeTab={key === "4"}/>,
         },
         {

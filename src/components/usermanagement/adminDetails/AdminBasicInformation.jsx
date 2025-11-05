@@ -5,6 +5,7 @@ import CustomUserData from "../../common/CustomUserData";
 
 const BasicInformation = () => {
   const { userDetails } = useSelector((state) => state?.users);
+  
   const basicInformation = userDetails?.data;
   return (
     <div className="border-[1px] border-[#A2A1A833] rounded-md  p-2">
@@ -26,6 +27,10 @@ const BasicInformation = () => {
           <CustomText
             className={"text-[18px] font-[400]"}
             value={`UID : ${basicInformation?.uid}`}
+          />
+          <CustomText
+            className={"text-[18px] font-[400]"}
+            value={`Profile Managed By : ${userDetails?.data?.pdetail?.ptype}`}
           />
         </div>
       </div>

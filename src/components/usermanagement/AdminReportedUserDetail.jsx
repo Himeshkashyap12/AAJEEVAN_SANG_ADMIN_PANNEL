@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { ReportedUserDetailsAsync } from "../../feature/userManagement/userManagementSlice";
+import { ReportedUserDetailsAsync, UpdateReportedUserDetailsAsync } from "../../feature/userManagement/userManagementSlice";
 import { useDispatch, useSelector } from "react-redux";
 import Cookies from "js-cookie";
 import CustomText from "../common/CustomText";
@@ -7,14 +7,19 @@ import { Col, Image, Row } from "antd";
 import CustomButton from "../common/CustomButton";
 import ConfirmationPopup from "../common/ConfirmationPopup";
 import Loader from "../loader/Loader";
+import { Link, useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 const AdminUserReportedDetails = ({ id }) => {
   const [repotModel,setReportModel]=useState({
     status:false,
     key:""
   })
   const dispatch = useDispatch();
+  const navigate=useNavigate()
   const token = Cookies.get("token");
-  const { reportedDetailsData,isLoading } = useSelector((state) => state?.users);
+  const { reportedDetailsData,isLoading } = useSelector((state) => state?.users);;
+  console.log(reportedDetailsData?.data?.reportedBy?._id,"hgc");
+  
   const reportDetails = reportedDetailsData?.data;
   const getReportedUserDetails = async () => {
     try {
@@ -25,6 +30,21 @@ const AdminUserReportedDetails = ({ id }) => {
       console.log(error);
     }
   };
+  const statusHandler=async()=>{
+        try {
+            const data={type:repotModel?.key=="Approve"?"blocked":"rejected",status:repotModel?.key=="Approve"?"approved":"rejected"}
+            const res=await dispatch(UpdateReportedUserDetailsAsync({token,id,data})).unwrap();         
+               if(res.status && res.code==200){
+                toast.success(res.message);
+                navigate("/admin/user")
+            }
+            
+          
+        } catch (error) {
+            console.log(error);
+            
+        }
+    }
 
   useEffect(() => {
     getReportedUserDetails();
@@ -37,10 +57,10 @@ const AdminUserReportedDetails = ({ id }) => {
         <Row>
            
           <Col span={12}>
+               <Link to={`/admin/user-details/${reportedDetailsData?.data?.reportedUser?._id}`}>
             <div className="flex flex-col gap-2 border-b-1 border-[#A2A1A833] pb-5 ">
                 <CustomText className={"leading-0 !text-start"} value={"Reported Profile "} />
                <div className="flex gap-3">
-
               <div className="w-[50px] h-[50px] sm:w-[70px] sm:h-[70px] md:w-[100px] md:h-[100px] rounded-2xl overflow-hidden">
                 <Image
                   preview={false}
@@ -72,8 +92,10 @@ const AdminUserReportedDetails = ({ id }) => {
               </div>
               </div>
             </div>
+              </Link>
           </Col>
           <Col span={12}>
+           <Link to={`/admin/user-details/${reportedDetailsData?.data?.reportedBy?._id}`}>
             <div className="flex  flex-col gap-2  border-b-1 border-[#A2A1A833] pb-5">
                 <CustomText  className={"leading-0 text-start"} value={"Reported By"} />
                <div className="flex gap-3">
@@ -108,6 +130,7 @@ const AdminUserReportedDetails = ({ id }) => {
               </div>
               </div>
             </div>
+            </Link>
           </Col>
         </Row>
       </div>
@@ -123,7 +146,7 @@ const AdminUserReportedDetails = ({ id }) => {
                <CustomButton onclick={()=>{setReportModel({status:true,key:"Reject"})}} className={"!bg-[#ff2d55] !text-[#fff]"} value={"Reject"}/>
               </div>}
         </div>
-        {repotModel && <ConfirmationPopup repotModel={repotModel} id={id} setReportModel={setReportModel} />}
+        {repotModel.status && <ConfirmationPopup  model={repotModel} confirmationPopUpHandler={statusHandler} setModel={setReportModel} />}
 
     </>
   );
