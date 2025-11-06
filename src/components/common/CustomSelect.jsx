@@ -1,29 +1,17 @@
 
-import React from "react";
-import MenuItem from "@mui/material/MenuItem";
-import FormControl from "@mui/material/FormControl";
-import InputLabel from "@mui/material/InputLabel";
-import CustomText from "./CustomText";
-import { Select } from "antd";
+import { Cascader, Space } from "antd";
 
-const CustomSelect = ({
-  options = [],
-  onchange,
-  className = "",
-  placeholder = "Select an option",
-  value,
-  required
-}) => {
-  return (
-    <Select
-      defaultValue="lucy"
-      value={value}
-      onChange={onchange}
-      options={options}
-      className={`${className}`}
-      placeholder={placeholder}
-    />
-  );
+const CustomSlect=({handleChange,options,defaultValue,className,setFilterState,placeHolder,name})=>{
+    const filterHandler = value => {
+  setFilterState(value);
 };
+    return(
+        <>
+         <Space wrap>
+        <Cascader fieldNames={name} placeholder={placeHolder??"Filter"} variant="borderless" options={options} onChange={filterHandler} defaultValue={`${defaultValue??options[0]?.value}`} className={`!w-[200px] rounded-md h-[45px]  ${className}`}  />
+       </Space>
+        </>
+    )
+}
 
-export default CustomSelect;
+export default CustomSlect;

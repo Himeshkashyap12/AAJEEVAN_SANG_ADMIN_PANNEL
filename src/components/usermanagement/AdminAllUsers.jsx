@@ -16,9 +16,10 @@ import Loader from "../loader/Loader";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import CustomCard from "../common/CustomCard";
-import CustomFiter from "../../../../AAPKA_APNA_GAME-main/src/components/common/CustomFilter";
-const AdminAllUsers = ({ activeTab  }) => {
+import CustomFiter from "../../components/common/CustomFilter";
+const AdminAllUsers = ({ activeTab }) => {
   const page=Cookies.get("page");
+
   const [pageNumber, setPageNumber] = useState(page??1);
   const [serachInput, setSearchInput] = useState("");
   const [filterState,setFilterState]=useState("");

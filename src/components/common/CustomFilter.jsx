@@ -18,3 +18,6 @@ const CustomFiter=({className,options,setFilterState})=>{
     )
 }
 export default CustomFiter;
+
+
+
