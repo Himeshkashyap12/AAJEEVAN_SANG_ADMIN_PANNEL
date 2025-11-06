@@ -8,7 +8,7 @@ import { useNavigate } from "react-router-dom";
 import CustomText from "../common/CustomText";
 import { Avatar } from "antd";
 import {  useState } from "react";
-import doubleCheck from "../../assets/revenue/doubleCheck.svg"
+import doubleCheck from "../../assets/revenue/doublecheck.svg"
 import Loader from "../loader/Loader";
 const AdminNotification=()=>{
   const {notification,isLoading}=useSelector(state=>state?.notification);
