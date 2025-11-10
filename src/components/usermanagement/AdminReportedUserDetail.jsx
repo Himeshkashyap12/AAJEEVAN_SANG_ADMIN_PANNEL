@@ -9,6 +9,7 @@ import ConfirmationPopup from "../common/ConfirmationPopup";
 import Loader from "../loader/Loader";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import support from "../../assets/support/support.png"
 const AdminUserReportedDetails = ({ id }) => {
   const [repotModel,setReportModel]=useState({
     status:false,
@@ -56,7 +57,7 @@ const AdminUserReportedDetails = ({ id }) => {
       const res=await dispatch(adminStartChatAsync({data,token})).unwrap();
       console.log(res?.data?.conversationId);
       if(res.status && res.code==200){
-        navigate("/admin/chat",{state:res?.data?.conversationId})
+        navigate("/admin/chat",{state:{conversationId:res?.data?.conversationId,reportedId:reportedDetailsData?.data?._id}})
       }
     } catch (error) {
         console.log(error);
@@ -74,7 +75,7 @@ const AdminUserReportedDetails = ({ id }) => {
 
   return (
     <>
-      <div className="border-[1px] border-[#A2A1A833] rounded-md  p-2">
+      <div className=" relative  border-[1px] border-[#A2A1A833] rounded-md  p-2">
         <Row>
            
           <Col span={12}>
@@ -158,7 +159,7 @@ const AdminUserReportedDetails = ({ id }) => {
         <div className="comment flex justify-start p-2">
             <CustomText className={"!text-[16px]  !text-[red]  font-[500]" } value={"Report a suspicious profile."} />
         </div>
-        <div className="flex flex-col items-start ps-2">
+        <div className="flex flex-col items-start ps-2 ">
             <CustomText className={"!text-[16px]    font-[500]" } value={`Report id : ${reportDetails?._id}`} />
             <CustomText className={"!text-[16px]    font-[500]" } value={`Reason : ${reportDetails?.reason}`} />
             {reportDetails?.status!="Pending" ? <CustomText className={"!text-[16px]    font-[500]" } value={`Status : ${reportDetails?.status}`} />:<div className="flex gap-2 !h-[40px] ">
@@ -167,8 +168,11 @@ const AdminUserReportedDetails = ({ id }) => {
               </div>}
               {(reportDetails?.status=="Pending" || ( reportDetails?.status=="Rejected" && reportDetails?.conversationId ) ||
               ( reportDetails?.status=="Resolved" && reportDetails?.conversationId ))  &&
-              <div>
-                  <CustomButton onclick={()=>{startChatHandler()}} className={"!bg-[#ff2d55] !text-[#fff]"} value={"Start Chat"}/>
+              <div className="absolute bottom-10 right-10" >
+                  {/* <CustomButton onclick={()=>{startChatHandler()}} className={"!bg-[#ff2d55] !text-[#fff]"} value={"Start Chat"}/> */}
+              <div className="cursor-pointer" onClick={()=>{startChatHandler()}}>
+               <Image preview={false} src={support}/>
+               </div>
               </div>  }
         </div>
         

@@ -1,14 +1,14 @@
 import { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import Cookies from "js-cookie"
 import { getAdminChatAsync } from "../../feature/userManagement/userManagementSlice";
 import { Avatar, Button, Tag } from "antd";
 import TextArea from "antd/es/input/TextArea";
-import {SendOutlined} from '@ant-design/icons';
+import {LeftOutlined, SendOutlined} from '@ant-design/icons';
 import { io } from "socket.io-client";
-import Loader from "../loader/Loader";
-import { toast } from "react-toastify";
+import CustomText from "../common/CustomText";
+import {  isoToISTTime } from "../../constant/constant";
 const AdminUserReportedChat=()=>{
     const userid=useSelector(state=>state?.profile?.profile);
      const [bulkMessage,setBulkMessage]=useState([]);
@@ -16,7 +16,8 @@ const AdminUserReportedChat=()=>{
      const [message,setMessage]=useState();
     const location =useLocation();
     const dispatch=useDispatch();
-    const token=Cookies.get("token")
+    const token=Cookies.get("token");
+    const navigate=useNavigate()
     console.log(location.state);
     console.log(bulkMessage,"bulkMessage");
     
@@ -31,7 +32,7 @@ const AdminUserReportedChat=()=>{
    
   const sendMessageHandler = async () => {   
     if(!message) return ;
-        const data={sender:userid?.data?.id, receiver:bulkMessage[0]?.receiver,conversationId:location.state, text:message }    
+        const data={sender:userid?.data?.id, receiver:bulkMessage[0]?.receiver,conversationId:location.state.conversationId, text:message }    
         console.log(data);
         // setBulkMessage([...bulkMessage,{text:message,sender:userid?.data?.id, receiver:bulkMessage[0]?.receiver,conversationId:location?.state,local:true}])
         socket.emit("send_message",data);
@@ -51,16 +52,13 @@ const AdminUserReportedChat=()=>{
     
   const getMessage=async()=>{
     try {
-        const res=await dispatch(getAdminChatAsync({token,id:location?.state})).unwrap();
+        const res=await dispatch(getAdminChatAsync({token,id:location?.state?.conversationId})).unwrap();
         console.log(res.data);
-        
         if(res.code==200 && res.status){
           setBulkMessage(res.data)
         }
-        console.log(res);
-        
     } catch (error) {
-        
+       console.log(error); 
     }
   }
     useEffect(()=>{
@@ -69,7 +67,11 @@ const AdminUserReportedChat=()=>{
     // if(isLoading) return <Loader/>
     return(
         <>
+        <div  className="flex justify-start py-3 cursor-pointer" onClick={()=>{navigate(`/admin/reported-user/${location.state?.reportedId}`)}}>
+          <LeftOutlined style={{fontSize:"24px",Color:"red"}}/>
+        </div>
         <div className="w-full mx-auto bg-[#FFE3E9] rounded-xl shadow p-4 flex flex-col min-h-[80vh]">
+           
       {/* Header */}
       {/* <div className="flex justify-between items-center border-b pb-3">
         <div className="flex items-center gap-3">
@@ -118,7 +120,10 @@ const AdminUserReportedChat=()=>{
               : "bg-white text-black"
           }`}
         >
-          {msg?.text}
+          <div className="flex items-baseline gap-3">
+         <div><CustomText className={"!text-[14px]"} value={msg?.text}/></div>
+         <div className="text-end"><CustomText className={"!text-[8px]"} value={isoToISTTime(msg.createdAt)}/></div>
+         </div>
         </div>
       </div>
     ))}
