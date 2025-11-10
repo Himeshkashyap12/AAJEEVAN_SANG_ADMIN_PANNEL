@@ -5,6 +5,7 @@ const initialState = {
   userDetails:[],  
   reportedUser:[],
   reportedDetailsData:[],
+  adminChat:[],
   isLoading: false,
   error: null,
 };
@@ -132,6 +133,46 @@ export const ReportedUserDetailsAsync = createAsyncThunk(
     }
   }
 );
+
+
+export const adminStartChatAsync = createAsyncThunk(
+  "users/adminchat",
+ async ({data,token}) => {
+  console.log(token);
+  
+        try {
+      const res = await api.post(`/chat/report/create`,data,{
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${token}`,
+        }
+      });
+      
+      return res.data; 
+    } catch (error) {
+      throw error;
+    }
+  }
+);
+export const getAdminChatAsync = createAsyncThunk(
+  "users/adminconversation",
+ async ({token,id}) => {
+  console.log(token);
+  
+        try {
+      const res = await api.get(`/chat/messages/${id}`,{
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${token}`,
+        }
+      });
+      
+      return res.data; 
+    } catch (error) {
+      throw error;
+    }
+  }
+);
 export const userSlice = createSlice({
   name: "users",
   initialState,
@@ -212,6 +253,28 @@ export const userSlice = createSlice({
       state.isLoading = false;
     });
     builder.addCase(deleImageInUserAsync.rejected, (state, action) => {
+      state.isLoading = false;
+      state.error = action;
+    });
+    
+     builder.addCase(adminStartChatAsync.pending, (state) => {
+      state.isLoading = true;
+    });
+    builder.addCase(adminStartChatAsync.fulfilled, (state, action) => {                
+      state.isLoading = false;
+    });
+    builder.addCase(adminStartChatAsync.rejected, (state, action) => {
+      state.isLoading = false;
+      state.error = action;
+    });
+    builder.addCase(getAdminChatAsync.pending, (state) => {
+      state.isLoading = true;
+    });
+    builder.addCase(getAdminChatAsync.fulfilled, (state, action) => {                
+      state.isLoading = false;
+      state.adminChat=action.payload.data
+    });
+    builder.addCase(getAdminChatAsync.rejected, (state, action) => {
       state.isLoading = false;
       state.error = action;
     });

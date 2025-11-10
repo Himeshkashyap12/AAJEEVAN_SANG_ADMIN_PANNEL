@@ -7,6 +7,7 @@ import { lazy, Suspense } from 'react'
 import Loader from './components/loader/Loader'
 import RoleDetailsPage from './pages/RoleDetailsPage'
 import AdminChangePasswordPage from './pages/AdminChangePasswordPage'
+import AdminUserReportedChat from './components/usermanagement/AdminUserReportedChat'
 const AdminLoginPage = lazy(() => import("./pages/AdminLoaginPage"))
 const UserManagement = lazy(() => import("./components/usermanagement/UserManagement"))
 const AdminProtected = lazy(() => import("./protected/AdminProtected"))
@@ -50,6 +51,7 @@ function App() {
         <Route path='/admin/analytics' element={<AdminAnalyticsPage/>}/>
         <Route path='/admin/analytics-activity' element={<AnalyticsActivityPage/>}/>
         <Route path='/admin/analytics-tierwise-subscription' element={<TireWiseSubscriptionPage/>}/>
+        <Route path='/admin/chat' element={<AdminUserReportedChat/>}/>
         <Route path='/admin/logs' element={<AdminLogPage/>}/>
       </Route>
     </Routes>

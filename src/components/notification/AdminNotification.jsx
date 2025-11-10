@@ -1,8 +1,7 @@
 
 import { useDispatch, useSelector } from "react-redux";
-import verify from "../../assets/home/verify.png"
 import { clearNotificationAsync, getAllNotificationAsync, seenNotificationAsync } from "../../feature/notification/Notification";
-import { BellOutlined, DiffOutlined } from "@ant-design/icons";
+import {  DiffOutlined } from "@ant-design/icons";
 import Cookies from "js-cookie"
 import { useNavigate } from "react-router-dom";
 import CustomText from "../common/CustomText";
@@ -20,12 +19,12 @@ const dispatch=useDispatch();
     try {
       const data={ntype:item?.id}
       const res=await dispatch(seenNotificationAsync({token,data})).unwrap();
-     if(res.code==200 && res.status){
-      if(item?.ntype=="verify"){
-        navigate("/admin/kyc-request")
-      }
-      dispatch(getAllNotificationAsync({token}))
-     }
+        if(res.code==200 && res.status){
+          if(item?.ntype=="verify"){
+            navigate("/admin/kyc-request")
+          }
+          dispatch(getAllNotificationAsync({token}))
+        }
       
     } catch (error) {
       
@@ -62,7 +61,6 @@ if(isLoading) return <div className="w-[600px] h-[300px] flex justify-center ite
                           {item?.ntype=="alert"? <div className="!size-[24px] text-[blue] ps-2 flex items-center !text-[20px] ">₹</div>:
                            <div className="rounded-full p-1"><DiffOutlined style={{ color:"green",fontSize:"20px"}} /></div>
                            }
-
                             <div>
                               <CustomText className={"md:!text-[14px] !text-[12px] font-[500]  "} value={item?.title} />
                             </div>

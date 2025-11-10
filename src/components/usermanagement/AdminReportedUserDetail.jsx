@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { ReportedUserDetailsAsync, UpdateReportedUserDetailsAsync } from "../../feature/userManagement/userManagementSlice";
+import { adminStartChatAsync, ReportedUserDetailsAsync, UpdateReportedUserDetailsAsync } from "../../feature/userManagement/userManagementSlice";
 import { useDispatch, useSelector } from "react-redux";
 import Cookies from "js-cookie";
 import CustomText from "../common/CustomText";
@@ -17,10 +17,14 @@ const AdminUserReportedDetails = ({ id }) => {
   const dispatch = useDispatch();
   const navigate=useNavigate()
   const token = Cookies.get("token");
+  console.log(token);
+  
   const { reportedDetailsData,isLoading } = useSelector((state) => state?.users);;
   console.log(reportedDetailsData?.data?.reportedBy?._id,"hgc");
   
   const reportDetails = reportedDetailsData?.data;
+  console.log(reportDetails,"fgdfkg");
+  
   const getReportedUserDetails = async () => {
     try {
       const res = await dispatch(
@@ -45,6 +49,23 @@ const AdminUserReportedDetails = ({ id }) => {
             
         }
     }
+
+    const startChatHandler=async()=>{
+    try {
+      const data={reportId:reportDetails?._id,reportedBy:reportDetails?.reportedBy?._id}
+      const res=await dispatch(adminStartChatAsync({data,token})).unwrap();
+      console.log(res?.data?.conversationId);
+      if(res.status && res.code==200){
+        navigate("/admin/chat",{state:res?.data?.conversationId})
+      }
+    } catch (error) {
+        console.log(error);
+        
+    }
+    // navigate("/admin/chat")
+
+    }
+
 
   useEffect(() => {
     getReportedUserDetails();
@@ -140,13 +161,18 @@ const AdminUserReportedDetails = ({ id }) => {
         <div className="flex flex-col items-start ps-2">
             <CustomText className={"!text-[16px]    font-[500]" } value={`Report id : ${reportDetails?._id}`} />
             <CustomText className={"!text-[16px]    font-[500]" } value={`Reason : ${reportDetails?.reason}`} />
-            {reportDetails?.status!="Pending" ? <CustomText className={"!text-[16px]    font-[500]" } value={`Status : ${reportDetails?.status}`} />:<div className="flex gap-2 ">
-               
+            {reportDetails?.status!="Pending" ? <CustomText className={"!text-[16px]    font-[500]" } value={`Status : ${reportDetails?.status}`} />:<div className="flex gap-2 !h-[40px] ">
                <CustomButton onclick={()=>{setReportModel({status:true,key:"Approve"})}} className={"!bg-[#ff2d55] !text-[#fff]"} value={"Approve"}/>
                <CustomButton onclick={()=>{setReportModel({status:true,key:"Reject"})}} className={"!bg-[#ff2d55] !text-[#fff]"} value={"Reject"}/>
               </div>}
+              {(reportDetails?.status=="Pending" || ( reportDetails?.status=="Rejected" && reportDetails?.conversationId ) ||
+              ( reportDetails?.status=="Resolved" && reportDetails?.conversationId ))  &&
+              <div>
+                  <CustomButton onclick={()=>{startChatHandler()}} className={"!bg-[#ff2d55] !text-[#fff]"} value={"Start Chat"}/>
+              </div>  }
         </div>
-        {repotModel.status && <ConfirmationPopup  model={repotModel} confirmationPopUpHandler={statusHandler} setModel={setReportModel} />}
+        
+        {repotModel?.status && <ConfirmationPopup  model={repotModel} confirmationPopUpHandler={statusHandler} setModel={setReportModel} />}
 
     </>
   );

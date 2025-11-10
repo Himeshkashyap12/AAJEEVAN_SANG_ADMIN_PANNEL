@@ -88,9 +88,7 @@ const AdminReportedUsers=({activeTab})=>{
         return(
           <Popover content={<div className="flex flex-col gap-2 w-[100px]">
            <div onClick={()=>{navigate(`/admin/reported-user/${record?._id}`)}}  className="cursor-pointer" > <CustomText value={"View"}/></div>
-
           </div>}  trigger="click" placement="bottomLeft" >
-                {/* <EllipsisOutlined /> */}
                 <EllipsisOutlined />
          </Popover>
         )
@@ -103,8 +101,7 @@ const AdminReportedUsers=({activeTab})=>{
        try {
          const res=await dispatch(ReportedUserAsync({token})).unwrap();         
        } catch (error) {
-         console.log(error);
-         
+         console.log(error);   
        }
   }
 
@@ -112,7 +109,6 @@ const AdminReportedUsers=({activeTab})=>{
     useEffect(()=>{
       if(activeTab){
                 getAllReportedUser();
-
       }
 
     },[dispatch,pageNumber,activeTab]);

@@ -26,9 +26,7 @@ export const logInAsyncHandler = createAsyncThunk(
 );
 export const changePasswordAsyncHandler = createAsyncThunk(
   "auth/forget",
- async ({data,token}) => {
-  console.log(token);
-  
+ async ({data,token}) => {  
         try {
       const res = await api.put("admin/password",data,{
         headers: {
@@ -63,7 +61,7 @@ export const authSlice = createSlice({
       state.token = action.payload.data.token;
       state.isAuthenticated = true;
       Cookies.set('token', action.payload.data.token, { 
-        expires: 1,
+        expires: 1  ,
         secure: true,
         sameSite: 'Strict'
       });
