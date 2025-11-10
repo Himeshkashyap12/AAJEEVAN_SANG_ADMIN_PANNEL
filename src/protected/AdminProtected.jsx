@@ -4,7 +4,7 @@ import Cookies from "js-cookie";
 const AdminProtected = ( {children}) => {
   const token=Cookies?.get("token")
   const {isAuthenticated} = useSelector((state) => state?.auth);
-  if (!isAuthenticated ||  !token )  {
+  if (!isAuthenticated &&  !token )  {
     return <Navigate to="/login" replace />;
   }
 

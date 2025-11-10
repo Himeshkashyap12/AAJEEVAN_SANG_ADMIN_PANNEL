@@ -33,7 +33,7 @@ const AdminUserReportedChat=()=>{
     if(!message) return ;
         const data={sender:userid?.data?.id, receiver:bulkMessage[0]?.receiver,conversationId:location.state, text:message }    
         console.log(data);
-        setBulkMessage([...bulkMessage,{text:message,sender:userid?.data?.id, receiver:bulkMessage[0]?.receiver,conversationId:location?.state,local:true}])
+        // setBulkMessage([...bulkMessage,{text:message,sender:userid?.data?.id, receiver:bulkMessage[0]?.receiver,conversationId:location?.state,local:true}])
         socket.emit("send_message",data);
             setMessage("");
         };
