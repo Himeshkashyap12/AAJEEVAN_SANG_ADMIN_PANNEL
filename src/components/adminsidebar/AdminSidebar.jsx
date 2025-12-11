@@ -18,7 +18,9 @@ const AdminSidebar = ({ collapsed }) => {
   const {profile}=useSelector(state=>state?.profile);
   console.log(profile);
   
-  const sidebar=profile?.data?.permission;  
+  const sidebar=profile?.data?.permission; 
+  console.log(sidebar,"fbshbf");
+   
   const navigate = useNavigate();
   const sidebarItems = [
     {
@@ -230,6 +232,28 @@ const AdminSidebar = ({ collapsed }) => {
                   selectKey == 7 ? "!text-[#000]" : "!text-[#7b8190]"
                 }`}
                 value={"Admin Logs"}
+              />
+            </Link>
+          ),
+        
+        },
+         (  sidebar?.length>0 &&  sidebar[9]?.pushnotification?.view ) && {
+          key: 9,
+          path: "admin/push-notification",
+          icon: (
+           <div
+              className={`flex justify-start `}
+            >
+               <Image src={adminLog} className={`!size-[28px] ${selectKey != 9 && "grayscale" }`}/>
+            </div>
+          ),
+          label: !collapsed && (
+            <Link to={"/admin/push-notification"}>
+              <CustomText
+                className={`${
+                  selectKey == 9 ? "!text-[#000]" : "!text-[#7b8190]"
+                }`}
+                value={"Push Notification"}
               />
             </Link>
           ),

@@ -25,3 +25,12 @@ export function getChangedData({oldObj, newObj}) {
 
   return changed;
 }
+
+export function formatDayjsToYMD(dateObj) {
+  const year = dateObj.$y;
+  const month = String(dateObj.$M + 1).padStart(2, "0"); // month is 0-based
+  const day = String(dateObj.$D).padStart(2, "0");
+
+  return `${year}-${month}-${day}`;
+}
+

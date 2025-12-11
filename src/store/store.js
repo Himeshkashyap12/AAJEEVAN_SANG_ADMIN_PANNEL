@@ -9,7 +9,8 @@ import fianancialOversightReducer from "../feature/financialOversight/FinancialO
 import notificationReducer from "../feature/notification/Notification.js";
 import roleReducer from "../feature/role/roleSlice.js";
 import profileReducer from "../feature/profile/profileSlice.js";
-import analyticsReducer from "../feature/analytics/analyticSlice.js"
+import analyticsReducer from "../feature/analytics/analyticSlice.js";
+import pushReducer from "../feature/pushNotification/pushNotificationSlice.js"
 export const store = configureStore({
   reducer: {
       auth:authReducer,
@@ -22,7 +23,8 @@ export const store = configureStore({
       notification:notificationReducer,
       role:roleReducer,
       profile:profileReducer,
-      analytics:analyticsReducer
+      analytics:analyticsReducer,
+      push:pushReducer
 
   },
 })

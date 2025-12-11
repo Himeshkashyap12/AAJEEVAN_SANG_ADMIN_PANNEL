@@ -8,6 +8,7 @@ import Loader from './components/loader/Loader'
 import RoleDetailsPage from './pages/RoleDetailsPage'
 import AdminChangePasswordPage from './pages/AdminChangePasswordPage'
 import AdminUserReportedChat from './components/usermanagement/AdminUserReportedChat'
+import AdminPushNotificationPage from './pages/AdminPushNotificationPage'
 const AdminLoginPage = lazy(() => import("./pages/AdminLoaginPage"))
 const UserManagement = lazy(() => import("./components/usermanagement/UserManagement"))
 const AdminProtected = lazy(() => import("./protected/AdminProtected"))
@@ -53,6 +54,7 @@ function App() {
         <Route path='/admin/analytics-tierwise-subscription' element={<TireWiseSubscriptionPage/>}/>
         <Route path='/admin/chat' element={<AdminUserReportedChat/>}/>
         <Route path='/admin/logs' element={<AdminLogPage/>}/>
+        <Route path='/admin/push-notification' element={<AdminPushNotificationPage/>}/>
       </Route>
     </Routes>
     </Suspense>
