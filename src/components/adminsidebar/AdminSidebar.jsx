@@ -12,14 +12,15 @@ import role from "../../assets/adminSidebar/role.png"
 import financial from "../../assets/adminSidebar/financial.png"
 import analytic from "../../assets/adminSidebar/analytic.png"
 import adminLog from "../../assets/adminSidebar/adminlog.png"
-import adminPlan from "../../assets/adminSidebar/plan.png"
+import adminPlan from "../../assets/adminSidebar/plan.png";
+import adminPushNotification from "../../assets/adminSidebar/pushNotification.svg";
+
 const AdminSidebar = ({ collapsed }) => {
   const [selectKey, setSelectKey] = useState(0);
   const {profile}=useSelector(state=>state?.profile);
   console.log(profile);
   
   const sidebar=profile?.data?.permission; 
-  console.log(sidebar,"fbshbf");
    
   const navigate = useNavigate();
   const sidebarItems = [
@@ -244,7 +245,7 @@ const AdminSidebar = ({ collapsed }) => {
            <div
               className={`flex justify-start `}
             >
-               <Image src={adminLog} className={`!size-[28px] ${selectKey != 9 && "grayscale" }`}/>
+               <Image src={adminPushNotification} className={`!h-[30px] !w-[24px] ${selectKey != 9 && "grayscale" }`}/>
             </div>
           ),
           label: !collapsed && (
