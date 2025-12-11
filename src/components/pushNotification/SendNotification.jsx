@@ -254,7 +254,10 @@ console.log(pushNotificationInput,"f bhjbh");
              
              {/* name,value,options,defaultValue,onchange,label,className */}
                   <CustomRadio onchange={(e)=>{deliveryTimeHandler(e)}}  value={sendNotification}  options={[{label:"Send Now",value:"sendNow"},{label:"Schedule",value:"schedule"}]} label={"Delivery Time"}/>
-                  {sendNotification=="schedule" &&  <DatePicker onChange={(value)=>{setPushNotiofication({...pushNotificationInput,scheduleAt:value.$d.getTime()})}}  showTime />}
+                         
+                  {sendNotification=="schedule" &&  <DatePicker 
+                     disabledDate={(current) => current && current < new Date().setHours(0, 0, 0, 0)}
+                  onChange={(value)=>{setPushNotiofication({...pushNotificationInput,scheduleAt:value.$d.getTime()})}}  showTime />}
                   <CustomButton onclick={()=>{sendNotificationHandler()}}  className={"!bg-[#F81B3E]  !text-[#fff]"} value={"Send Notification"}/>
             
                 </div>

@@ -59,7 +59,34 @@ const NotificationHistory=()=>{
                     render:(_,text)=>{
                         return(
                             <>
-                            <CustomText className={"!text-[14px]"} value={text?.target} />
+
+                         
+                            <CustomText className={"!text-[14px]"} value={
+                                text?.target=="on_date_users" && "On Date Users" ||
+                                text?.target=="custom_users" && "Custom Users" ||
+                                text?.target=="active_users" && "Active Users" ||
+                                text?.target=="inactive_users" && "Inactive Users" ||
+                                text?.target=="new_users" && "New Users" ||
+                                text?.target=="all" && "All" 
+                                } />
+                            </>
+                        )
+                    }
+                },
+                 {
+                    title: 'Status',
+                    dataIndex: 'status',
+                    key: 'status',
+                    align:"start",
+                    render:(_,text)=>{
+                        return(
+                            <>
+                            <CustomText className={
+                                `!text-[14px] 
+                                ${text?.status=="scheduled" && "!text-[#fcbf49]"}
+                                ${text?.status=="pending" && "!text-[#ff9248]"}
+                                ${text?.status=="sent" && "!text-[#5CB85C]"}
+                                `} value={text?.status} />
                             </>
                         )
                     }
