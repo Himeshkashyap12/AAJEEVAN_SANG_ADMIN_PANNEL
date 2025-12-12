@@ -288,7 +288,7 @@ const SendNotification = () => {
               className={"text-[16px] font-semibold text-start"}
               value={"Target Audience"}
             />
-            <div className="flex flex-wrap gap-3">
+            <div className="flex flex-wrap gap-x-2 gap-y-6 items-center">
               {pushType?.map((item, idx) => {
                 return (
                   <>
@@ -346,7 +346,6 @@ const SendNotification = () => {
                           <CustomText value={item?.name} />
                         </div>
                         <div>
-                          {" "}
                           <Checkbox
                             checked={item?.checkUsers}
                             onChange={(e) => {
